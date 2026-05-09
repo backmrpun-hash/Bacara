@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baccarat AI</title>
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+h1 { color: #22c55e; }
+
+.btn {
+    padding: 15px 25px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.banker { background: red; }
+.player { background: blue; }
+.tie { background: gray; }
+
+.card {
+    background: #1e293b;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+.history {
+    margin-top: 10px;
+    font-size: 18px;
+}
+</style>
+</head>
+<body>
+
+<h1>🔥 Baccarat Smart Analyzer</h1>
+
+<button class="btn banker" onclick="addResult('B')">Banker</button>
+<button class="btn player" onclick="addResult('P')">Player</button>
+<button class="btn tie" onclick="addResult('T')">Tie</button>
+
+<div class="card">
+    <h3>📊 สถิติ</h3>
+    <p id="stats"></p>
+</div>
+
+<div class="card">
+    <h3>📈 แนวโน้ม</h3>
+    <p id="trend"></p>
+</div>
+
+<div class="card">
+    <h3>🧠 AI แนะนำ</h3>
+    <p id="ai"></p>
+</div>
+
+<div class="card">
+    <h3>📜 ประวัติ</h3>
+    <div class="history" id="history"></div>
+</div>
+
+<script>
+let results = [];
+
+function addResult(x) {
+    results.push(x);
+    update();
+}
+
+function update() {
+    let b = results.filter(r => r === 'B').length;
+    let p = results.filter(r => r === 'P').length;
+    let t = results.filter(r => r === 'T').length;
+    let total = results.length;
+
+    document.getElementById("stats").innerText =
+        `ทั้งหมด: ${total} | B: ${b} | P: ${p} | T: ${t}`;
+
+    // แนวโน้ม
+    let trend = "สูสี";
+    if (b > p) trend = "Banker มาแรง 🔴";
+    if (p > b) trend = "Player มาแรง 🔵";
+
+    document.getElementById("trend").innerText = trend;
+
+    // AI ง่ายๆ
+    let ai = "รอดูไปก่อน";
+    if (results.slice(-3).every(x => x === 'B')) ai = "Banker ติด 3 🔴";
+    if (results.slice(-3).every(x => x === 'P')) ai = "Player ติด 3 🔵";
+
+    document.getElementById("ai").innerText = ai;
+
+    // history
+    document.getElementById("history").innerText = results.join(" ");
+}
+</script>
+
+</body>
+</html>
