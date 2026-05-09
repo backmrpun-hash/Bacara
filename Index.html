@@ -3,104 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Baccarat AI</title>
+<title>Baccarat GOD AI</title>
+
 <style>
 body {
-    font-family: Arial;
-    background: #0f172a;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #0f172a, #020617);
     color: white;
     text-align: center;
-    padding: 20px;
 }
-h1 { color: #22c55e; }
 
+/* Glass Card */
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 15px;
+    box-shadow: 0 0 20px rgba(0,255,255,0.2);
+}
+
+/* Glow Buttons */
 .btn {
     padding: 15px 25px;
     margin: 10px;
     font-size: 18px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
+    color: white;
+    transition: 0.3s;
 }
 
-.banker { background: red; }
-.player { background: blue; }
-.tie { background: gray; }
-
-.card {
-    background: #1e293b;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 10px;
+.banker {
+    background: #ef4444;
+    box-shadow: 0 0 15px #ef4444;
+}
+.player {
+    background: #3b82f6;
+    box-shadow: 0 0 15px #3b82f6;
+}
+.tie {
+    background: gray;
 }
 
-.history {
-    margin-top: 10px;
-    font-size: 18px;
+.btn:hover {
+    transform: scale(1.1);
 }
+
+/* Glow text */
+.glow {
+    font-size: 22px;
+    text-shadow: 0 0 10px cyan, 0 0 20px cyan;
+}
+
+/* History */
+.history span {
+    margin: 4px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: inline-block;
+}
+.B { background: red; }
+.P { background: blue; }
+.T { background: gray; }
 </style>
 </head>
+
 <body>
 
-<h1>🔥 Baccarat Smart Analyzer</h1>
+<h1 class="glow">🔥 Baccarat GOD AI</h1>
 
-<button class="btn banker" onclick="addResult('B')">Banker</button>
-<button class="btn player" onclick="addResult('P')">Player</button>
-<button class="btn tie" onclick="addResult('T')">Tie</button>
+<button class="btn banker" onclick="add('B')">BANKER</button>
+<button class="btn player" onclick="add('P')">PLAYER</button>
+<button class="btn tie" onclick="add('T')">TIE</button>
 
 <div class="card">
-    <h3>📊 สถิติ</h3>
-    <p id="stats"></p>
+<h3>📊 สถิติ</h3>
+<p id="stats"></p>
 </div>
 
 <div class="card">
-    <h3>📈 แนวโน้ม</h3>
-    <p id="trend"></p>
+<h3>📈 แนวโน้ม</h3>
+<p id="trend"></p>
 </div>
 
 <div class="card">
-    <h3>🧠 AI แนะนำ</h3>
-    <p id="ai"></p>
+<h3>🔥 AI โหด</h3>
+<p id="ai"></p>
 </div>
 
 <div class="card">
-    <h3>📜 ประวัติ</h3>
-    <div class="history" id="history"></div>
+<h3>⚡ Streak</h3>
+<p id="streak"></p>
+</div>
+
+<div class="card">
+<h3>📜 History</h3>
+<div class="history" id="history"></div>
 </div>
 
 <script>
 let results = [];
 
-function addResult(x) {
+function add(x){
     results.push(x);
     update();
 }
 
-function update() {
-    let b = results.filter(r => r === 'B').length;
-    let p = results.filter(r => r === 'P').length;
-    let t = results.filter(r => r === 'T').length;
+function update(){
+    let b = results.filter(r=>r==='B').length;
+    let p = results.filter(r=>r==='P').length;
+    let t = results.filter(r=>r==='T').length;
     let total = results.length;
 
     document.getElementById("stats").innerText =
-        `ทั้งหมด: ${total} | B: ${b} | P: ${p} | T: ${t}`;
+        `ทั้งหมด ${total} | B ${b} | P ${p} | T ${t}`;
 
     // แนวโน้ม
     let trend = "สูสี";
-    if (b > p) trend = "Banker มาแรง 🔴";
-    if (p > b) trend = "Player มาแรง 🔵";
-
+    if(b > p) trend = "Banker มาแรง 🔴";
+    if(p > b) trend = "Player มาแรง 🔵";
     document.getElementById("trend").innerText = trend;
 
-    // AI ง่ายๆ
-    let ai = "รอดูไปก่อน";
-    if (results.slice(-3).every(x => x === 'B')) ai = "Banker ติด 3 🔴";
-    if (results.slice(-3).every(x => x === 'P')) ai = "Player ติด 3 🔵";
+    // streak
+    let streak = 1;
+    for(let i=results.length-1;i>0;i--){
+        if(results[i] === results[i-1]) streak++;
+        else break;
+    }
+    document.getElementById("streak").innerText =
+        `${results[results.length-1] || '-'} ติด ${streak}`;
+
+    // AI โหด
+    let ai = "⏳ รอจังหวะ";
+
+    let last2 = results.slice(-2);
+    let last3 = results.slice(-3);
+
+    if(last3.length===3 && last3.every(x=>x==='B')){
+        ai = "🔥 แทงตาม Banker (ติด 3)";
+    }
+    else if(last3.length===3 && last3.every(x=>x==='P')){
+        ai = "🔥 แทงตาม Player (ติด 3)";
+    }
+    else if(last2.length===2 && last2[0]===last2[1]){
+        ai = "⚡ แทงตาม " + (last2[0]==='B'?'Banker':'Player');
+    }
 
     document.getElementById("ai").innerText = ai;
 
-    // history
-    document.getElementById("history").innerText = results.join(" ");
+    // history render
+    let html = "";
+    results.forEach(r=>{
+        html += `<span class="${r}">${r}</span>`;
+    });
+    document.getElementById("history").innerHTML = html;
 }
 </script>
 
