@@ -1,167 +1,259 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Baccarat GOD AI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZXX Admin Menu - Preview Version</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500&display=swap');
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at top, #0f172a, #020617);
-    color: white;
-    text-align: center;
-}
+        :root {
+            --primary-glow: #00e5ff;
+            --secondary-glow: #00ffa2;
+            --bg-dark: rgba(15, 15, 18, 0.98);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-sub: #888888;
+        }
 
-/* Glass Card */
-.card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(15px);
-    border-radius: 15px;
-    padding: 15px;
-    margin: 15px;
-    box-shadow: 0 0 20px rgba(0,255,255,0.2);
-}
+        * { box-sizing: border-box; font-family: 'Kanit', sans-serif; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); user-select: none; }
 
-/* Glow Buttons */
-.btn {
-    padding: 15px 25px;
-    margin: 10px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    color: white;
-    transition: 0.3s;
-}
+        body {
+            background: #111 url('https://wallpaperaccess.com/full/21532.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh; margin: 0;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            /* แก้ไข: ลบ display: none ออกเพื่อให้เปิดดูได้ทันที */
+        }
 
-.banker {
-    background: #ef4444;
-    box-shadow: 0 0 15px #ef4444;
-}
-.player {
-    background: #3b82f6;
-    box-shadow: 0 0 15px #3b82f6;
-}
-.tie {
-    background: gray;
-}
+        .admin-panel {
+            width: 1000px; height: 620px;
+            background: var(--bg-dark);
+            backdrop-filter: blur(30px);
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 60px rgba(0,0,0,0.9);
+            padding: 30px;
+            display: flex; flex-direction: column;
+            position: relative;
+            animation: panelShow 0.5s ease-out;
+        }
 
-.btn:hover {
-    transform: scale(1.1);
-}
+        /* เอฟเฟกต์แสงขอบบน */
+        .admin-panel::before {
+            content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
 
-/* Glow text */
-.glow {
-    font-size: 22px;
-    text-shadow: 0 0 10px cyan, 0 0 20px cyan;
-}
+        /* --- Header & Navbar --- */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .title-area { display: flex; align-items: center; gap: 15px; }
+        .title-area h1 { font-size: 22px; margin: 0; color: #fff; font-weight: 500; letter-spacing: 1px; }
+        .status-badge { background: rgba(0, 255, 162, 0.1); color: var(--secondary-glow); padding: 4px 12px; border-radius: 20px; font-size: 11px; border: 1px solid rgba(0, 255, 162, 0.2); }
 
-/* History */
-.history span {
-    margin: 4px;
-    padding: 6px 10px;
-    border-radius: 6px;
-    display: inline-block;
-}
-.B { background: red; }
-.P { background: blue; }
-.T { background: gray; }
-</style>
+        .navbar { display: flex; gap: 8px; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 18px; border: 1px solid var(--border-color); }
+        .nav-item { padding: 10px 20px; border-radius: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-sub); }
+        .nav-item i { font-size: 16px; }
+        .nav-item.active { background: rgba(0, 229, 255, 0.1); color: var(--primary-glow); border: 1px solid rgba(0, 229, 255, 0.2); box-shadow: 0 0 15px rgba(0, 229, 255, 0.05); }
+        .nav-item:hover:not(.active) { color: #fff; background: rgba(255, 255, 255, 0.05); }
+
+        /* --- Content Layout --- */
+        .content-container { flex: 1; overflow-y: auto; padding-right: 5px; }
+        .page { display: none; }
+        .page.active { display: block; animation: pageIn 0.4s ease; }
+
+        .section-header { text-align: center; margin: 25px 0 15px; position: relative; }
+        .section-header span { background: var(--bg-dark); padding: 0 20px; font-size: 12px; color: var(--text-sub); text-transform: uppercase; letter-spacing: 3px; position: relative; z-index: 2; }
+        .section-header::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: var(--border-color); z-index: 1; }
+
+        /* --- Action Cards --- */
+        .actions-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+        .action-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; position: relative; overflow: hidden; }
+        .action-card:hover { border-color: var(--primary-glow); background: rgba(0, 229, 255, 0.05); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .action-card i { font-size: 20px; color: var(--primary-glow); text-shadow: 0 0 10px rgba(0, 229, 255, 0.3); }
+        .card-info div { font-size: 13px; color: #fff; font-weight: 400; }
+        .card-info span { font-size: 10px; color: var(--text-sub); display: block; margin-top: 2px; }
+
+        /* --- Switches --- */
+        .switches-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+        .switch-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 16px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; }
+        .switch-label { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+        .switch-label i { color: var(--secondary-glow); font-size: 16px; }
+
+        .toggle-input { appearance: none; width: 40px; height: 20px; background: #333; border-radius: 20px; position: relative; cursor: pointer; outline: none; }
+        .toggle-input:checked { background: var(--secondary-glow); box-shadow: 0 0 15px rgba(0, 255, 162, 0.4); }
+        .toggle-input::before { content: ''; position: absolute; width: 14px; height: 14px; background: #fff; border-radius: 50%; top: 3px; left: 4px; transition: 0.3s; }
+        .toggle-input:checked::before { transform: translateX(18px); }
+
+        /* --- Modal --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-box { background: #16161a; width: 400px; padding: 30px; border-radius: 25px; border: 1px solid var(--primary-glow); text-align: center; box-shadow: 0 0 40px rgba(0,229,255,0.2); }
+        .modal-box h3 { margin: 0 0 10px; color: var(--primary-glow); font-weight: 400; }
+        .modal-box input { width: 100%; padding: 14px; background: #000; border: 1px solid #333; border-radius: 12px; color: #fff; margin: 20px 0; outline: none; font-size: 14px; text-align: center; }
+        .modal-box input:focus { border-color: var(--primary-glow); }
+        .modal-btns { display: flex; gap: 10px; }
+        .modal-btns button { flex: 1; padding: 12px; border-radius: 12px; border: none; cursor: pointer; font-weight: 500; font-size: 14px; }
+        .btn-confirm { background: var(--primary-glow); color: #000; }
+        .btn-cancel { background: #222; color: #fff; }
+
+        /* Animations */
+        @keyframes panelShow { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pageIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-glow); border-radius: 10px; }
+    </style>
 </head>
-
 <body>
 
-<h1 class="glow">🔥 Baccarat GOD AI</h1>
+    <div class="admin-panel">
+        <div class="header">
+            <div class="title-area">
+                <h1>ADMIN PANEL</h1>
+                <div class="status-badge"><i class="fas fa-shield-check"></i> PROTECTED</div>
+            </div>
+            <div class="navbar">
+                <div class="nav-item active" onclick="tab('main', this)"><i class="fas fa-th-large"></i> Dashboard</div>
+                <div class="nav-item" onclick="tab('player', this)"><i class="fas fa-users"></i> Players</div>
+                <div class="nav-item" onclick="tab('vehicle', this)"><i class="fas fa-car"></i> Vehicles</div>
+                <div class="nav-item" onclick="tab('server', this)"><i class="fas fa-server"></i> Server</div>
+            </div>
+        </div>
 
-<button class="btn banker" onclick="add('B')">BANKER</button>
-<button class="btn player" onclick="add('P')">PLAYER</button>
-<button class="btn tie" onclick="add('T')">TIE</button>
+        <div class="content-container">
+            <div id="main" class="page active">
+                <div class="section-header"><span>Admin Actions</span></div>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="openInput('announcement', 'ประกาศข้อความ')">
+                        <i class="fas fa-bullhorn"></i>
+                        <div class="card-info"><div>Announcement</div><span>ประกาศแจ้งเตือน</span></div>
+                    </div>
+                    <div class="action-card" onclick="send('reviveAll')">
+                        <i class="fas fa-heart"></i>
+                        <div class="card-info"><div>Revive All</div><span>ชุบผู้เล่นทั้งหมด</span></div>
+                    </div>
+                    <div class="action-card" onclick="openInput('giveMoney', 'ระบุจำนวนเงิน')">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div class="card-info"><div>Give Money</div><span>เพิ่มเงินให้ตนเอง</span></div>
+                    </div>
+                    <div class="action-card" onclick="send('healAll')">
+                        <i class="fas fa-medkit"></i>
+                        <div class="card-info"><div>Heal All</div><span>ฮีลผู้เล่นทั้งหมด</span></div>
+                    </div>
+                    <div class="action-card" onclick="send('killAll')">
+                        <i class="fas fa-skull"></i>
+                        <div class="card-info"><div>Kill All</div><span>ฆ่าผู้เล่นทั้งหมด</span></div>
+                    </div>
+                </div>
 
-<div class="card">
-<h3>📊 สถิติ</h3>
-<p id="stats"></p>
-</div>
+                <div class="section-header"><span>Switch Actions</span></div>
+                <div class="switches-grid">
+                    <div class="switch-card">
+                        <div class="switch-label"><i class="fas fa-id-card"></i><span>เปิดชื่อผู้เล่น</span></div>
+                        <input type="checkbox" class="toggle-input" onchange="toggle('showNames', this.checked)">
+                    </div>
+                    <div class="switch-card">
+                        <div class="switch-label"><i class="fas fa-ghost"></i><span>ล่องหน</span></div>
+                        <input type="checkbox" class="toggle-input" onchange="toggle('invisible', this.checked)">
+                    </div>
+                    <div class="switch-card">
+                        <div class="switch-label"><i class="fas fa-bolt"></i><span>วิ่งไว</span></div>
+                        <input type="checkbox" class="toggle-input" onchange="toggle('superSpeed', this.checked)">
+                    </div>
+                    <div class="switch-card">
+                        <div class="switch-label"><i class="fas fa-shield-alt"></i><span>อมตะ</span></div>
+                        <input type="checkbox" class="toggle-input" onchange="toggle('godMode', this.checked)">
+                    </div>
+                </div>
+            </div>
 
-<div class="card">
-<h3>📈 แนวโน้ม</h3>
-<p id="trend"></p>
-</div>
+            <div id="vehicle" class="page">
+                <div class="section-header"><span>Vehicle Management</span></div>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="openInput('spawnVeh', 'ชื่อรุ่นรถ (Model)')">
+                        <i class="fas fa-plus-circle"></i>
+                        <div class="card-info"><div>Spawn Vehicle</div><span>เสกรถ</span></div>
+                    </div>
+                    <div class="action-card" onclick="send('repairVeh')">
+                        <i class="fas fa-tools"></i>
+                        <div class="card-info"><div>Repair</div><span>ซ่อมรถที่ขับ</span></div>
+                    </div>
+                    <div class="action-card" onclick="send('deleteVeh')">
+                        <i class="fas fa-trash"></i>
+                        <div class="card-info"><div>Delete</div><span>ลบรถที่ขับ</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-<h3>🔥 AI โหด</h3>
-<p id="ai"></p>
-</div>
+    <div id="modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="m-title">ใส่ข้อมูล</h3>
+            <input type="text" id="m-input" placeholder="พิมพ์ที่นี่...">
+            <div class="modal-btns">
+                <button class="btn-confirm" onclick="confirmInput()">ยืนยัน</button>
+                <button class="btn-cancel" onclick="closeInput()">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-<h3>⚡ Streak</h3>
-<p id="streak"></p>
-</div>
+    <script>
+        let currentType = "";
 
-<div class="card">
-<h3>📜 History</h3>
-<div class="history" id="history"></div>
-</div>
+        // สลับหน้า (Tab)
+        function tab(id, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
+        }
 
-<script>
-let results = [];
+        // ระบบส่งค่า (ใช้ Fetch เพื่อส่งไปหา Lua)
+        function send(name, data = {}) {
+            console.log("Sending Action:", name, data);
+            // ใน FiveM ใช้: fetch(`https://${GetParentResourceName()}/${name}`, { ... })
+        }
 
-function add(x){
-    results.push(x);
-    update();
-}
+        function toggle(name, status) {
+            send('toggleAction', { action: name, status: status });
+        }
 
-function update(){
-    let b = results.filter(r=>r==='B').length;
-    let p = results.filter(r=>r==='P').length;
-    let t = results.filter(r=>r==='T').length;
-    let total = results.length;
+        // ระบบ Modal Input
+        function openInput(type, title) {
+            currentType = type;
+            document.getElementById('m-title').innerText = title;
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('m-input').focus();
+        }
 
-    document.getElementById("stats").innerText =
-        `ทั้งหมด ${total} | B ${b} | P ${p} | T ${t}`;
+        function closeInput() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('m-input').value = "";
+        }
 
-    // แนวโน้ม
-    let trend = "สูสี";
-    if(b > p) trend = "Banker มาแรง 🔴";
-    if(p > b) trend = "Player มาแรง 🔵";
-    document.getElementById("trend").innerText = trend;
+        function confirmInput() {
+            let val = document.getElementById('m-input').value;
+            if (val) {
+                send('inputAction', { action: currentType, value: val });
+                closeInput();
+            }
+        }
 
-    // streak
-    let streak = 1;
-    for(let i=results.length-1;i>0;i--){
-        if(results[i] === results[i-1]) streak++;
-        else break;
-    }
-    document.getElementById("streak").innerText =
-        `${results[results.length-1] || '-'} ติด ${streak}`;
-
-    // AI โหด
-    let ai = "⏳ รอจังหวะ";
-
-    let last2 = results.slice(-2);
-    let last3 = results.slice(-3);
-
-    if(last3.length===3 && last3.every(x=>x==='B')){
-        ai = "🔥 แทงตาม Banker (ติด 3)";
-    }
-    else if(last3.length===3 && last3.every(x=>x==='P')){
-        ai = "🔥 แทงตาม Player (ติด 3)";
-    }
-    else if(last2.length===2 && last2[0]===last2[1]){
-        ai = "⚡ แทงตาม " + (last2[0]==='B'?'Banker':'Player');
-    }
-
-    document.getElementById("ai").innerText = ai;
-
-    // history render
-    let html = "";
-    results.forEach(r=>{
-        html += `<span class="${r}">${r}</span>`;
-    });
-    document.getElementById("history").innerHTML = html;
-}
-</script>
-
+        // กด ESC เพื่อปิด (จำลองการปิดเมนู)
+        window.addEventListener('keyup', (e) => {
+            if (e.key === "Escape") {
+                if (document.getElementById('modal').style.display === 'flex') {
+                    closeInput();
+                } else {
+                    alert("ปิดเมนู (ส่งคำสั่ง Close ไปหา Lua)");
+                }
+            }
+        });
+    </script>
 </body>
 </html>
