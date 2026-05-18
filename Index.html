@@ -3,246 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZXX MASTER ADMIN - 50+ Functions</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>ANDA PANEL FF</title>
+    <!-- นำเข้าฟอนต์ Kanit เพื่อความสวยงาม -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500&display=swap');
-
-        :root {
-            --primary: #00e5ff;
-            --secondary: #00ffa2;
-            --danger: #ff4d4d;
-            --bg-dark: rgba(12, 12, 14, 0.98);
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        * { box-sizing: border-box; font-family: 'Kanit', sans-serif; transition: 0.2s ease-in-out; }
-
+        /* ==========================================================================
+           CSS Style (ปรับปรุงจากที่ให้มาเพื่อความสมบูรณ์และรองรับ Responsive)
+           ========================================================================== */
+        
+        /* ตั้งค่าพื้นหลังภาพหมาสีดำ (เปลี่ยนลิงก์รูปให้เห็นภาพชัดเจนขึ้น) */
         body {
-            background: #0a0a0a;
-            height: 100vh; margin: 0;
-            display: flex; align-items: center; justify-content: center;
-            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Kanit', sans-serif;
+            background: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?q=80&w=1470') no-repeat center center fixed;
+            background-size: cover;
         }
 
-        .admin-panel {
-            width: 1100px; height: 750px;
-            background: var(--bg-dark);
-            backdrop-filter: blur(40px);
-            border-radius: 30px;
-            border: 1px solid var(--border);
-            display: flex; flex-direction: column;
+        /* เลเยอร์สีดำโปร่งแสงทับพื้นหลังเพื่อให้เห็นเมนูชัดขึ้น */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        /* ตัว Panel กลางจอ */
+        .panel {
             position: relative;
-            box-shadow: 0 0 80px rgba(0,0,0,0.9);
-            overflow: hidden;
+            z-index: 2;
+            background: rgba(20, 20, 20, 0.95);
+            width: 350px;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #ff0000;
+            box-shadow: 0 0 25px rgba(250, 0, 0, 0.6);
+            text-align: center;
+            color: white;
+            box-sizing: border-box;
         }
 
-        /* ขอบเรืองแสงบน */
-        .admin-panel::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+        h2 { 
+            color: #ff0000; 
+            margin-top: 0;
+            margin-bottom: 20px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
         }
 
-        /* Top Header */
-        .header {
-            padding: 25px 35px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border);
+        /* ส่วน Login */
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background: #222;
+            color: #fff;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        .login-box input:focus {
+            border-color: #ff0000;
         }
 
-        .brand h1 { margin: 0; font-size: 24px; color: var(--primary); letter-spacing: 2px; font-weight: 500; }
-        .brand span { font-size: 11px; color: var(--secondary); opacity: 0.8; }
-
-        .search-box {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 8px 15px;
-            display: flex; align-items: center;
-            width: 300px;
+        .btn-login {
+            background: #ff0000;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            width: 100%;
+            font-family: 'Kanit', sans-serif;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        
+        .btn-login:hover {
+            background: #cc0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
 
-        .search-box input {
-            background: transparent; border: none; color: #fff; outline: none; margin-left: 10px; width: 100%;
+        /* ส่วนเมนู (ซ่อนไว้ก่อน Login) */
+        #menu-section { 
+            display: none; 
         }
 
-        /* Navbar แนวนอน */
-        .navbar {
-            display: flex; gap: 5px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 15px; border: 1px solid var(--border);
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
         }
 
-        .nav-item {
-            padding: 10px 18px; border-radius: 10px; cursor: pointer; color: #888; display: flex; align-items: center; gap: 8px; font-size: 14px;
+        /* สวิตช์ เปิด-ปิด Custom Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
         }
 
-        .nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
-        .nav-item.active { background: rgba(0, 229, 255, 0.15); color: var(--primary); border: 1px solid rgba(0, 229, 255, 0.2); }
-
-        /* Content Area */
-        .main-container { flex: 1; overflow-y: auto; padding: 30px; }
-        .page { display: none; }
-        .page.active { display: block; animation: fadeInUp 0.4s ease; }
-
-        .grid-section {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 40px;
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
-        .section-title {
-            grid-column: span 4;
-            margin: 10px 0 15px;
-            font-size: 13px; color: #666;
-            text-transform: uppercase; letter-spacing: 2px;
-            display: flex; align-items: center; gap: 10px;
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 24px;
         }
 
-        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-        /* Function Cards */
-        .btn-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 18px; border-radius: 20px;
-            display: flex; align-items: center; gap: 15px;
-            cursor: pointer; position: relative;
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
         }
 
-        .btn-card:hover {
-            background: rgba(0, 229, 255, 0.05);
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        input:checked + .slider {
+            background-color: #ff0000;
         }
 
-        .btn-card i { font-size: 22px; color: var(--primary); min-width: 30px; text-align: center; }
-        .btn-card.danger i { color: var(--danger); }
-        .btn-card.danger:hover { border-color: var(--danger); background: rgba(255, 77, 77, 0.05); }
-
-        .info h4 { margin: 0; font-size: 14px; color: #fff; font-weight: 400; }
-        .info p { margin: 2px 0 0; font-size: 10px; color: #777; }
-
-        /* Switches */
-        .switch-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 30px;
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
-
-        .switch-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            padding: 15px; border-radius: 18px;
-            display: flex; align-items: center; justify-content: space-between;
+        
+        /* ข้อความแจ้งเตือนข้อผิดพลาด */
+        .error-msg {
+            color: #ff3333;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
         }
-
-        .toggle {
-            appearance: none; width: 38px; height: 20px; background: #333; border-radius: 20px; position: relative; cursor: pointer;
-        }
-
-        .toggle:checked { background: var(--secondary); box-shadow: 0 0 15px rgba(0, 255, 162, 0.4); }
-        .toggle::before { content: ''; position: absolute; width: 14px; height: 14px; background: #fff; border-radius: 50%; top: 3px; left: 4px; transition: 0.3s; }
-        .toggle:checked::before { transform: translateX(16px); }
-
-        /* Animations */
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="admin-panel">
-        <div class="header">
-            <div class="brand">
-                <h1>ZXX MASTER</h1>
-                <span>FIVE-M ADMINISTRATION SYSTEM</span>
-            </div>
-            
-            <div class="navbar">
-                <div class="nav-item active" onclick="tab('main', this)"><i class="fas fa-home"></i> HOME</div>
-                <div class="nav-item" onclick="tab('player', this)"><i class="fas fa-user-shield"></i> PLAYERS</div>
-                <div class="nav-item" onclick="tab('vehicle', this)"><i class="fas fa-car"></i> VEHICLES</div>
-                <div class="nav-item" onclick="tab('world', this)"><i class="fas fa-globe-asia"></i> WORLD</div>
-                <div class="nav-item" onclick="tab('server', this)"><i class="fas fa-database"></i> SERVER</div>
-            </div>
+    <!-- เลเยอร์พื้นหลังโปร่งแสง -->
+    <div class="overlay"></div>
 
-            <div class="search-box">
-                <i class="fas fa-search" style="color:#555"></i>
-                <input type="text" placeholder="ค้นหาฟังก์ชันที่ต้องการ...">
-            </div>
+    <!-- ตัวโครง Panel -->
+    <div class="panel">
+        <h2>ANDA PANEL FF</h2>
+        
+        <!-- โซนที่ 1: หน้าต่างล็อกอิน -->
+        <div id="login-section" class="login-box">
+            <input type="text" id="username" placeholder="ชื่อผู้ใช้งาน (Username)" autocomplete="off">
+            <input type="password" id="password" placeholder="รหัสผ่าน (Password)">
+            <button class="btn-login" onclick="checkLogin()">เข้าสู่ระบบ</button>
+            <div id="error-message" class="error-msg">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!</div>
         </div>
 
-        <div class="main-container">
-            <div id="main" class="page active">
-                
-                <div class="section-title">Essential Switches (เปิด/ปิด)</div>
-                <div class="switch-grid">
-                    <div class="switch-card"><div class="info"><h4>God Mode</h4><p>อมตะไม่ตาย</p></div><input type="checkbox" class="toggle"></div>
-                    <div class="switch-card"><div class="info"><h4>Invisible</h4><p>ล่องหน</p></div><input type="checkbox" class="toggle"></div>
-                    <div class="switch-card"><div class="info"><h4>No Clip</h4><p>ทะลุกำแพง</p></div><input type="checkbox" class="toggle"></div>
-                    <div class="switch-card"><div class="info"><h4>Infinite Stamina</h4><p>วิ่งไม่เหนื่อย</p></div><input type="checkbox" class="toggle"></div>
-                    <div class="switch-card"><div class="info"><h4>Super Jump</h4><p>กระโดดสูง</p></div><input type="checkbox" class="toggle"></div>
-                    <div class="switch-card"><div class="info"><h4>Fast Swim</h4><p>ว่ายน้ำไว</p></div><input type="checkbox" class="toggle"></div>
-                    <div class="switch-card"><div class="info"><h4>Thermal Vision</h4><p>มองความร้อน</p></div><input type="checkbox" class="toggle"></div>
-                    <div class="switch-card"><div class="info"><h4>Show Blips</h4><p>ดูตำแหน่งคน</p></div><input type="checkbox" class="toggle"></div>
-                </div>
-
-                <div class="section-title">Admin Actions (ฟังก์ชันหลัก)</div>
-                <div class="grid-section">
-                    <div class="btn-card" onclick="alert('Revive Self')"><i class="fas fa-heartbeat"></i><div class="info"><h4>Revive Self</h4><p>ชุบชีวิตตัวเอง</p></div></div>
-                    <div class="btn-card" onclick="alert('Heal Self')"><i class="fas fa-medkit"></i><div class="info"><h4>Heal Self</h4><p>ฮีลเลือด/เกราะ</p></div></div>
-                    <div class="btn-card" onclick="alert('Give Armor')"><i class="fas fa-shield-alt"></i><div class="info"><h4>Give Armor</h4><p>ใส่เกราะเต็ม</p></div></div>
-                    <div class="btn-card" onclick="alert('Clean Ped')"><i class="fas fa-soap"></i><div class="info"><h4>Clean Ped</h4><p>ล้างตัวละคร</p></div></div>
-                    <div class="btn-card" onclick="alert('Suicide')"><i class="fas fa-skull"></i><div class="info"><h4>Suicide</h4><p>ฆ่าตัวตาย</p></div></div>
-                    <div class="btn-card" onclick="alert('Clear Tasks')"><i class="fas fa-broom"></i><div class="info"><h4>Clear Tasks</h4><p>ล้างแอนิเมชัน</p></div></div>
-                    <div class="btn-card" onclick="alert('Teleport Marker')"><i class="fas fa-map-marker-alt"></i><div class="info"><h4>TP to Marker</h4><p>วาร์ปไปจุดที่มาร์ค</p></div></div>
-                    <div class="btn-card" onclick="alert('Tpm Coords')"><i class="fas fa-crosshairs"></i><div class="info"><h4>TP Coords</h4><p>วาร์ปตามพิกัด</p></div></div>
-                </div>
-
-                <div class="section-title">Server Wide (ฟังก์ชันเซิร์ฟเวอร์)</div>
-                <div class="grid-section">
-                    <div class="btn-card"><i class="fas fa-bullhorn"></i><div class="info"><h4>Announce</h4><p>ประกาศทั้งเซิร์ฟ</p></div></div>
-                    <div class="btn-card"><i class="fas fa-cloud-sun"></i><div class="info"><h4>Weather</h4><p>เปลี่ยนสภาพอากาศ</p></div></div>
-                    <div class="btn-card"><i class="fas fa-clock"></i><div class="info"><h4>Set Time</h4><p>เปลี่ยนเวลา</p></div></div>
-                    <div class="btn-card danger"><i class="fas fa-sync"></i><div class="info"><h4>Restart Scripts</h4><p>รีระบบทั้งหมด</p></div></div>
-                </div>
-
+        <!-- โซนที่ 2: หน้าต่างเมนู (จะแสดงหลังจาก Login สำเร็จ) -->
+        <div id="menu-section">
+            
+            <div class="menu-item">
+                <span>ล็อกเป้า (Aimbot 100%)</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleFeature('Aimbot', this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="menu-item">
+                <span>ลดแรงดีด (No Recoil)</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleFeature('No Recoil', this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="menu-item">
+                <span>มองทะลุ (ESP Wallhack)</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleFeature('ESP', this.checked)">
+                    <span class="slider"></span>
+                </label>
             </div>
 
-            <div id="vehicle" class="page">
-                <div class="section-title">Vehicle Functions</div>
-                <div class="grid-section">
-                    <div class="btn-card"><i class="fas fa-plus"></i><div class="info"><h4>Spawn Car</h4><p>เสกรถตามชื่อ</p></div></div>
-                    <div class="btn-card"><i class="fas fa-wrench"></i><div class="info"><h4>Fix Vehicle</h4><p>ซ่อมรถทันที</p></div></div>
-                    <div class="btn-card"><i class="fas fa-tint"></i><div class="info"><h4>Clean Vehicle</h4><p>ล้างรถ</p></div></div>
-                    <div class="btn-card"><i class="fas fa-trash"></i><div class="info"><h4>Delete Vehicle</h4><p>ลบรถที่ขับอยู่</p></div></div>
-                    <div class="btn-card"><i class="fas fa-gas-pump"></i><div class="info"><h4>Max Fuel</h4><p>เติมน้ำมันเต็ม</p></div></div>
-                    <div class="btn-card"><i class="fas fa-palette"></i><div class="info"><h4>Mod Menu</h4><p>แต่งรถเต็ม</p></div></div>
-                    <div class="btn-card"><i class="fas fa-unlock"></i><div class="info"><h4>Unlock Door</h4><p>ปลดล็อครถ</p></div></div>
-                    <div class="btn-card"><i class="fas fa-key"></i><div class="info"><h4>Give Keys</h4><p>รับกุญแจรถ</p></div></div>
-                </div>
+            <div class="menu-item">
+                <span>ความเร็วสูง (Speed Hack)</span>
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleFeature('Speed Hack', this.checked)">
+                    <span class="slider"></span>
+                </label>
             </div>
-
-            </div>
+            
+        </div>
     </div>
 
+    <!-- ==========================================================================
+       JavaScript ระบบควบคุมการทำงาน
+       ========================================================================== */ -->
     <script>
-        function tab(id, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
+        // ฟังก์ชันเช็คการล็อกอิน (ตั้งค่า Mockup ไว้เป็น admin / 1234)
+        function checkLogin() {
+            var user = document.getElementById("username").value;
+            var pass = document.getElementById("password").value;
+            var errorMsg = document.getElementById("error-message");
+
+            // ตั้งค่า ID และ Password สำหรับทดสอบตรงนี้ได้เลยครับ
+            if (user === "admin" && pass === "1234") {
+                // ซ่อนหน้า Login และแสดงหน้าเมนูแทน
+                document.getElementById("login-section").style.display = "none";
+                document.getElementById("menu-section").style.display = "block";
+            } else {
+                // แสดงข้อความเตือนเมื่อรหัสผิด
+                errorMsg.style.display = "block";
+                errorMsg.innerText = "รหัสผ่านไม่ถูกต้อง! (ลองใช้ admin / 1234)";
+            }
         }
 
-        // ระบบค้นหาเบื้องต้น
-        document.querySelector('.search-box input').addEventListener('keyup', function() {
-            let filter = this.value.toUpperCase();
-            let cards = document.querySelectorAll('.btn-card, .switch-card');
-            cards.forEach(card => {
-                let text = card.innerText.toUpperCase();
-                card.style.display = text.includes(filter) ? "" : "none";
-            });
-        });
+        // ฟังก์ชันตรวจจับการเปิด-ปิดสวิตช์ในเมนู
+        function toggleFeature(featureName, isChecked) {
+            if (isChecked) {
+                console.log(featureName + " Status: เปิดใช้งาน (ON)");
+                // สามารถเขียนคำสั่งเชื่อมต่อไปยัง API หรือ Injector ของเกมต่อตรงนี้ได้
+            } else {
+                console.log(featureName + " Status: ปิดใช้งาน (OFF)");
+            }
+        }
     </script>
+
 </body>
 </html>
