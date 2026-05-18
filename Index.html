@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANDA PANEL FF</title>
+    <title>STACKX PANEL</title>
     <!-- นำเข้าฟอนต์ Kanit เพื่อความสวยงาม -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,10 +11,9 @@
     
     <style>
         /* ==========================================================================
-           CSS Style (ปรับปรุงจากที่ให้มาเพื่อความสมบูรณ์และรองรับ Responsive)
+           CSS Style - STACKX โทนม่วง-ดำ (Purple & Black Theme)
            ========================================================================== */
         
-        /* ตั้งค่าพื้นหลังภาพหมาสีดำ (เปลี่ยนลิงก์รูปให้เห็นภาพชัดเจนขึ้น) */
         body {
             margin: 0;
             padding: 0;
@@ -23,18 +22,19 @@
             align-items: center;
             height: 100vh;
             font-family: 'Kanit', sans-serif;
-            background: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?q=80&w=1470') no-repeat center center fixed;
+            /* พื้นหลังธีมมืด */
+            background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1470') no-repeat center center fixed;
             background-size: cover;
         }
 
-        /* เลเยอร์สีดำโปร่งแสงทับพื้นหลังเพื่อให้เห็นเมนูชัดขึ้น */
+        /* เลเยอร์สีดำโปร่งแสงทับพื้นหลังเพิ่มความชัดให้เมนู */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(10, 10, 12, 0.75);
             z-index: 1;
         }
 
@@ -42,49 +42,55 @@
         .panel {
             position: relative;
             z-index: 2;
-            background: rgba(20, 20, 20, 0.95);
+            background: rgba(15, 12, 22, 0.95); /* ดำอมม่วงเข้ม */
             width: 350px;
             padding: 30px;
             border-radius: 15px;
-            border: 2px solid #ff0000;
-            box-shadow: 0 0 25px rgba(250, 0, 0, 0.6);
+            border: 2px solid #8a2be2; /* เส้นขอบสีม่วง (Neon Purple) */
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.5); /* แสงออร่าสีม่วง */
             text-align: center;
-            color: white;
+            color: #ffffff;
             box-sizing: border-box;
         }
 
         h2 { 
-            color: #ff0000; 
+            color: #a020f0; /* สีม่วงหลัก */
             margin-top: 0;
-            margin-bottom: 20px; 
+            margin-bottom: 25px; 
             text-transform: uppercase; 
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(160, 32, 240, 0.6);
         }
 
-        /* ส่วน Login */
+        /* ส่วน Login (ระบบใช้คีย์) */
         .login-box input {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #444;
-            background: #222;
+            border-radius: 6px;
+            border: 1px solid #3a2a4a;
+            background: #161122; /* ดำหม่นม่วง */
             color: #fff;
             outline: none;
             box-sizing: border-box;
             font-family: 'Kanit', sans-serif;
+            text-align: center; /* ให้พิมพ์คีย์ตรงกลาง */
+            letter-spacing: 1px;
+            transition: 0.3s;
         }
         
         .login-box input:focus {
-            border-color: #ff0000;
+            border-color: #a020f0;
+            box-shadow: 0 0 8px rgba(160, 32, 240, 0.4);
         }
 
         .btn-login {
-            background: #ff0000;
+            background: #8a2be2; /* ปุ่มสีม่วง */
             color: white;
             border: none;
             padding: 12px 30px;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             margin-top: 15px;
@@ -92,11 +98,12 @@
             font-family: 'Kanit', sans-serif;
             text-transform: uppercase;
             transition: 0.3s;
+            letter-spacing: 1px;
         }
         
         .btn-login:hover {
-            background: #cc0000;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            background: #9932cc;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
         }
 
         /* ส่วนเมนู (ซ่อนไว้ก่อน Login) */
@@ -109,18 +116,19 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 5px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #2a1f3d;
+            font-size: 15px;
         }
         
         .menu-item:last-child {
             border-bottom: none;
         }
 
-        /* สวิตช์ เปิด-ปิด Custom Toggle Switch */
+        /* สวิตช์ เปิด-ปิด Custom Toggle Switch (สีม่วง) */
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
+            width: 48px;
             height: 24px;
         }
 
@@ -137,9 +145,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #333;
-            transition: .4s;
+            background-color: #251c33;
+            transition: .3s;
             border-radius: 24px;
+            border: 1px solid #4a3568;
         }
 
         .slider:before {
@@ -147,25 +156,27 @@
             content: "";
             height: 16px;
             width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
+            left: 3px;
+            bottom: 3px;
+            background-color: #9b8bb4;
+            transition: .3s;
             border-radius: 50%;
         }
 
         input:checked + .slider {
-            background-color: #ff0000;
+            background-color: #8a2be2; /* เปลี่ยนเป็นสีม่วงเมื่อเปิด */
+            border-color: #a020f0;
         }
 
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(24px);
+            background-color: #ffffff;
         }
         
-        /* ข้อความแจ้งเตือนข้อผิดพลาด */
+        /* ข้อความแจ้งเตือนเมื่อคีย์ผิด */
         .error-msg {
-            color: #ff3333;
-            font-size: 14px;
+            color: #ff4444;
+            font-size: 13px;
             margin-top: 10px;
             display: none;
         }
@@ -176,23 +187,22 @@
     <!-- เลเยอร์พื้นหลังโปร่งแสง -->
     <div class="overlay"></div>
 
-    <!-- ตัวโครง Panel -->
+    <!-- ตัวโครง STACKX Panel -->
     <div class="panel">
-        <h2>ANDA PANEL FF</h2>
+        <h2>STACKX</h2>
         
-        <!-- โซนที่ 1: หน้าต่างล็อกอิน -->
+        <!-- โซนที่ 1: หน้าต่างล็อกอินแบบใช้คีย์ -->
         <div id="login-section" class="login-box">
-            <input type="text" id="username" placeholder="ชื่อผู้ใช้งาน (Username)" autocomplete="off">
-            <input type="password" id="password" placeholder="รหัสผ่าน (Password)">
-            <button class="btn-login" onclick="checkLogin()">เข้าสู่ระบบ</button>
-            <div id="error-message" class="error-msg">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!</div>
+            <input type="text" id="access-key" placeholder="กรอกคีย์ของคุณ (ENTER KEY)" autocomplete="off">
+            <button class="btn-login" onclick="checkKey()">ยืนยันคีย์</button>
+            <div id="error-message" class="error-msg">คีย์ไม่ถูกต้อง หรือหมดอายุ!</div>
         </div>
 
-        <!-- โซนที่ 2: หน้าต่างเมนู (จะแสดงหลังจาก Login สำเร็จ) -->
+        <!-- โซนที่ 2: หน้าต่างเมนูฟังก์ชัน (จะแสดงเมื่อคีย์ถูกต้อง) -->
         <div id="menu-section">
             
             <div class="menu-item">
-                <span>ล็อกเป้า (Aimbot 100%)</span>
+                <span>ล็อกเป้าอัตโนมัติ (Aimbot)</span>
                 <label class="switch">
                     <input type="checkbox" onchange="toggleFeature('Aimbot', this.checked)">
                     <span class="slider"></span>
@@ -200,7 +210,7 @@
             </div>
             
             <div class="menu-item">
-                <span>ลดแรงดีด (No Recoil)</span>
+                <span>ลดแรงดีดปืน (No Recoil)</span>
                 <label class="switch">
                     <input type="checkbox" onchange="toggleFeature('No Recoil', this.checked)">
                     <span class="slider"></span>
@@ -208,17 +218,17 @@
             </div>
             
             <div class="menu-item">
-                <span>มองทะลุ (ESP Wallhack)</span>
+                <span>แสดงสายตาตัวละคร (ESP Line)</span>
                 <label class="switch">
-                    <input type="checkbox" onchange="toggleFeature('ESP', this.checked)">
+                    <input type="checkbox" onchange="toggleFeature('ESP Line', this.checked)">
                     <span class="slider"></span>
                 </label>
             </div>
 
             <div class="menu-item">
-                <span>ความเร็วสูง (Speed Hack)</span>
+                <span>เพิ่มความเร็ว (Speed Move)</span>
                 <label class="switch">
-                    <input type="checkbox" onchange="toggleFeature('Speed Hack', this.checked)">
+                    <input type="checkbox" onchange="toggleFeature('Speed Move', this.checked)">
                     <span class="slider"></span>
                 </label>
             </div>
@@ -227,34 +237,32 @@
     </div>
 
     <!-- ==========================================================================
-       JavaScript ระบบควบคุมการทำงาน
+       JavaScript ระบบควบคุมหน้าต่างและคีย์
        ========================================================================== */ -->
     <script>
-        // ฟังก์ชันเช็คการล็อกอิน (ตั้งค่า Mockup ไว้เป็น admin / 1234)
-        function checkLogin() {
-            var user = document.getElementById("username").value;
-            var pass = document.getElementById("password").value;
+        // ฟังก์ชันตรวจสอบคีย์ (ตั้งค่าคีย์สำหรับทดสอบไว้คือ STACKX-FREE)
+        function checkKey() {
+            var inputKey = document.getElementById("access-key").value.trim();
             var errorMsg = document.getElementById("error-message");
 
-            // ตั้งค่า ID และ Password สำหรับทดสอบตรงนี้ได้เลยครับ
-            if (user === "admin" && pass === "1234") {
-                // ซ่อนหน้า Login และแสดงหน้าเมนูแทน
+            // สามารถเปลี่ยนคีย์ที่ต้องการให้ผ่านตรงเงื่อนไขนี้ได้เลยครับ
+            if (inputKey === "STACKX-FREE" || inputKey === "admin") {
+                // ซ่อนหน้ากรอกคีย์ แล้วเปิดหน้าเมนูฟังก์ชัน
                 document.getElementById("login-section").style.display = "none";
                 document.getElementById("menu-section").style.display = "block";
             } else {
-                // แสดงข้อความเตือนเมื่อรหัสผิด
+                // แสดงข้อความเตือนเมื่อคีย์ไม่ตรง
                 errorMsg.style.display = "block";
-                errorMsg.innerText = "รหัสผ่านไม่ถูกต้อง! (ลองใช้ admin / 1234)";
+                errorMsg.innerText = "คีย์ไม่ถูกต้อง! (ลองใช้: STACKX-FREE)";
             }
         }
 
-        // ฟังก์ชันตรวจจับการเปิด-ปิดสวิตช์ในเมนู
+        // ฟังก์ชันเก็บสถานะการเปิด-ปิดเมนู
         function toggleFeature(featureName, isChecked) {
             if (isChecked) {
-                console.log(featureName + " Status: เปิดใช้งาน (ON)");
-                // สามารถเขียนคำสั่งเชื่อมต่อไปยัง API หรือ Injector ของเกมต่อตรงนี้ได้
+                console.log("STACKX -> " + featureName + ": [ON]");
             } else {
-                console.log(featureName + " Status: ปิดใช้งาน (OFF)");
+                console.log("STACKX -> " + featureName + ": [OFF]");
             }
         }
     </script>
