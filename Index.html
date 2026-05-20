@@ -3,491 +3,518 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STACKX | NEXT-GEN SYSTEM CORE</title>
+    <title>STACKX HUB | ULTIMATE INTERACTIVE DASHBOARD</title>
     
-    <!-- Google Fonts & Tailwind CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --purple-neon: #be4dff;
+            --purple-glow: rgba(190, 77, 255, 0.4);
+            --pink-neon: #ff6ec7;
+            --pink-glow: rgba(255, 110, 199, 0.4);
+            --cyan-neon: #00f3ff;
+            --cyan-glow: rgba(0, 243, 255, 0.4);
+            --bg-dark: #07050d;
+            --bg-card: rgba(20, 15, 34, 0.75);
+            --glass-border: rgba(190, 77, 255, 0.2);
+            --round-super: 40px;
+            --round-large: 28px;
+            --round-medium: 18px;
+        }
+
         * {
             margin: 0; padding: 0; box-sizing: border-box;
             font-family: 'Fredoka', 'Kanit', sans-serif; user-select: none;
         }
 
         body {
-            background-color: #040108;
-            overflow: hidden;
+            background-color: var(--bg-dark); color: #fff;
+            min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 80% 20%, rgba(255, 110, 199, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(190, 77, 255, 0.18) 0%, transparent 50%);
+            background-attachment: fixed;
         }
 
-        /* Premium Glassmorphism */
-        .glass-panel {
-            background: rgba(12, 6, 26, 0.5);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(190, 77, 255, 0.15);
+        /* --- 🌌 BACKGROUND SPARKS --- */
+        .sparkles { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .sparkle { position: absolute; background: #fff; border-radius: 50%; animation: floatUp infinite linear; opacity: 0.25; }
+
+        /* --- 🔔 TOAST NOTIFICATION --- */
+        #toastContainer {
+            position: fixed; top: 30px; right: 30px; z-index: 9999;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .toast {
+            background: rgba(25, 18, 45, 0.9); border: 1px solid var(--cyan-neon);
+            box-shadow: 0 10px 25px var(--cyan-glow); backdrop-filter: blur(15px);
+            padding: 16px 28px; border-radius: var(--round-medium); color: #fff;
+            font-weight: 600; min-width: 280px; transform: translateX(120%);
+            animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
+            transition: all 0.4s ease;
         }
 
-        /* Neon Glow System */
-        .glow-purple { box-shadow: 0 0 40px rgba(190, 77, 255, 0.2); }
-        .glow-cyan { box-shadow: 0 0 40px rgba(0, 243, 255, 0.15); }
-        .glow-text-purple { text-shadow: 0 0 15px rgba(190, 77, 255, 0.6); }
-        .glow-text-cyan { text-shadow: 0 0 15px rgba(0, 243, 255, 0.6); }
-
-        /* Dynamic View Switching Anim */
-        .app-view { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .app-view.active-view { display: block; opacity: 1; transform: translateY(0); }
-
-        /* Advanced Border Glow Animation */
-        .animate-glow-border {
-            position: relative;
-            background: linear-gradient(135deg, rgba(18, 9, 38, 0.8), rgba(6, 3, 13, 0.9));
-            transition: all 0.3s;
+        /* --- 🧭 NAVIGATION BAR --- */
+        nav {
+            margin: 25px auto; width: 90%; max-width: 1200px;
+            background: rgba(20, 15, 34, 0.6); backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); padding: 14px 35px; border-radius: var(--round-large);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 25px; z-index: 100; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
-        .animate-glow-border::before {
-            content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px;
-            background: linear-gradient(90deg, #be4dff, #00f3ff, #ff6ec7, #be4dff);
-            background-size: 300% 100%; animation: borderGlowMove 4s linear infinite;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
-        }
-        @keyframes borderGlowMove { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+        .logo { font-size: 1.8rem; font-weight: 700; text-shadow: 0 0 12px var(--purple-glow); cursor: pointer; }
+        .logo span { color: var(--pink-neon); }
 
-        /* Custom Mini Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(190, 77, 255, 0.2); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(190, 77, 255, 0.4); }
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .nav-links { display: flex; gap: 10px; list-style: none; }
+        .nav-links button {
+            background: transparent; border: none; color: rgba(255, 255, 255, 0.7);
+            padding: 10px 22px; font-size: 1rem; font-weight: 600; border-radius: var(--round-medium);
+            cursor: pointer; transition: 0.3s;
+        }
+        .nav-links button.active {
+            background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); color: #fff;
+            box-shadow: 0 6px 20px var(--purple-glow);
+        }
+
+        /* --- 📦 MAIN CONTAINER --- */
+        .container { width: 90%; max-width: 1200px; margin: 20px auto 60px auto; flex: 1; z-index: 10; }
+
+        /* --- 🔍 SEARCH BAR & HEADER --- */
+        .store-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 35px; flex-wrap: wrap; gap: 20px;
+        }
+        .search-box { position: relative; width: 100%; max-width: 350px; }
+        .search-box input {
+            width: 100%; background: var(--bg-card); border: 1px solid var(--glass-border);
+            padding: 14px 25px; padding-right: 50px; border-radius: 50px; color: #fff;
+            font-size: 0.95rem; outline: none; transition: 0.3s;
+        }
+        .search-box input:focus { border-color: var(--purple-neon); box-shadow: 0 0 15px var(--purple-glow); }
+
+        /* --- 🗂️ LAYOUT --- */
+        .store-layout { display: grid; grid-template-columns: 260px 1fr; gap: 30px; }
+        .store-sidebar { display: flex; flex-direction: column; gap: 12px; }
+        .category-btn {
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            color: rgba(255,255,255,0.7); padding: 15px 20px; text-align: left;
+            font-size: 1rem; font-weight: 600; border-radius: var(--round-medium);
+            cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center;
+        }
+        .category-btn.active-cat {
+            background: linear-gradient(90deg, rgba(190, 77, 255, 0.25), rgba(255, 110, 199, 0.15));
+            border-color: var(--purple-neon); color: #fff; font-weight: 700; box-shadow: 0 4px 15px rgba(190, 77, 255, 0.1);
+        }
+
+        /* --- 💳 ITEM CARD DESIGN --- */
+        .store-shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .item-card {
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            border-radius: var(--round-large); padding: 25px; text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .item-card:hover { transform: translateY(-8px); border-color: var(--cyan-neon); box-shadow: 0 15px 35px rgba(0, 243, 255, 0.15); }
+        
+        .item-badge {
+            position: absolute; top: 15px; right: 15px; background: rgba(0, 243, 255, 0.15);
+            padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; color: var(--cyan-neon);
+            font-weight: 700; border: 1px solid var(--cyan-neon);
+        }
+
+        .item-icon {
+            width: 85px; height: 85px; background: rgba(190, 77, 255, 0.1);
+            border-radius: var(--round-medium); margin: 10px auto 18px auto;
+            display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
+            transition: 0.3s;
+        }
+        .item-card:hover .item-icon { transform: scale(1.1) rotate(5deg); background: rgba(0, 243, 255, 0.1); }
+
+        .item-card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; color: #fff; }
+        .item-card p { color: rgba(255,255,255,0.5); font-size: 0.85rem; min-height: 45px; line-height: 1.4; margin-bottom: 10px; }
+        
+        .status-indicator {
+            display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem;
+            color: #00ffa3; background: rgba(0, 255, 163, 0.1); padding: 6px 14px;
+            border-radius: 50px; margin: 15px 0; font-weight: 600;
+        }
+        .status-indicator::before {
+            content: ''; display: block; width: 8px; height: 8px; background: #00ffa3;
+            border-radius: 50%; box-shadow: 0 0 8px #00ffa3;
+        }
+
+        .action-button {
+            background: rgba(255, 255, 255, 0.04); color: #fff;
+            border: 1px solid var(--glass-border); width: 100%;
+            padding: 14px; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.3s;
+            font-size: 0.95rem; letter-spacing: 0.5px;
+        }
+        .item-card:hover .action-button {
+            background: linear-gradient(135deg, var(--cyan-neon), var(--purple-neon));
+            border-color: transparent; box-shadow: 0 5px 20px var(--cyan-glow);
+        }
+
+        /* --- 🎛️ SYSTEM DASHBOARD SLIDE OVERLAY --- */
+        .dashboard-modal {
+            position: fixed; top: 0; right: -500px; width: 460px; height: 100%;
+            background: rgba(12, 8, 22, 0.96); backdrop-filter: blur(30px);
+            border-left: 1px solid var(--glass-border); z-index: 9999;
+            box-shadow: -15px 0 45px rgba(0,0,0,0.7); padding: 40px 30px;
+            display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top-left-radius: var(--round-super); border-bottom-left-radius: var(--round-super);
+        }
+        .dashboard-modal.open { right: 0; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .close-dash { background: transparent; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; transition: 0.3s; }
+        .close-dash:hover { color: var(--pink-neon); transform: scale(1.1); }
+
+        .dash-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding-right: 5px; }
+        .dash-content::-webkit-scrollbar { width: 6px; }
+        .dash-content::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+
+        /* --- 📊 INTERACTIVE DASHBOARD COMPONENTS --- */
+        .dash-widget {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px; border-radius: var(--round-medium);
+        }
+        .widget-title { font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;}
+        
+        /* Live Terminal Box */
+        .terminal-box {
+            background: #020105; border: 1px solid rgba(190, 77, 255, 0.3);
+            border-radius: 12px; padding: 15px; font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem; color: #00ffaa; min-height: 120px; max-height: 180px; overflow-y: auto;
+        }
+
+        /* Status Toggles */
+        .control-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+        .switch {
+            position: relative; display: inline-block; width: 46px; height: 24px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255,255,255,0.1); transition: .3s; border-radius: 34px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--cyan-neon); border-color: var(--cyan-neon); box-shadow: 0 0 10px var(--cyan-glow); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        /* Execute Master Button */
+        .execute-btn {
+            background: linear-gradient(135deg, var(--cyan-neon), var(--purple-neon));
+            color: #fff; border: none; width: 100%; padding: 16px; border-radius: 50px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 5px 25px var(--cyan-glow); margin-top: 10px;
+        }
+        .execute-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--purple-glow); }
+
+        /* --- 🎬 ANIMATIONS KEYFRAMES --- */
+        @keyframes toastIn { 0% { transform: translateX(120%); } 100% { transform: translateX(0); } }
+        @keyframes floatUp { 0% { transform: translateY(105vh); } 100% { transform: translateY(-5vh); } }
+
+        @media (max-width: 900px) {
+            .store-layout { grid-template-columns: 1fr; }
+            .store-sidebar { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .category-btn { white-space: nowrap; }
+            .dashboard-modal { width: 100%; right: -100%; border-radius: 0; }
+        }
     </style>
 </head>
-<body class="w-screen h-screen text-white flex items-center justify-center p-4 relative antialiased">
+<body>
 
-    <!-- ================= 🔮 BACKGROUND VECTOR ANIM FLUIDS ================= -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-[#be4dff]/10 rounded-full filter blur-[120px] animate-pulse" style="animation-duration: 9s;"></div>
-        <div class="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#00f3ff]/8 rounded-full filter blur-[120px] animate-pulse" style="animation-duration: 14s;"></div>
-    </div>
+    <div id="toastContainer"></div>
+    <div class="sparkles" id="sparklesContainer"></div>
 
-
-    <!-- ================= 🚪 SCREEN 1: THE ACCES GATE (หน้ากดเข้าสู่ระบบ) ================= -->
-    <div id="gateScreen" class="z-10 w-full max-w-[420px] text-center p-8 rounded-[32px] glass-panel glow-purple transition-all duration-500 transform scale-100">
-        <!-- Brand Logo Big -->
-        <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-tr from-[#be4dff] to-[#00f3ff] flex items-center justify-center shadow-xl shadow-purple-500/20">
-            <span class="text-black font-extrabold text-2xl tracking-tighter">S</span>
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <div class="logo">💥 Stack<span>X</span></div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><button class="nav-btn active">System Console</button></li>
+            </ul>
         </div>
-        <h2 class="text-2xl font-bold tracking-widest font-mono glow-text-purple mb-1">STACK<span class="text-[#00f3ff]">X</span> ENGINE</h2>
-        <p class="text-xs text-gray-400 mb-8 tracking-wide">NEXT-GEN SYSTEM OPTIMIZATION SUITE</p>
+    </nav>
 
-        <!-- ปุ่มกดเข้าหน้าหลักที่ต้องการ (Interactive Cyberpunk Action Button) -->
-        <button onclick="enterDashboard()" class="animate-glow-border w-full py-4 rounded-2xl font-bold text-sm tracking-widest text-white hover:shadow-[0_0_30px_rgba(190,77,255,0.35)] transition-all duration-300 active:scale-[0.98] cursor-pointer block overflow-hidden">
-            <span class="bg-gradient-to-r from-white via-purple-200 to-[#00f3ff] bg-clip-text text-transparent">LAUNCH CORE DASHBOARD</span>
-        </button>
-
-        <div class="text-[10px] text-gray-500 font-mono mt-6 uppercase tracking-widest">SECXION SOFTWARE INC @2026</div>
-    </div>
-
-
-    <!-- ================= 🖥️ SCREEN 2: MAIN COMMAND DASHBOARD (ระบบจัดการเต็มรูปแบบ) ================= -->
-    <div id="mainDashboard" class="hidden opacity-0 scale-95 glass-panel glow-purple w-full max-w-[1180px] h-[740px] rounded-[32px] flex flex-col z-10 overflow-hidden transition-all duration-500">
+    <!-- CONTENT WRAPPER -->
+    <div class="container">
         
-        <!-- ╔════════════════════════════════════════════════╗
-               🔝 TOP BAR CONTROL INTERFACE 
-             ╚════════════════════════════════════════════════╝ -->
-        <div class="flex items-center justify-between px-6 py-4 border-b border-purple-500/10 bg-black/30">
-            <!-- Brand & Version Platform -->
-            <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#be4dff] to-[#00f3ff] flex items-center justify-center">
-                    <span class="text-black font-extrabold text-xs">S</span>
-                </div>
-                <h1 class="text-lg font-bold tracking-wider font-mono glow-text-purple">STACK<span class="text-[#00f3ff]">X</span></h1>
-                <div class="h-4 w-[1px] bg-white/10 mx-1"></div>
-                <span class="text-[10px] font-mono font-bold text-gray-400 bg-white/5 border border-white/5 px-2 py-0.5 rounded-md">BUILD_v2.6.5_STABLE</span>
+        <div class="store-header">
+            <div>
+                <h2 style="font-size: 2.3rem; font-weight: 700; letter-spacing: -0.5px;">StackX Module Control</h2>
+                <p style="color: rgba(255,255,255,0.5); font-size: 0.95rem; margin-top: 4px;">เลือกยูนิตระบบเพื่อรันกระบวนการ ตรวจสอบลอ็ก และปรับแต่ง Kernel</p>
             </div>
-
-            <!-- Hardware Spec Display Real-time -->
-            <div class="hidden md:flex items-center gap-6 text-[11px] font-mono text-gray-400">
-                <div class="flex items-center gap-2">
-                    <span class="text-purple-400">🎨 GPU:</span>
-                    <span class="text-gray-200 font-semibold">NVIDIA RTX 4050</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-purple-400">🧠 CPU:</span>
-                    <span class="text-gray-200 font-semibold">AMD Ryzen 7 8845HS</span>
-                </div>
-            </div>
-
-            <!-- Window Control & Profile Simulator -->
-            <div class="flex items-center gap-3">
-                <div class="glass-panel bg-purple-950/20 px-3 py-1.5 rounded-xl border border-purple-500/10 flex items-center gap-2 text-xs font-mono">
-                    <span class="w-1.5 h-1.5 bg-[#00ff88] rounded-full"></span>
-                    <span class="text-gray-400">AGENT:</span>
-                    <span class="text-[#00ff88] font-bold">PUNNAWICH</span>
-                </div>
-                <!-- ปุ่ม Logout ถอยออกหน้าแรก -->
-                <button onclick="exitDashboard()" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/5 hover:border-red-500/30 flex items-center justify-center text-xs transition-all cursor-pointer" title="Disconnect Core">
-                    🚪
-                </button>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ค้นหาโมดูลระบบ..." oninput="liveSearch()">
             </div>
         </div>
 
-        <!-- ╔════════════════════════════════════════════════╗
-               🎛️ MAIN SPLIT VIEW (SIDEBAR + WORKSPACE)
-             ╚════════════════════════════════════════════════╝ -->
-        <div class="flex-1 flex overflow-hidden">
-            
-            <!-- 👈 SIDEBAR NAVIGATION BAR -->
-            <div class="w-1/4 max-w-[240px] border-r border-purple-500/10 p-4 flex flex-col justify-between bg-black/15">
-                <div class="flex flex-col gap-1.5">
-                    <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-2 mb-2">SYSTEM CONSOLE</span>
-                    
-                    <button id="tab-overview" onclick="switchTab('overview')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 bg-gradient-to-r from-[#be4dff]/20 to-[#ff6ec7]/10 text-white border border-[#be4dff]/30 shadow-lg shadow-purple-500/5 cursor-pointer">
-                        <span class="text-base text-[#be4dff]">📊</span> ภาพรวมระบบ (Overview)
-                    </button>
-                    
-                    <button id="tab-tweaks" onclick="switchTab('tweaks')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer">
-                        <span class="text-base">⚡</span> การปรับแต่งด่วน (Tweaks)
-                    </button>
-                    
-                    <button id="tab-logs" onclick="switchTab('logs')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer">
-                        <span class="text-base">📜</span> บันทึกเคอร์เนล (Kernel Logs)
-                    </button>
-                </div>
-
-                <!-- Footer Sidebar Signature -->
-                <div class="glass-panel p-3 rounded-2xl text-center bg-gradient-to-b from-purple-950/20 to-black/30 border border-purple-500/10">
-                    <span class="text-[9px] block text-gray-500 font-mono">CORE SYSTEM POWER</span>
-                    <span class="text-xs font-bold text-[#00f3ff] font-mono tracking-widest glow-text-cyan">SECXION LAB</span>
-                </div>
+        <div class="store-layout">
+            <!-- Sidebar Categories -->
+            <div class="store-sidebar">
+                <button class="category-btn active-cat" id="cat-all" onclick="filterCategory('all')">⭐ ทั้งหมด</button>
+                <button class="category-btn" id="cat-opt" onclick="filterCategory('opt')">⚡ Optimizer Engine</button>
+                <button class="category-btn" id="cat-ui" onclick="filterCategory('ui')">🎨 UI Interface</button>
             </div>
 
-            <!-- 👉 DYNAMIC WORKSPACE CONTENT -->
-            <div class="flex-1 p-6 overflow-y-auto bg-black/5">
+            <!-- Modules Grid -->
+            <div class="store-shelf" id="productShelf">
                 
-                <!-- 📊 PAGE 1: OVERVIEW COMPONENT -->
-                <div class="app-view active-view" id="view-overview">
-                    <!-- Hero Status Banner -->
-                    <div class="animate-glow-border rounded-[24px] p-6 mb-6 shadow-xl flex flex-col justify-center min-h-[120px]">
-                        <h2 class="text-xl font-bold tracking-wide bg-gradient-to-r from-white via-purple-200 to-[#00f3ff] bg-clip-text text-transparent">ENGINE PERFORMANCE ACTIVE</h2>
-                        <p class="text-xs text-gray-400 mt-1 leading-relaxed">โมดูลความเสถียรต่ำสุดตรวจพบคอร์เกนระบบทำงานปกติ กำลังจัดการสตรีมข้อมูลผ่านอินเตอร์เฟสแก้วฝ้า</p>
+                <!-- Module 1 -->
+                <div class="item-card" data-cat="opt" data-name="zxx cpu pro booster">
+                    <div class="item-badge">CORE</div>
+                    <div>
+                        <div class="item-icon">⚙️</div>
+                        <h3>ZXX CPU PRO Booster</h3>
+                        <p>ควบคุมโครงสร้าง CPU Core Steering, ปรับแต่ง Thread Queues และหน่วงการตอบสนองฮาร์ดแวร์ขีดสุด</p>
                     </div>
-
-                    <!-- Live Hardware Telemetry Blocks -->
-                    <h3 class="text-[10px] font-bold text-gray-500 tracking-wider uppercase mb-3 px-1">📊 INTERACTIVE HARDWARE TELEMETRY</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                        <div class="glass-panel bg-white/[0.01] p-4 rounded-2xl text-center transition-all hover:-translate-y-0.5">
-                            <span class="text-[9px] text-gray-400 font-bold block mb-1">🔥 CPU CLOCK FREQ</span>
-                            <div id="stat-cpu" class="text-lg font-mono font-bold text-[#00f3ff] tracking-wider">4.35 GHz</div>
-                        </div>
-                        <div class="glass-panel bg-white/[0.01] p-4 rounded-2xl text-center transition-all hover:-translate-y-0.5">
-                            <span class="text-[9px] text-gray-400 font-bold block mb-1">🎮 GPU LOAD STATE</span>
-                            <div id="stat-gpu" class="text-lg font-mono font-bold text-[#be4dff] tracking-wider">12 %</div>
-                        </div>
-                        <div class="glass-panel bg-white/[0.01] p-4 rounded-2xl text-center transition-all hover:-translate-y-0.5">
-                            <span class="text-[9px] text-gray-400 font-bold block mb-1">🧊 SYSTEM TEMP CORE</span>
-                            <div id="stat-temp" class="text-lg font-mono font-bold text-[#ff6ec7] tracking-wider">58 °C</div>
-                        </div>
-                        <div class="glass-panel bg-white/[0.01] p-4 rounded-2xl text-center transition-all hover:-translate-y-0.5">
-                            <span class="text-[9px] text-gray-400 font-bold block mb-1">🎚️ LATENCY QUEUE SIZE</span>
-                            <div id="stat-latency" class="text-lg font-mono font-bold text-[#00ff88] tracking-wider">0.45 ms</div>
-                        </div>
-                    </div>
-
-                    <!-- Mini Actions Inside Dashboard Overview -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="glass-panel p-5 rounded-[22px] border border-white/5 flex flex-col justify-between">
-                            <div>
-                                <h4 class="text-xs font-bold text-purple-400 mb-1">🚀 QUICK LATENCY PURGE</h4>
-                                <p class="text-[11px] text-gray-400 mb-4">บังคับสั่งเคลียร์ขยะหน่วยความจำสแต็กชั่วคราวเพื่อลด Ping ในทันที</p>
-                            </div>
-                            <button onclick="triggerPurge()" class="w-full sm:w-auto self-start bg-purple-500/10 hover:bg-purple-500/20 text-[#be4dff] border border-purple-500/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all cursor-pointer">
-                                🔌 สั่งกวาดล้างสแต็กหน่วยความจำ
-                            </button>
-                        </div>
-
-                        <div class="glass-panel p-5 rounded-[22px] border border-white/5 flex flex-col justify-between">
-                            <div>
-                                <h4 class="text-xs font-bold text-cyan-400 mb-1">🎮 FIVEM SPECIALIZED PROFILE</h4>
-                                <p class="text-[11px] text-gray-400 mb-4">สลับสเตตโปรไฟล์ไปที่โหมดเร่งประสิทธิภาพของแพลตฟอร์ม FiveM HUD</p>
-                            </div>
-                            <button id="fivemBtn" onclick="toggleFiveMMode()" class="w-full sm:w-auto self-start bg-cyan-500/10 hover:bg-cyan-500/20 text-[#00f3ff] border border-cyan-500/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all cursor-pointer">
-                                ⚡ เปิดใช้งาน FiveM Profile Mode
-                            </button>
-                        </div>
+                    <div>
+                        <div class="status-indicator">Ready to Inject</div>
+                        <button class="action-button" onclick="openDashboard('ZXX CPU PRO Booster', '⚙️ Optimizer', ['Core Parking Override', 'Dynamic Thread Priority', 'RAM Latency Shifter'])">Open Dashboard</button>
                     </div>
                 </div>
 
-                <!-- ⚡ PAGE 2: TWEAKS COMPONENT -->
-                <div class="app-view" id="view-tweaks">
-                    <div class="border-b border-white/5 pb-3 mb-4">
-                        <h2 class="text-base font-bold text-white">⚡ SYSTEM CORE REGISTRY TWEAKS</h2>
-                        <p class="text-xs text-gray-400 mt-0.5">เปิด-ปิดสวิตช์ฟังก์ชันการปรับแต่งเคอร์เนลความหน่วงต่ำระดับโครงสร้างสคริปต์</p>
+                <!-- Module 2 -->
+                <div class="item-card" data-cat="ui" data-name="glassmorphism inventory panels ui">
+                    <div class="item-badge">UI MASK</div>
+                    <div>
+                        <div class="item-icon">💎</div>
+                        <h3>Glassmorphism Panels</h3>
+                        <p>เรนเดอร์ UI รูปแบบกระจกฝ้าสะท้อนแสงแบล็กไลต์ เสริมฟังก์ชันลากวัตถุระดับ Low-latency</p>
                     </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <!-- Tweak Card 1 -->
-                        <div class="glass-panel p-4 rounded-2xl flex items-center justify-between border border-white/5">
-                            <div>
-                                <span class="text-xs font-bold text-gray-200 block">ZXX CPU Thread Steering</span>
-                                <span class="text-[10px] text-gray-400 font-mono">Registry: CPUPriorityClass -> High</span>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" onchange="toggleTweak('CPU Thread Steering', this.checked)" class="sr-only peer">
-                                <div class="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#be4dff]"></div>
-                            </label>
-                        </div>
-
-                        <!-- Tweak Card 2 -->
-                        <div class="glass-panel p-4 rounded-2xl flex items-center justify-between border border-white/5">
-                            <div>
-                                <span class="text-xs font-bold text-gray-200 block">Mouse Data Queue Buffer Fix</span>
-                                <span class="text-[10px] text-gray-400 font-mono">Registry: MouseQueueSize -> 20 (Low)</span>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" onchange="toggleTweak('Mouse Data Queue', this.checked)" class="sr-only peer">
-                                <div class="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#be4dff]"></div>
-                            </label>
-                        </div>
-
-                        <!-- Tweak Card 3 -->
-                        <div class="glass-panel p-4 rounded-2xl flex items-center justify-between border border-white/5">
-                            <div>
-                                <span class="text-xs font-bold text-gray-200 block">Anti-Forensics Artifact Wiper</span>
-                                <span class="text-[10px] text-gray-400 font-mono">Automated: BAM/DAM Logs Purger</span>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" onchange="toggleTweak('Anti-Forensics Wiper', this.checked)" class="sr-only peer">
-                                <div class="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#be4dff]"></div>
-                            </label>
-                        </div>
-
-                        <!-- Tweak Card 4 -->
-                        <div class="glass-panel p-4 rounded-2xl flex items-center justify-between border border-white/5">
-                            <div>
-                                <span class="text-xs font-bold text-gray-200 block">Keyboard Response Optimization</span>
-                                <span class="text-[10px] text-gray-400 font-mono">Registry: Flags/Delay -> 0ms Rate</span>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" onchange="toggleTweak('Keyboard Response Opt', this.checked)" class="sr-only peer">
-                                <div class="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#be4dff]"></div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Advanced Tool Alert -->
-                    <div class="mt-4 p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs flex items-start gap-3 text-amber-300">
-                        <span class="mt-0.5">⚠️</span>
-                        <div>
-                            <span class="font-bold block">ข้อควรระวังความปลอดภัยโครงสร้างระบบ:</span>
-                            <span class="text-amber-400/80 leading-relaxed font-sans">การปรับสวิตช์ลงโครงสร้างเรจิสทรีด้านบน เป็นการจำลองเขียนค่าข้ามผ่านสิทธิ์ TrustedInstaller ของซอฟต์แวร์ STACKX กรุณาตรวจสอบสถานะเคอร์เนลอย่างสม่ำเสมอ</span>
-                        </div>
+                    <div>
+                        <div class="status-indicator">Ready to Inject</div>
+                        <button class="action-button" onclick="openDashboard('Glassmorphism Panels', '🎨 UI Render', ['Glass Blur Cache', 'Neon Glow Filter', 'GPU Hardware Canvas'])">Open Dashboard</button>
                     </div>
                 </div>
 
-                <!-- 📜 PAGE 3: KERNEL LOGS COMPONENT -->
-                <div class="app-view" id="view-logs">
-                    <div class="flex justify-between items-center mb-3">
-                        <h2 class="text-base font-bold text-white">📜 LIVE CORE RECOVERY & DATABANK REPORT LOG</h2>
-                        <button onclick="clearHistoryLog()" class="bg-white/5 hover:bg-red-500/10 hover:text-red-400 text-gray-400 text-[11px] font-mono border border-white/5 px-3 py-1.5 rounded-xl transition-all cursor-pointer">
-                            🧹 PURGE LOG DATABASE
-                        </button>
+                <!-- Module 3 -->
+                <div class="item-card" data-cat="opt" data-name="anti-trace forensics system cleaner">
+                    <div class="item-badge">SECURITY</div>
+                    <div>
+                        <div class="item-icon">🧹</div>
+                        <h3>Anti-Trace Cleaner</h3>
+                        <p>ตรวจจับและล้างร่องรอยการประมวลผลของระบบ ดึงทรัพยากรที่ถูกบล็อกใน Kernel ล็อกอินสแตนซ์คืนมา</p>
                     </div>
-                    <div class="glass-panel rounded-2xl overflow-hidden border border-white/5">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs font-mono min-w-[650px] border-collapse">
-                                <thead>
-                                    <tr class="bg-white/[0.03] border-b border-white/5 text-gray-400">
-                                        <th class="p-3.5">EVENT PIPE</th>
-                                        <th class="p-3.5">OPERATION INTERACTION INTERFACE</th>
-                                        <th class="p-3.5">VALUE TARGET</th>
-                                        <th class="p-3.5">TIMESTAMP</th>
-                                        <th class="p-3.5 text-center">KERNEL STATUS</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="historyTableBody" class="divide-y divide-white/[0.03]">
-                                    <tr class="hover:bg-white/[0.01] transition-all">
-                                        <td class="p-3.5 text-cyan-400 font-bold">SYSTEM_INIT</td>
-                                        <td class="p-3.5 text-gray-300">ผสานโครงสร้างชุดแผงควบคุมระบบเว็บบอร์ด STACKX เรียบร้อย</td>
-                                        <td class="p-3.5 text-[#00f3ff] font-bold">v2.6.5</td>
-                                        <td class="p-3.5 text-gray-500">CORE_READY</td>
-                                        <td class="p-3.5 text-center"><span class="px-2.5 py-0.5 bg-green-500/10 border border-green-500/30 text-[#00ff88] font-bold text-[10px] rounded-lg">SUCCESS</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div>
+                        <div class="status-indicator">Ready to Inject</div>
+                        <button class="action-button" onclick="openDashboard('Anti-Trace Cleaner', '⚙️ Security', ['BAM/DAM Log Purge', 'SRUM DB Lock Release', 'Forensic Cache Wipe'])">Open Dashboard</button>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="item-card" data-cat="ui" data-name="neon cyberpunk hud panel status">
+                    <div class="item-badge">HUD SYSTEM</div>
+                    <div>
+                        <div class="item-icon">🛸</div>
+                        <h3>Cyberpunk HUD Status</h3>
+                        <p>โมดูลตรวจสอบและแสดงผลสถานะ Health / Shield แบบ Vector อัตรารีเฟรชตามเฟรมเรตหน้าจอ</p>
+                    </div>
+                    <div>
+                        <div class="status-indicator">Ready to Inject</div>
+                        <button class="action-button" onclick="openDashboard('Cyberpunk HUD Status', '🎨 UI Render', ['Vector Arc Engine', 'Hz Refresh Linker', 'Alpha Layer Fade'])">Open Dashboard</button>
                     </div>
                 </div>
 
             </div>
-        </div>
-
-        <!-- ╔════════════════════════════════════════════════╗
-               📥 BOTTOM STATUS BAR CONTROL
-             ╚════════════════════════════════════════════════╝ -->
-        <div class="px-6 py-2 border-t border-purple-500/10 bg-black/40 flex justify-between items-center text-[11px] text-gray-500 font-mono">
-            <div class="flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#00ff88] animate-ping"></span>
-                <span id="pipelineText">SYSTEM PIPELINE STANDBY: Ready to inject optimization files</span>
-            </div>
-            <div id="liveDigitalClock" class="text-purple-400 font-bold">13:59:40</div>
         </div>
 
     </div>
 
-    <!-- ================= ⚙️ CORE DASHBOARD ENGINE OPERATIONS ================= -->
+    <!-- 🎛️ SIDE DASHBOARD OVERLAY PANEL -->
+    <div class="dashboard-modal" id="dashboardModal">
+        <div class="dash-header">
+            <div>
+                <span id="dashModCategory" style="font-size: 0.8rem; font-weight:700; color:var(--cyan-neon); letter-spacing:1px; display:block; margin-bottom:2px;">CATEGORY</span>
+                <h2 id="dashModName" style="font-weight: 700; color: #fff; font-size: 1.5rem;">Module Name</h2>
+            </div>
+            <button class="close-dash" onclick="toggleDashboard(false)">✕</button>
+        </div>
+        
+        <div class="dash-content">
+            <!-- Widget 1: System Status & Control -->
+            <div class="dash-widget">
+                <div class="widget-title">Engine Configuration</div>
+                <div id="toggleContainer">
+                    <!-- Toggles จะถูกสร้างขึ้นไดนามิกที่นี่ -->
+                </div>
+            </div>
+
+            <!-- Widget 2: Live Console Monitor -->
+            <div class="dash-widget">
+                <div class="widget-title">Live Terminal Monitor</div>
+                <div class="terminal-box" id="terminalLog">
+                    [SYSTEM] Select a module and trigger "Execute" to start monitoring...
+                </div>
+            </div>
+            
+            <!-- Widget 3: Hardware Metrics Simulation -->
+            <div class="dash-widget" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
+                <div>
+                    <div class="widget-title">Response Rate</div>
+                    <div id="metricResponse" style="font-size: 1.8rem; font-weight: 700; color: var(--pink-neon); text-shadow: 0 0 10px var(--pink-glow);">0.00 ms</div>
+                </div>
+                <div>
+                    <div class="widget-title">Kernel Load</div>
+                    <div id="metricLoad" style="font-size: 1.8rem; font-weight: 700; color: var(--cyan-neon); text-shadow: 0 0 10px var(--cyan-glow);">0.0%</div>
+                </div>
+            </div>
+
+            <!-- Execute Module Master Button -->
+            <button class="execute-btn" id="masterExecBtn" onclick="runModuleExecution()">INJECT MODULE</button>
+        </div>
+    </div>
+
+
+    <!-- INTERACTIVE ENGINE SCRIPT -->
     <script>
-        let isFiveMActive = false;
+        let currentModuleName = '';
+        let terminalInterval;
 
-        // 1. ฟังก์ชันเปลี่ยนผ่านก้าวข้ามหน้าจอ (Gate Screen -> Main Dashboard)
-        function enterDashboard() {
-            const gate = document.getElementById('gateScreen');
-            const dash = document.getElementById('mainDashboard');
-
-            gate.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                gate.classList.add('hidden');
-                dash.classList.remove('hidden');
-                
-                // แอนิเมชันตอนเปิด Dashboard
-                setTimeout(() => {
-                    dash.classList.remove('opacity-0', 'scale-95');
-                    addLogToTable("CORE_LAUNCH", "ผู้ใช้ผ่านรหัสสิทธิ์ Access Gate เพื่อเข้าสู่แดชบอร์ดหลัก", "SUCCESS", "INITIALIZED");
-                }, 50);
-            }, 400);
-        }
-
-        function exitDashboard() {
-            if(!confirm("คุณต้องการสั่ง Disconnect และย้อนกลับไปหน้าตรวจสอบสิทธิ์หลักหรือไม่?")) return;
-            
-            const gate = document.getElementById('gateScreen');
-            const dash = document.getElementById('mainDashboard');
-
-            dash.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => {
-                dash.classList.add('hidden');
-                gate.classList.remove('hidden');
-                setTimeout(() => {
-                    gate.classList.remove('scale-95', 'opacity-0');
-                }, 50);
-            }, 400);
-        }
-
-        // 2. ระบบควบคุมแถบสลับหน้าจัดการข้อมูลความเร็วสูง (Navigation Core)
-        function switchTab(viewName) {
-            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
-            document.querySelectorAll('.tab-btn').forEach(tab => {
-                tab.className = "tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer";
-            });
-            
-            const currentView = document.getElementById(`view-${viewName}`);
-            currentView.classList.add('active-view');
-            
-            const activeTabBtn = document.getElementById(`tab-${viewName}`);
-            activeTabBtn.className = "tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 bg-gradient-to-r from-[#be4dff]/20 to-[#ff6ec7]/10 text-white border border-[#be4dff]/30 shadow-lg shadow-purple-500/5 cursor-pointer";
-        }
-
-        // 3. ฟังก์ชันระบบปุ่มกดล้างความหน่วงแฝง (Latency Purge Operation)
-        function triggerPurge() {
-            document.getElementById('stat-latency').innerText = "0.08 ms";
-            document.getElementById('stat-latency').style.color = "#00ff88";
-            document.getElementById('pipelineText').innerText = "SYSTEM PIPELINE STATUS: Purged Cache Data Block Successfully";
-            
-            addLogToTable("STACK_PURGE", "สั่งกวาดล้างสแต็กหน่วยความจำส่วนเกินเพื่อเพิ่ม Kernel Responsiveness", "0.08 ms", "CLEARED");
-            alert("🧹 เคลียร์ขยะสแต็กความหน่วงระบบจำลองเสร็จสิ้น! (ค่า Latency ลดลงเหลือ 0.08 ms)");
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.classList.add('toast');
+            toast.innerText = message;
+            container.appendChild(toast);
             
             setTimeout(() => {
-                document.getElementById('stat-latency').innerText = "0.45 ms";
-                document.getElementById('stat-latency').style.color = "";
-            }, 5000);
+                toast.style.transform = 'translateX(120%)';
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
         }
 
-        // 4. ฟังก์ชันเปิดโหมดพิเศษ FiveM Performance HUD
-        function toggleFiveMMode() {
-            isFiveMActive = !isFiveMActive;
-            const btn = document.getElementById('fivemBtn');
-            const cpuStat = document.getElementById('stat-cpu');
-
-            if(isFiveMActive) {
-                btn.className = "w-full sm:w-auto self-start bg-green-500/20 hover:bg-green-500/30 text-[#00ff88] border border-green-500/30 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all cursor-pointer shadow-[0_0_15px_rgba(0,255,136,0.1)]";
-                btn.innerText = "🟢 FiveM Profile Mode: ON";
-                cpuStat.innerText = "4.85 GHz";
-                cpuStat.style.color = "#00ff88";
-                
-                addLogToTable("FIVEM_MODE", "ปรับเร่งประสิทธิภาพเครื่องและปรับแต่งการแสดงผล HUD สำหรับ FiveM", "ENABLED", "HIGH_PRIORITY");
+        function toggleDashboard(isOpen) {
+            const modal = document.getElementById('dashboardModal');
+            if(isOpen) {
+                modal.classList.add('open');
             } else {
-                btn.className = "w-full sm:w-auto self-start bg-cyan-500/10 hover:bg-cyan-500/20 text-[#00f3ff] border border-cyan-500/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all cursor-pointer";
-                btn.innerText = "⚡ เปิดใช้งาน FiveM Profile Mode";
-                cpuStat.innerText = "4.35 GHz";
-                cpuStat.style.color = "";
-                
-                addLogToTable("FIVEM_MODE", "คืนค่าสถานะความเสถียรสำหรับใช้งานทั่วไป", "DISABLED", "NORMAL");
+                modal.classList.remove('open');
+                clearInterval(terminalInterval); // หยุดรัน log เมื่อปิดหน้าจอ
             }
         }
 
-        // 5. ระบบตรวจสอบปุ่มทวิกเรจิสทรี (Tweak Monitor)
-        function toggleTweak(tweakName, isChecked) {
-            const status = isChecked ? "ENABLED" : "DISABLED";
-            const hexCode = isChecked ? "0x00000001" : "0x00000000";
+        // ฟังก์ชันเมื่อกดปุ่มเปิด Dashboard บนการ์ดไอเทม
+        function openDashboard(name, category, featureOptions) {
+            currentModuleName = name;
+            document.getElementById('dashModName').innerText = name;
+            document.getElementById('dashModCategory').innerText = category.toUpperCase();
             
-            addLogToTable("REG_TWEAK", `ปรับเปลี่ยนสถานะชุดคำสั่งสคริปต์ [${tweakName}]`, status, hexCode);
+            // รีเซ็ต Terminal และ Metrics กลับไปค่าเริ่มต้น
+            document.getElementById('terminalLog').innerHTML = `[SYSTEM] Initialization core template for ${name}...<br>[SYSTEM] Awaiting user command injection.`;
+            document.getElementById('metricResponse').innerText = "0.00 ms";
+            document.getElementById('metricLoad').innerText = "0.0%";
+            document.getElementById('masterExecBtn').innerText = `INJECT ${name.toUpperCase()}`;
+            clearInterval(terminalInterval);
+
+            // เจนสวิตช์เปิด/ปิด (Toggles) ประจำโมดูลแบบไดนามิก
+            const toggleContainer = document.getElementById('toggleContainer');
+            toggleContainer.innerHTML = '';
+            
+            featureOptions.forEach((option, index) => {
+                const checkedStr = index === 0 ? 'checked' : ''; // ให้ตัวแรกเปิดไว้เป็นพิธี
+                const row = document.createElement('div');
+                row.classList.add('control-row');
+                row.innerHTML = `
+                    <span style="font-size:0.95rem; color:rgba(255,255,255,0.85); font-weight:500;">${option}</span>
+                    <label class="switch">
+                        <input type="checkbox" ${checkedStr} onchange="showToast('🔧 อัปเดตพารามิเตอร์: ${option}')">
+                        <span class="slider"></span>
+                    </label>
+                `;
+                toggleContainer.appendChild(row);
+            });
+
+            toggleDashboard(true);
+            showToast(`📂 เรียกแผงควบคุมหลัก: ${name}`);
         }
 
-        // 6. ฟังก์ชันการแทรกแถวประวัติตาราง (Dynamic Kernel Log Injector)
-        function addLogToTable(pipe, detail, val, status) {
-            const tableBody = document.getElementById('historyTableBody');
-            const tr = document.createElement('tr');
-            tr.className = "hover:bg-white/[0.01] transition-all";
-            tr.innerHTML = `
-                <td class="p-3.5 text-[#ff6ec7] font-bold font-mono">${pipe}</td>
-                <td class="p-3.5 text-gray-300">${detail}</td>
-                <td class="p-3.5 text-[#00f3ff] font-bold font-mono">${val}</td>
-                <td class="p-3.5 text-gray-500">JUST NOW</td>
-                <td class="p-3.5 text-center"><span class="px-2.5 py-0.5 bg-purple-500/10 border border-purple-500/30 text-[#be4dff] font-bold text-[10px] rounded-lg">${status}</span></td>
-            `;
-            tableBody.insertBefore(tr, tableBody.firstChild);
+        // ระบบจำลองการยิง Script / รันโมดูล (Inject & Run)
+        function runModuleExecution() {
+            const term = document.getElementById('terminalLog');
+            term.innerHTML = `<span style="color:#fff;">[DEPLOY] Connecting to StackX Subsystem kernel...</span>`;
+            showToast(`🚀 กำลังรันกระบวนการโปรเซส ${currentModuleName}...`);
+
+            let counter = 0;
+            clearInterval(terminalInterval);
+
+            // จำลองสตรีมข้อความลง Terminal Box และสุ่มตัวเลข Metrics
+            terminalInterval = setInterval(() => {
+                counter++;
+                const fakeLogs = [
+                    `[OK] Thread Context Swapped successfully.`,
+                    `[INFO] Clearing Windows event buffers...`,
+                    `[PROCESS] Memory allocation mapped at 0x7FFA${Math.floor(Math.random()*9000+1000)}`,
+                    `[PERF] Latency alignment verified.`,
+                    `[STATUS] Kernel callback execution holding stable.`
+                ];
+
+                if(counter <= 6) {
+                    const randomLog = fakeLogs[Math.floor(Math.random() * fakeLogs.length)];
+                    term.innerHTML += `<br>${randomLog}`;
+                    term.scrollTop = term.scrollHeight; // สั่งให้เลื่อนลงล่างสุดอัตโนมัติ
+
+                    // สุ่มตัวเลขฮาร์ดแวร์โชว์ความสมจริง
+                    document.getElementById('metricResponse').innerText = (Math.random() * 0.4 + 0.05).toFixed(2) + " ms";
+                    document.getElementById('metricLoad').innerText = (Math.random() * 15 + 2).toFixed(1) + "%";
+                } else {
+                    term.innerHTML += `<br><span style="color:var(--cyan-neon);">[SUCCESS] ${currentModuleName} Process Synced Active!</span>`;
+                    term.scrollTop = term.scrollHeight;
+                    clearInterval(terminalInterval);
+                    showToast(`✅ ${currentModuleName} เปิดทำงานเต็มระบบแล้ว!`);
+                }
+            }, 600);
         }
 
-        function clearHistoryLog() {
-            document.getElementById('historyTableBody').innerHTML = `
-                <tr class="hover:bg-white/[0.01] transition-all">
-                    <td class="p-3.5 text-red-400 font-bold">LOG_PURGE</td>
-                    <td class="p-3.5 text-gray-500">ทำการสั่ง Wipe ลบทำลายสารบบโครงสร้างประวัติข้อมูลล็อกทั้งหมดบนแรมชั่วคราว</td>
-                    <td class="p-3.5 text-gray-600">-</td>
-                    <td class="p-3.5 text-gray-600">NOW</td>
-                    <td class="p-3.5 text-center"><span class="px-2.5 py-0.5 bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-[10px] rounded-lg">CLEARED</span></td>
-                </tr>
-            `;
+        // ระบบค้นหา Real-time ฟิลเตอร์ทันทีที่พิมพ์ (Live Search Engine)
+        function liveSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.item-card');
+            
+            cards.forEach(card => {
+                const searchKey = card.getAttribute('data-name');
+                if(searchKey.includes(query)) card.style.display = 'flex';
+                else card.style.display = 'none';
+            });
         }
 
-        // 7. สถิติจำลองการขยับของกราฟตัวเลขฮาร์ดแวร์เบื้องหลัง
-        setInterval(() => {
-            if(!document.getElementById('mainDashboard').classList.contains('hidden') && document.getElementById('view-overview').classList.contains('active-view')) {
-                // สุ่มแกว่งโหลดของ GPU
-                let gpuBox = document.getElementById('stat-gpu');
-                let currentGpu = parseInt(gpuBox.innerText);
-                currentGpu += Math.floor(Math.random() * 7) - 3;
-                if(currentGpu < 5) currentGpu = 8;
-                if(currentGpu > 85) currentGpu = 30;
-                gpuBox.innerText = currentGpu + " %";
+        // ระบบสลับหมวดหมู่สินค้า (Category Filter)
+        function filterCategory(cat) {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active-cat'));
+            document.getElementById(`cat-${cat}`).classList.add('active-cat');
 
-                // สุ่มแกว่งของอุณหภูมิเซ็นเซอร์
-                let tempBox = document.getElementById('stat-temp');
-                let currentTemp = parseInt(tempBox.innerText);
-                currentTemp += Math.floor(Math.random() * 3) - 1;
-                if(currentTemp < 50) currentTemp = 55;
-                if(currentTemp > 80) currentTemp = 65;
-                tempBox.innerText = currentTemp + " °C";
-            }
-        }, 2000);
-
-        // ระบบนาฬิกาดิจิตอลมุมขวาล่างแอป
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('liveDigitalClock').innerText = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            const cards = document.querySelectorAll('.item-card');
+            cards.forEach(card => {
+                const itemCat = card.getAttribute('data-cat');
+                if(cat === 'all' || itemCat === cat) card.style.display = 'flex';
+                else card.style.display = 'none';
+            });
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+
+        // ปล่อยละออง Background ฟุ้งลอยแบบสุ่ม
+        const sparksContainer = document.getElementById('sparklesContainer');
+        for (let i = 0; i < 25; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            const size = Math.random() * 3 + 2;
+            sparkle.style.width = size + 'px'; 
+            sparkle.style.height = size + 'px';
+            sparkle.style.left = Math.random() * 100 + 'vw'; 
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            sparkle.style.animationDelay = (Math.random() * 4) + 's';
+            sparksContainer.appendChild(sparkle);
+        }
     </script>
 </body>
 </html>
