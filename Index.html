@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PURPLE NEON | FIVEM CUTE EDITION</title>
+    <title>StackX | PREMIUM CUTE STORE</title>
     
-    <!-- Google Fonts: ใช้ฟอนต์ละมุนๆ มีความน่ารักและอ่านง่าย -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
@@ -15,11 +15,12 @@
             --purple-neon: #be4dff;
             --purple-glow: rgba(190, 77, 255, 0.4);
             --pink-neon: #ff6ec7;
-            --bg-dark: #0d0b14;
-            --bg-card: rgba(22, 17, 36, 0.7);
-            --glass-border: rgba(190, 77, 255, 0.15);
-            --round-large: 32px;
-            --round-medium: 20px;
+            --pink-glow: rgba(255, 110, 199, 0.4);
+            --bg-dark: #09070f;
+            --bg-card: rgba(25, 19, 41, 0.65);
+            --glass-border: rgba(190, 77, 255, 0.18);
+            --round-large: 28px;
+            --round-medium: 18px;
         }
 
         * {
@@ -37,396 +38,348 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            /* แสงออร่าวิ้งๆ ข้างหลัง */
             background-image: 
-                radial-gradient(circle at 15% 20%, rgba(190, 77, 255, 0.15) 0%, transparent 45%),
-                radial-gradient(circle at 85% 80%, rgba(255, 110, 199, 0.12) 0%, transparent 45%);
+                radial-gradient(circle at 80% 20%, rgba(255, 110, 199, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 20% 80%, rgba(190, 77, 255, 0.15) 0%, transparent 45%);
             background-attachment: fixed;
         }
 
-        /* --- 🌟 BACKGROUND SPARKS ANIMATION --- */
+        /* --- BACKGROUND SPARKS --- */
         .sparkles {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
         }
         .sparkle {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            animation: floatUp infinite linear;
-            opacity: 0.3;
+            position: absolute; background: #fff; border-radius: 50%;
+            animation: floatUp infinite linear; opacity: 0.25;
         }
 
-        /* --- 🧭 NAV BAR (โค้งมนสุดๆ) --- */
+        /* --- NAVIGATION BAR --- */
         nav {
             margin: 25px auto;
-            width: 90%;
-            max-width: 1000px;
-            background: rgba(22, 17, 36, 0.6);
-            backdrop-filter: blur(20px);
+            width: 90%; max-width: 1200px;
+            background: rgba(25, 19, 41, 0.6);
+            backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            padding: 12px 30px;
+            padding: 14px 35px;
             border-radius: var(--round-large);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 25px;
-            z-index: 100;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 25px; z-index: 100;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
             animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #fff;
-            text-shadow: 0 0 10px var(--purple-glow);
-            cursor: pointer;
+            font-size: 1.8rem; font-weight: 700;
+            color: #fff; text-shadow: 0 0 12px var(--purple-glow);
+            cursor: pointer; display: flex; align-items: center; gap: 5px;
         }
-        .logo span { color: var(--pink-neon); }
+        .logo span { color: var(--pink-neon); text-shadow: 0 0 12px var(--pink-glow); }
 
-        .nav-links {
-            display: flex;
-            gap: 10px;
-            list-style: none;
-        }
-
+        .nav-links { display: flex; gap: 10px; list-style: none; }
         .nav-links button {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.7);
-            padding: 10px 22px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: var(--round-medium);
-            cursor: pointer;
+            background: transparent; border: none; color: rgba(255, 255, 255, 0.7);
+            padding: 10px 24px; font-size: 1rem; font-weight: 600;
+            border-radius: var(--round-medium); cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .nav-links button:hover {
-            color: var(--purple-neon);
-            background: rgba(190, 77, 255, 0.08);
-        }
-
+        .nav-links button:hover { color: var(--purple-neon); background: rgba(190, 77, 255, 0.08); }
         .nav-links button.active {
             background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon));
-            color: #fff;
-            box-shadow: 0 5px 15px var(--purple-glow);
+            color: #fff; box-shadow: 0 6px 20px var(--purple-glow);
             transform: scale(1.05);
         }
 
-        /* --- 📦 MAIN CONTENT WRAPPER --- */
+        /* --- MAIN CONTAINER --- */
         .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 40px auto;
-            flex: 1;
-            position: relative;
-            z-index: 10;
+            width: 90%; max-width: 1200px;
+            margin: 20px auto 60px auto; flex: 1;
+            position: relative; z-index: 10;
         }
 
-        /* --- 📄 MULTI-PAGE MANAGEMENT --- */
         .page {
-            display: none; /* ซ่อนหน้าอื่นๆ ไว้ก่อน */
-            opacity: 0;
-            transform: translateY(20px) scale(0.98);
+            display: none; opacity: 0; transform: translateY(20px);
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .page.active-page {
-            display: block;
-            animation: pageShow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            display: block; animation: pageShow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
-        /* --- 🏠 PAGE: HOME --- */
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
+        /* --- HOME PAGE --- */
+        .hero { text-align: center; padding: 60px 20px 40px 20px; }
         .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, var(--purple-neon), var(--pink-neon));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-            animation: bounceGentle 3s infinite ease-in-out;
+            font-size: 4.5rem; font-weight: 700;
+            background: linear-gradient(135deg, #fff 20%, var(--purple-neon), var(--pink-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 15px; animation: bounceGentle 4s infinite ease-in-out;
         }
-
         .hero p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 35px auto;
-            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6); font-size: 1.15rem;
+            max-width: 600px; margin: 0 auto 40px auto; line-height: 1.6;
         }
 
-        /* Cute Rounded Button */
         .cute-btn {
             background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon));
-            color: white;
-            border: none;
-            padding: 16px 38px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 50px; /* โค้งมนแบบมนสุดๆ */
-            cursor: pointer;
-            box-shadow: 0 8px 25px var(--purple-glow);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none;
+            color: white; border: none; padding: 16px 42px; font-size: 1.1rem; font-weight: 700;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 8px 25px var(--purple-glow);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none;
             display: inline-block;
         }
+        .cute-btn:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(190, 77, 255, 0.6); }
 
-        .cute-btn:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 12px 30px rgba(190, 77, 255, 0.6);
-        }
-        .cute-btn:active { transform: translateY(-1px); }
-
-        /* Dashboard Status */
-        .status-box {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--round-large);
-            padding: 25px 40px;
-            margin: 50px auto 0 auto;
-            max-width: 700px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
+        /* --- 🛒 NEW ADVANCED STORE LAYOUT --- */
+        .store-layout {
+            display: grid; grid-template-columns: 240px 1px; gap: 30px; margin-top: 20px;
         }
 
-        .status-info { display: flex; align-items: center; gap: 15px; }
-        .dot {
-            width: 12px; height: 12px;
-            background: #00ffaa; border-radius: 50%;
-            box-shadow: 0 0 12px #00ffaa;
-            animation: blink 1.5s infinite;
+        /* Sidebar Categories */
+        .store-sidebar {
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .category-btn {
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            color: rgba(255,255,255,0.7); padding: 15px 20px; text-align: left;
+            font-size: 1rem; font-weight: 600; border-radius: var(--round-medium);
+            cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);
+        }
+        .category-btn:hover { border-color: var(--pink-neon); color: #fff; padding-left: 25px; }
+        .category-btn.active-cat {
+            background: linear-gradient(90deg, rgba(190, 77, 255, 0.2), rgba(255, 110, 199, 0.1));
+            border-color: var(--purple-neon); color: var(--purple-neon); font-weight: 700;
+            box-shadow: inset 0 0 15px rgba(190, 77, 255, 0.1);
         }
 
-        /* --- 📜 PAGE: RULES (แบบโค้งมนยุบยับ) --- */
-        .rules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 100px));
-            gap: 25px;
-            margin-top: 20px;
+        /* Store Grid Shelf */
+        .store-shelf {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 100px)); gap: 25px;
         }
 
-        .rule-card {
-            background: var(--bg-card);
-            border: 2px solid transparent;
-            border-radius: var(--round-large);
-            padding: 30px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .rule-card:hover {
-            border-color: var(--purple-neon);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(190, 77, 255, 0.15);
-        }
-        .rule-card h3 { color: var(--pink-neon); margin-bottom: 10px; font-size: 1.3rem; }
-        .rule-card p { color: rgba(255, 255, 255, 0.6); font-size: 0.95rem; line-height: 1.5; }
-
-        /* --- 🛒 PAGE: STORE (การ์ดไอเทม) --- */
-        .store-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 100px));
-            gap: 25px;
-        }
+        /* New Cute Item Card Design */
         .item-card {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--round-large);
-            padding: 25px;
-            text-align: center;
-            transition: 0.3s;
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            border-radius: var(--round-large); padding: 25px; text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px); position: relative; overflow: hidden;
+        }
+        .item-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,110,199,0.08) 0%, transparent 70%);
+            opacity: 0; transition: 0.4s; pointer-events: none;
         }
         .item-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            transform: translateY(-8px) scale(1.02); border-color: var(--pink-neon);
+            box-shadow: 0 15px 35px rgba(190, 77, 255, 0.2);
         }
-        .item-icon {
-            width: 80px; height: 80px;
-            background: rgba(255, 110, 199, 0.1);
-            border-radius: var(--round-medium);
-            margin: 0 auto 15px auto;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; color: var(--pink-neon);
-        }
-        .price { font-size: 1.4rem; color: var(--purple-neon); font-weight: 700; margin: 10px 0 15px 0; }
-        .buy-btn {
-            background: rgba(255,255,255,0.05); color: #fff;
-            border: 1px solid var(--glass-border); width: 100%;
-            padding: 10px; border-radius: 50px; cursor: pointer; font-weight: 600;
-            transition: 0.3s;
-        }
-        .item-card:hover .buy-btn { background: var(--purple-neon); box-shadow: 0 5px 15px var(--purple-glow); }
+        .item-card:hover::before { opacity: 1; }
 
-        /* --- 🌐 ANIMATIONS KEYFRAMES --- */
-        @keyframes popIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .item-icon {
+            width: 90px; height: 90px; background: rgba(190, 77, 255, 0.1);
+            border-radius: var(--round-medium); margin: 0 auto 18px auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; transition: 0.3s;
         }
-        @keyframes pageShow {
-            0% { opacity: 0; transform: translateY(15px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+        .item-card:hover .item-icon { transform: scale(1.1) rotate(5deg); background: rgba(255, 110, 199, 0.15); }
+        
+        .item-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 6px; }
+        .item-card p { color: rgba(255,255,255,0.5); font-size: 0.85rem; min-height: 38px; }
+        
+        .price-tag {
+            font-size: 1.5rem; color: var(--pink-neon); font-weight: 700;
+            margin: 15px 0; text-shadow: 0 0 10px rgba(255, 110, 199, 0.2);
         }
+
+        .buy-button {
+            background: rgba(255, 255, 255, 0.05); color: #fff;
+            border: 1px solid var(--glass-border); width: 100%;
+            padding: 12px; border-radius: 50px; cursor: pointer; font-weight: 700;
+            font-size: 0.95rem; transition: 0.3s; letter-spacing: 0.5px;
+        }
+        .item-card:hover .buy-button {
+            background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon));
+            border-color: transparent; box-shadow: 0 5px 15px var(--purple-glow);
+        }
+
+        /* --- RULES PAGE --- */
+        .rules-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        .rule-row {
+            background: var(--bg-card); border-left: 5px solid var(--purple-neon);
+            border-radius: var(--round-medium); padding: 25px 30px;
+            display: flex; gap: 20px; align-items: center; transition: 0.3s;
+        }
+        .rule-row:hover { transform: translateX(5px); background: rgba(35, 27, 56, 0.8); }
+        .rule-num { font-size: 1.8rem; font-weight: 700; color: var(--pink-neon); }
+
+        /* --- ANIMATIONS --- */
+        @keyframes popIn { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes pageShow { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes floatUp {
             0% { transform: translateY(105vh) translateX(0px); }
-            50% { transform: translateY(50vh) translateX(20px); }
-            100% { transform: translateY(-5vh) translateX(-10px); }
+            50% { transform: translateY(50vh) translateX(15px); }
+            100% { transform: translateY(-5vh) translateX(-5px); }
         }
-        @keyframes bounceGentle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        @keyframes blink { 50% { opacity: 0.4; } }
+        @keyframes bounceGentle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
+        @media (max-width: 900px) {
+            .store-layout { grid-template-columns: 1fr; }
+            .store-sidebar { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .category-btn { white-space: nowrap; }
+            .hero h1 { font-size: 2.8rem; }
             nav { flex-direction: column; gap: 15px; border-radius: var(--round-medium); }
-            .status-box { flex-direction: column; gap: 10px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 🌌 เกล็ดดาวระยิบระยับลอยละล่อง background -->
+    <!-- Sparkles Bg -->
     <div class="sparkles" id="sparklesContainer"></div>
 
-    <!-- 🧭 NAVIGATION BAR (กดสลับหน้าได้ที่นี่) -->
+    <!-- NAVIGATION BAR -->
     <nav>
-        <div class="logo" onclick="switchPage('home')">CUTE<span>CITY</span></div>
+        <div class="logo" onclick="switchPage('home')">💥 Stack<span>X</span></div>
         <ul class="nav-links">
             <li><button class="nav-btn active" id="btn-home" onclick="switchPage('home')">Home</button></li>
-            <li><button class="nav-btn" id="btn-rules" onclick="switchPage('rules')">Rules</button></li>
-            <li><button class="nav-btn" id="btn-store" onclick="switchPage('store')">Store</button></li>
-            <li><button class="nav-btn" id="btn-about" onclick="switchPage('about')">About</button></li>
+            <li><button class="nav-btn" id="btn-store" onclick="switchPage('store')">StackX Store</button></li>
+            <li><button class="nav-btn" id="btn-rules" onclick="switchPage('rules')">City Rules</button></li>
         </ul>
     </nav>
 
-    <!-- 📦 MAIN CONTAINER -->
+    <!-- CONTAINER CONTROLS -->
     <div class="container">
 
-        <!-- 🏠 หน้าที่ 1: HOME -->
+        <!-- 🏠 PAGE 1: HOME -->
         <div id="page-home" class="page active-page">
             <section class="hero">
-                <h1>Welcome to CuteCity</h1>
-                <p>เมืองเวทมนตร์แห่งความสุข สังคมน่ารักใจดี มาร่วมสร้างเรื่องราวสตอรี่สุดประทับใจไปกับพวกเราสิคะ!</p>
-                <button class="cute-btn" onclick="alert('กำลังเชื่อมต่อเข้าเซิร์ฟเวอร์... 🚀')">Connect Server</button>
+                <h1>StackX Hub</h1>
+                <p>ยกระดับการโรลเพลย์แบบพรีเมียมไปกับ StackX ระบบเสถียรที่สุด แฟชั่นน่ารักจัดเต็ม และคอมมูนิตี้สุดอบอุ่น</p>
+                <button class="cute-btn" onclick="switchPage('store')">เข้าสู่ร้านค้า StackX</button>
             </section>
-
-            <div class="status-box">
-                <div class="status-info">
-                    <div class="dot"></div>
-                    <div style="font-size: 1.1rem; font-weight: 600;">สถานะเซิร์ฟเวอร์: เปิดให้บริการ</div>
-                </div>
-                <div style="font-weight: 700; color: var(--pink-neon); font-size: 1.2rem;">143 / 300 คนออนไลน์</div>
-            </div>
         </div>
 
-        <!-- 📜 หน้าที่ 2: RULES -->
-        <div id="page-rules" class="page">
-            <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem;">📜 กฎระเบียบประจำเมือง</h2>
-            <div class="rules-grid">
-                <div class="rule-card">
-                    <h3>01. เคารพซึ่งกันและกัน</h3>
-                    <p>ห้ามใช้ถ้อยคำหยาบคายรุนแรงนอกบทบาท (OOC) ให้เกียรติผู้เล่นร่วมเมืองทุกคนเพื่อสังคมที่น่าอยู่จ้า</p>
-                </div>
-                <div class="rule-card">
-                    <h3>02. การเล่นตามบทบาท</h3>
-                    <p>ไม่อนุญาตให้ทำผิดกฎพื้นฐานเช่น Power Gaming หรือ Meta Gaming เล่นให้สนุกและสมเหตุสมผลนะ</p>
-                </div>
-                <div class="rule-card">
-                    <h3>03. การใช้ถุงดำ / พื้นที่แดง</h3>
-                    <p>ห้ามใช้ถุงดำในพื้นที่เขตปลอดภัย (Safe Zone) และกรุณาทำความเข้าใจกฎพื้นที่สู้รบก่อนเข้าเล่นทุกครั้ง</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 🛒 หน้าที่ 3: STORE -->
+        <!-- 🛒 PAGE 2: STACKX STORE (NEW DESIGN) -->
         <div id="page-store" class="page">
-            <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem;">🛒 ร้านค้าสนับสนุนเซิร์ฟเวอร์</h2>
-            <div class="store-grid">
-                <div class="item-card">
-                    <div class="item-icon">🏎️</div>
-                    <h3>Hyper Car Box</h3>
-                    <div class="price">350 ฿</div>
-                    <button class="buy-btn" onclick="alert('ระบบสุ่มรถกำลังทำงาน! 🎉')">ซื้อไอเทม</button>
+            <h2 style="text-align: center; margin-bottom: 35px; font-size: 2.2rem; font-weight: 700;">🛒 StackX Digital Store</h2>
+            
+            <div class="store-layout">
+                <!-- แถบหมวดหมู่ซ้ายมือดีไซน์ใหม่ -->
+                <div class="store-sidebar">
+                    <button class="category-btn active-cat" id="cat-all" onclick="filterStore('all')">⭐ สินค้าทั้งหมด</button>
+                    <button class="category-btn" id="cat-vip" onclick="filterStore('vip')">👑 แพ็กเกจ VIP</button>
+                    <button class="category-btn" id="cat-cars" onclick="filterStore('cars')">🏎️ ยานพาหนะนำเข้า</button>
+                    <button class="category-btn" id="cat-skins" onclick="filterStore('skins')">🎒 แฟชั่น & สกินน่ารัก</button>
                 </div>
-                <div class="item-card">
-                    <div class="item-icon">👑</div>
-                    <h3>VIP Status (30 Days)</h3>
-                    <div class="price">150 ฿</div>
-                    <button class="buy-btn" onclick="alert('ขอบคุณที่สนับสนุนเซิร์ฟเวอร์ค่ะ! 💖')">ซื้อไอเทม</button>
-                </div>
-                <div class="item-card">
-                    <div class="item-icon">🎒</div>
-                    <h3>Cute Backpack Skin</h3>
-                    <div class="price">90 ฿</div>
-                    <button class="buy-btn" onclick="alert('ซื้อกระเป๋าสุดน่ารักสำเร็จ! 🎒')">ซื้อไอเทม</button>
+
+                <!-- ชั้นวางสินค้า -->
+                <div class="store-shelf" id="productShelf">
+                    <!-- Item 1 -->
+                    <div class="item-card" data-item="vip">
+                        <div class="item-icon">👑</div>
+                        <h3>StackX VIP Pass</h3>
+                        <p>รับยศพิเศษในดิสคอร์ด เงินเดือนคูณสอง และเข้าคิวเซิร์ฟเวอร์แบบด่วนพิเศษ</p>
+                        <div class="price-tag">150 ฿</div>
+                        <button class="buy-button" onclick="alert('ขอบคุณที่เลือก StackX VIP ค่ะ! 💖')">Buy Now</button>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="item-card" data-item="cars">
+                        <div class="item-icon">🏎️</div>
+                        <h3>Concept Car Box</h3>
+                        <p>กล่องสุ่มรถสปอร์ต Hypercar ความเร็วทะลุมิติ พร้อมชุดแต่งรอบคัน</p>
+                        <div class="price-tag">350 ฿</div>
+                        <button class="buy-button" onclick="alert('เปิดระบบสุ่มโรงรถ StackX! 🏎️')">Buy Now</button>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="item-card" data-item="skins">
+                        <div class="item-icon">🎒</div>
+                        <h3>Bunny Bag Skin</h3>
+                        <p>กระเป๋าเป้หูกระต่ายดุ๊กดิ๊กสุดคิ้วท์ เพิ่มความน่ารักให้ตัวละครของคุณ 100%</p>
+                        <div class="price-tag">90 ฿</div>
+                        <button class="buy-button" onclick="alert('จัดส่งไอเทมกระเป๋ากระต่ายเข้าตัวละครเรียบร้อย! 🐰')">Buy Now</button>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="item-card" data-item="skins">
+                        <div class="item-icon">🧸</div>
+                        <h3>Teddy Bear Hood</h3>
+                        <p>ฮู้ดหมีนุ่มนิ่มคอลเลกชันจำกัดเวลาเฉพาะซีซันนี้เท่านั้น ห้ามพลาดเลยน้า</p>
+                        <div class="price-tag">120 ฿</div>
+                        <button class="buy-button" onclick="alert('คุณได้รับชุดฮู้ดคุณหมีแล้วค่ะ! 🧸')">Buy Now</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 🌐 หน้าที่ 4: ABOUT -->
-        <div id="page-about" class="page">
-            <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem;">🔮 เกี่ยวกับ CuteCity</h2>
-            <div style="background: var(--bg-card); padding: 40px; border-radius: var(--round-large); border: 1px solid var(--glass-border); max-width: 800px; margin: 0 auto; line-height: 1.8; color: rgba(255,255,255,0.7);">
-                <p style="margin-bottom: 15px;">เซิร์ฟเวอร์ <strong>CuteCity FiveM</strong> ถูกก่อตั้งขึ้นมาด้วยความตั้งใจที่จะสร้างพื้นที่แลกเปลี่ยนเสียงหัวเราะและมิตรภาพที่ปลอดภัยสำหรับทุกคน</p>
-                <p>เรามีทีมงานแอดมินดูแลตลอด 24 ชั่วโมง ระบบเซิร์ฟเวอร์เสถียร ของเล่น/แฟชั่นอัปเดตใหม่ๆ เพียบ! ไม่ว่าคุณจะเป็นสายเนื้อเรื่องจ๋าๆ หรือสายทำกิจกรรมคอมมูนิตี้ ที่นี่พร้อมต้อนรับทุกคนเลยค่ะ 💜</p>
+        <!-- 📜 PAGE 3: RULES -->
+        <div id="page-rules" class="page">
+            <h2 style="text-align: center; margin-bottom: 35px; font-size: 2rem;">📜 กฎเหล็กประจำเมือง StackX</h2>
+            <div class="rules-container">
+                <div class="rule-row">
+                    <div class="rule-num">01</div>
+                    <div>
+                        <h3 style="color: var(--pink-neon); margin-bottom: 5px;">Happy Community</h3>
+                        <p style="color: rgba(255,255,255,0.6);">พูดคุยเล่นสนุกด้วยความสุภาพ ให้เกียรติเพื่อนๆ ในเซิร์ฟเวอร์และงดดราม่านอกบทบาท (OOC)</p>
+                    </div>
+                </div>
+                <div class="rule-row">
+                    <div class="rule-num">02</div>
+                    <div>
+                        <h3 style="color: var(--pink-neon); margin-bottom: 5px;">Fair Play No Cheating</h3>
+                        <p style="color: rgba(255,255,255,0.6);">ห้ามใช้โปรแกรมโกง ข้อผิดพลาดของระบบ (Bug) หรือใช้สคริปต์ดัดแปลงเอาเปรียบผู้อื่นเด็ดขาด</p>
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <!-- 🛠️ JAVASCRIPT SYSTEM: ควบคุมการเปลี่ยนหน้า & แอนิเมชันดาว -->
+    <!-- 🛠️ INTERACTION JAVASCRIPT -->
     <script>
-        // 1. ฟังก์ชันสลับหน้า (SPA Web App)
+        // 1. ระบบเปลี่ยนหน้าหลัก
         function switchPage(pageId) {
-            // ซ่อนทุกหน้า และเอาคลาส active-page ออก
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                page.classList.remove('active-page');
-            });
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-            // เอาคลาส active ออกจากทุกปุ่มบนเมนู
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // เปิดหน้าและเปิดปุ่มที่เราเลือก
             document.getElementById('page-' + pageId).classList.add('active-page');
             document.getElementById('btn-' + pageId).classList.add('active');
         }
 
-        // 2. สร้างเอฟเฟกต์ประกายดาวลอยฟุ้งๆ (Cute Background Sparks)
-        const container = document.getElementById('sparklesContainer');
-        const sparkleCount = 30;
+        // 2. ระบบคัดแยกสินค้าใน StackX Store (Category Filter)
+        function filterStore(category) {
+            // สลับคลาสปุ่ม Active ของหมวดหมู่
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active-cat'));
+            event.target.classList.add('active-cat');
 
-        for (let i = 0; i < sparkleCount; i++) {
+            // ซ่อน/แสดง สินค้าตามหมวดหมู่พร้อมแอนิเมชันเด้งเบาๆ
+            const cards = document.querySelectorAll('.item-card');
+            cards.forEach(card => {
+                card.style.transform = 'scale(0.9)';
+                card.style.opacity = '0';
+                
+                setTimeout(() => {
+                    if(category === 'all' || card.getAttribute('data-item') === category) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.transform = 'scale(1)';
+                            card.style.opacity = '1';
+                        }, 50);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }, 200);
+            });
+        }
+
+        // 3. ปล่อยละอองประกายไฟน่ารักๆ ด้านหลัง
+        const container = document.getElementById('sparklesContainer');
+        for (let i = 0; i < 25; i++) {
             const sparkle = document.createElement('div');
             sparkle.classList.add('sparkle');
-            
-            // สุ่มตำแหน่ง ขนาด และความเร็วในการลอย
             const size = Math.random() * 4 + 2;
             sparkle.style.width = size + 'px';
             sparkle.style.height = size + 'px';
             sparkle.style.left = Math.random() * 100 + 'vw';
             sparkle.style.top = Math.random() * 100 + 'vh';
-            sparkle.style.animationDuration = (Math.random() * 8 + 5) + 's';
-            sparkle.style.animationDelay = (Math.random() * 5) + 's';
-            
+            sparkle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            sparkle.style.animationDelay = (Math.random() * 4) + 's';
             container.appendChild(sparkle);
         }
     </script>
