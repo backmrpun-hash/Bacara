@@ -1,632 +1,193 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SECXION STORE | WEB APP CORE INTERACTIVE</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --purple-neon: #be4dff;
-            --purple-glow: rgba(190, 77, 255, 0.4);
-            --pink-neon: #ff6ec7;
-            --pink-glow: rgba(255, 110, 199, 0.4);
-            --cyan-neon: #00f3ff;
-            --cyan-glow: rgba(0, 243, 255, 0.3);
-            --bg-dark: #07050e;
-            --bg-card: rgba(20, 15, 35, 0.7);
-            --glass-border: rgba(190, 77, 255, 0.15);
-            --round-super: 40px;
-            --round-large: 24px;
-            --round-medium: 16px;
-        }
-
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Fredoka', 'Kanit', sans-serif; user-select: none;
-        }
-
-        body {
-            background-color: var(--bg-dark); color: #fff;
-            min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;
-            background-image: 
-                radial-gradient(circle at 80% 20%, rgba(255, 110, 199, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(190, 77, 255, 0.12) 0%, transparent 50%);
-            background-attachment: fixed;
-        }
-
-        /* --- 🧭 NAVIGATION BAR (NO POPUPS) --- */
-        nav {
-            margin: 15px auto; width: 92%; max-width: 1300px;
-            background: rgba(15, 10, 26, 0.75); backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); padding: 12px 20px; border-radius: var(--round-large);
-            display: flex; flex-direction: column; gap: 12px; align-items: center;
-            position: sticky; top: 15px; z-index: 1000; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
-        }
-        .logo { font-size: 1.6rem; font-weight: 700; text-shadow: 0 0 12px var(--purple-glow); cursor: pointer; }
-        .logo span { color: var(--pink-neon); }
-
-        .nav-center { display: flex; gap: 5px; width: 100%; justify-content: center; }
-        .nav-tab {
-            background: transparent; border: none; color: rgba(255, 255, 255, 0.6);
-            padding: 8px 14px; font-size: 0.9rem; font-weight: 600; border-radius: 50px;
-            cursor: pointer; transition: 0.3s; flex: 1; max-width: 120px; text-align: center;
-        }
-        .nav-tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
-        .nav-tab.active-tab {
-            background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); color: #fff;
-            box-shadow: 0 6px 20px var(--purple-glow);
-        }
-
-        .nav-right { display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center; }
-        .wallet-display { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; }
-        .wallet-display span { color: #00ff88; font-weight: 700; }
-
-        .cart-trigger {
-            background: rgba(0, 243, 255, 0.05); border: 1px solid var(--cyan-neon);
-            padding: 8px 18px; border-radius: 50px; cursor: pointer; font-weight: 700;
-            display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 0.9rem;
-        }
-        .cart-trigger:hover { box-shadow: 0 0 15px var(--cyan-glow); }
-        .cart-count {
-            background: var(--cyan-neon); color: #000; font-size: 0.8rem;
-            width: 20px; height: 20px; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; font-weight: 700;
-        }
-
-        /* --- 📦 MAIN CONTAINER --- */
-        .container { width: 92%; max-width: 1300px; margin: 10px auto 40px auto; flex: 1; z-index: 10; }
-
-        .app-view { display: none; }
-        .app-view.active-view { display: block; animation: viewIn 0.3s ease-out forwards; }
-
-        /* --- 🏠 PAGE 1: HOME DASHBOARD --- */
-        .hero-banner {
-            background: linear-gradient(135deg, rgba(35, 15, 60, 0.6), rgba(15, 10, 25, 0.8));
-            border: 1px solid var(--glass-border); border-radius: var(--round-large);
-            padding: 35px 20px; text-align: center; margin-bottom: 25px;
-        }
-        .hero-banner h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; text-shadow: 0 0 20px var(--purple-glow); }
-        
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
-        .stat-box { background: var(--bg-card); border: 1px solid var(--glass-border); padding: 15px; border-radius: var(--round-medium); text-align: center; }
-        .stat-num { font-size: 1.6rem; font-weight: 700; color: var(--cyan-neon); }
-        .stat-label { color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-top: 3px; }
-
-        /* ฟังก์ชันเว็บบอร์ดล้ำๆ: ส่วนร่วมกิจกรรมหน้าร้าน */
-        .web-features-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .feature-card { background: rgba(12, 8, 24, 0.85); border: 1px solid var(--glass-border); border-radius: var(--round-large); padding: 20px; }
-        .feature-title { font-size: 1.2rem; font-weight: 700; color: var(--pink-neon); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        
-        .flex-btn-group { display: flex; flex-wrap: wrap; gap: 10px; }
-        .action-btn {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff;
-            padding: 10px 16px; border-radius: var(--round-medium); cursor: pointer; font-size: 0.85rem; font-weight: 600;
-            transition: 0.2s; display: flex; align-items: center; gap: 6px;
-        }
-        .action-btn:hover { background: var(--purple-neon); border-color: transparent; transform: translateY(-2px); box-shadow: 0 5px 15px var(--purple-glow); }
-
-        /* กล่องสุ่มอนิเมชันจำลอง */
-        .gacha-display {
-            background: #030206; border: 1px solid rgba(0, 243, 255, 0.2); border-radius: var(--round-medium);
-            padding: 15px; margin-top: 15px; text-align: center; min-height: 60px; display: flex; align-items: center; justify-content: center;
-            font-weight: 600; color: #00ff88; font-size: 0.95rem;
-        }
-
-        /* --- 🛒 PAGE 2: STORE PAGE --- */
-        .store-header { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
-        .search-box { position: relative; width: 100%; }
-        .search-box input {
-            width: 100%; background: var(--bg-card); border: 1px solid var(--glass-border);
-            padding: 12px 20px; border-radius: 50px; color: #fff; outline: none; transition: 0.3s; font-size: 0.95rem;
-        }
-        .search-box input:focus { border-color: var(--cyan-neon); box-shadow: 0 0 15px var(--cyan-glow); }
-
-        .store-layout { display: flex; flex-direction: column; gap: 20px; }
-        .store-sidebar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; }
-        .category-btn {
-            background: var(--bg-card); border: 1px solid var(--glass-border);
-            color: rgba(255,255,255,0.7); padding: 10px 20px; text-align: center;
-            font-size: 0.9rem; font-weight: 600; border-radius: 50px; cursor: pointer; white-space: nowrap; flex-shrink: 0;
-        }
-        .category-btn.active-cat { background: linear-gradient(90deg, rgba(0, 243, 255, 0.2), rgba(190, 77, 255, 0.1)); border-color: var(--cyan-neon); color: #fff; }
-
-        .store-shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
-        .item-card {
-            background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--round-large);
-            padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative;
-        }
-        .item-badge { position: absolute; top: 12px; right: 12px; background: rgba(0, 243, 255, 0.1); padding: 2px 10px; border-radius: 50px; font-size: 0.7rem; color: var(--cyan-neon); font-weight: 700; border: 1px solid var(--cyan-neon); }
-        .item-icon { font-size: 2.2rem; margin: 10px 0 5px 0; }
-        .price-tag { font-size: 1.4rem; color: var(--pink-neon); font-weight: 700; margin: 10px 0; }
-        .buy-button { background: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid var(--glass-border); width: 100%; padding: 11px; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.2s; }
-        .item-card:hover .buy-button { background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); border-color: transparent; }
-
-        /* --- 📜 PAGE 3: HISTORY LOG PAGE --- */
-        .history-table-wrapper { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--round-large); overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
-        th, td { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
-        th { background: rgba(255,255,255,0.02); color: rgba(255,255,255,0.6); }
-        .status-badge { background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid #00ff88; padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
-
-        /* --- 🛒 SHOPPING CART OVERLAY --- */
-        .cart-modal {
-            position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
-            background: rgba(12, 8, 22, 0.98); backdrop-filter: blur(20px);
-            border-left: 1px solid var(--glass-border); z-index: 99999;
-            padding: 30px 20px; display: flex; flex-direction: column; transition: 0.3s ease-in-out;
-        }
-        .cart-modal.open { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .close-cart { background: transparent; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
-        .cart-items-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
-        .cart-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: var(--round-medium); display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
-        
-        .promo-section { margin-bottom: 15px; display: flex; gap: 8px; }
-        .promo-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 50px; color: #fff; outline: none; font-size: 0.85rem; }
-        .promo-btn { background: var(--cyan-neon); color: #000; border: none; padding: 8px 18px; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
-
-        .total-price-row { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; }
-        .checkout-btn { background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 50px; font-weight: 700; cursor: pointer; }
-
-        /* --- 🖥️ DESKTOP RESPONSIVE LAYOUT --- */
-        @media (min-width: 768px) {
-            nav { flex-direction: row; justify-content: space-between; padding: 12px 30px; margin: 20px auto; }
-            .nav-center { width: auto; gap: 8px; }
-            .nav-tab { padding: 10px 24px; font-size: 1rem; max-width: none; }
-            .nav-right { width: auto; gap: 15px; }
-            .hero-banner { padding: 50px; }
-            .hero-banner h1 { font-size: 2.8rem; }
-            .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
-            .web-features-grid { grid-template-columns: repeat(2, 1fr); }
-            .store-header { flex-direction: row; justify-content: space-between; align-items: center; }
-            .search-box { max-width: 360px; }
-            .store-layout { grid-template-columns: 260px 1fr; }
-            .store-sidebar { flex-direction: column; overflow-x: visible; }
-            .category-btn { text-align: left; border-radius: var(--round-medium); padding: 14px 20px; }
-            .cart-modal { width: 420px; right: -450px; border-top-left-radius: var(--round-super); border-bottom-left-radius: var(--round-super); }
-        }
-
-        @keyframes viewIn { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: translateY(0); } }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZXX Toolbox Dashboard</title>
+  <!-- นำเข้า Tailwind CSS เพื่อจัดการดีไซน์ -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    /* เอฟเฟกต์ซ่อนเนื้อหาแท็บที่ไม่ได้เลือก */
+    .tab-content { display: none; }
+    .tab-content.active { display: flex; flex-direction: column; gap: 1rem; }
+  </style>
 </head>
-<body>
+<body class="bg-slate-950 min-h-screen flex items-center justify-center font-sans p-4">
 
-    <!-- NAVIGATION BAR -->
-    <nav>
-        <div class="logo" onclick="switchView('home')">🪐 Secxion<span>Store</span></div>
-        <div class="nav-center">
-            <button class="nav-tab active-tab" id="tab-home" onclick="switchView('home')">🏠 หน้าแรก</button>
-            <button class="nav-tab" id="tab-store" onclick="switchView('store')">🛒 ร้านค้า</button>
-            <button class="nav-tab" id="tab-history" onclick="switchView('history')">📜 ประวัติระบบ</button>
+  <!-- Main Container Layout: แบบ Glassmorphism วางการ์ดแนวนอน -->
+  <div class="flex h-[580px] w-[900px] rounded-2xl border border-white/10 bg-slate-900/40 text-slate-200 backdrop-blur-xl overflow-hidden shadow-2xl">
+    
+    <!-- ================= ฝั่งซ้าย: SIDEBAR MENU ================= -->
+    <div class="w-1/3 border-r border-white/5 bg-slate-950/50 p-4 flex flex-col gap-1.5 justify-between">
+      <div class="flex flex-col gap-1.5">
+        <!-- หัวข้อหลักของ Sidebar -->
+        <div class="px-3 py-2 text-xs font-bold uppercase tracking-widest text-cyan-400/80">
+          Core Modules
         </div>
-        <div class="nav-right">
-            <div class="wallet-display">💰 เงินของคุณ: <span id="userBalance">1,500</span> ฿</div>
-            <div class="cart-trigger" onclick="toggleCart(true)">
-                ตะกร้า <div class="cart-count" id="cartCount">0</div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- CONTENT CONTAINER -->
-    <div class="container">
-
-        <!-- 🏠 หน้าที่ 1: หน้าหลัก (DASHBOARD + WEB SYSTEM APP FUNCTIONS) -->
-        <div class="app-view active-view" id="view-home">
-            <div class="hero-banner">
-                <h1>WEB INTERACTIVE SYSTEM</h1>
-                <p>ศูนย์รวมระบบฟังก์ชันจำลองการทำงานบนหน้าเว็บแอปพลิเคชันอย่างเต็มรูปแบบ</p>
-            </div>
-
-            <!-- แผงสถิติรวมของระบบตัวเว็บ -->
-            <div class="stats-grid">
-                <div class="stat-box"><div class="stat-num" id="stat-online">342</div><div class="stat-label">🟢 ออนไลน์ขณะนี้</div></div>
-                <div class="stat-box"><div class="stat-num" id="stat-sales">1,204</div><div class="stat-label">📦 ออเดอร์ทั้งหมด</div></div>
-                <div class="stat-box"><div class="stat-num" id="stat-discount">0%</div><div class="stat-label">🎟️ ส่วนลดปัจจุบัน</div></div>
-                <div class="stat-box"><div class="stat-num" style="color: #be4dff;" id="stat-points">0</div><div class="stat-label">✨ พ้อยท์สะสม</div></div>
-            </div>
-
-            <!-- คลังฟังก์ชันระบบการทำงานของตัวเว็บ (Web Application Functions Vault) -->
-            <h2 style="font-size: 1.4rem; margin-bottom: 15px; color: var(--cyan-neon);">🛠️ WEB APPLICATION INTERACTIVE FUNCTIONS</h2>
-            
-            <div class="web-features-grid">
-                
-                <!-- หมวดหมู่ระบบสมาชิกและกระเป๋าเงิน -->
-                <div class="feature-card">
-                    <div class="feature-title">💳 ระบบบัญชี & การเงิน (Wallet Feature)</div>
-                    <div class="flex-btn-group">
-                        <button class="action-btn" onclick="mockAddFunds(100)">💵 เติมเงินจำลอง +100 ฿</button>
-                        <button class="action-btn" onclick="mockAddFunds(500)">💵 เติมเงินจำลอง +500 ฿</button>
-                        <button class="action-btn" onclick="clearWallet()">🗑️ ล้างยอดเงินเป็น 0</button>
-                    </div>
-                </div>
-
-                <!-- หมวดหมู่ระบบโปรโมชันและคูปอง -->
-                <div class="feature-card">
-                    <div class="feature-title">🎟️ ระบบการตลาด & โค้ดส่วนลด (Marketing & Coupon)</div>
-                    <div class="flex-btn-group">
-                        <button class="action-btn" onclick="generateCoupon()">🎲 สุ่มรับโค้ดส่วนลดในระบบ</button>
-                        <button class="action-btn" onclick="resetCouponStatus()">🔄 รีเซ็ตสิทธิ์การใช้โค้ดทั้งหมด</button>
-                    </div>
-                    <div class="gacha-display" id="couponDisplay">กดปุ่มด้านบนเพื่อรับสิทธิ์โค้ดส่วนลดระบบ...</div>
-                </div>
-
-                <!-- หมวดหมู่ระบบกิจกรรมความบันเทิงหน้าเว็บ -->
-                <div class="feature-card">
-                    <div class="feature-title">🎁 ฟังก์ชันกิจกรรมลูกค้า (Engagement & Gacha Mini-game)</div>
-                    <div class="flex-btn-group">
-                        <button class="action-btn" onclick="rollGacha()">🎰 สุ่มกล่องของรางวัลฟรี (ใช้ 10 พ้อยท์)</button>
-                        <button class="action-btn" onclick="addMockPoints()">✨ รับพ้อยท์ทดสอบระบบ +20 pt</button>
-                    </div>
-                    <div class="gacha-display" id="gachaDisplay">ผลการสุ่มของรางวัลหน้าร้านจะแสดงตรงนี้...</div>
-                </div>
-
-                <!-- หมวดหมู่ระบบควบคุมเซิร์ฟเวอร์หลังบ้าน -->
-                <div class="feature-card">
-                    <div class="feature-title">🖥️ ฟังก์ชันจำลองเซิร์ฟเวอร์หลังบ้าน (Site Server Control)</div>
-                    <div class="flex-btn-group">
-                        <button class="action-btn" onclick="toggleServerStatus()">🔌 สลับสถานะเซิร์ฟเวอร์ (เปิด/ปิด)</button>
-                        <button class="action-btn" onclick="clearHistoryLog()">🧹 สั่งล้างประวัติตารางธุรกรรมทั้งหมด</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- 🛒 หน้าที่ 2: หน้าร้านค้า (STORE + REALTIME FILTER & SEARCH) -->
-        <div class="app-view" id="view-store">
-            <div class="store-header">
-                <div>
-                    <h2 style="font-size: 1.6rem;">🛒 ระบบหน้าร้านและการจัดส่ง</h2>
-                    <p style="color: rgba(255,255,255,0.4); font-size: 0.85rem;">ฟังก์ชันตัวกรองหมวดหมู่สินค้าแยกประเภทแบบไม่ต้องโหลดหน้าใหม่</p>
-                </div>
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="ค้นหาชื่อสินค้าในระบบแอปพลิเคชัน..." oninput="liveSearch()">
-                </div>
-            </div>
-
-            <div class="store-layout">
-                <div class="store-sidebar">
-                    <button class="category-btn active-cat" id="cat-all" onclick="filterCategory('all')">⭐ คลังทั้งหมด</button>
-                    <button class="category-btn" id="cat-opt" onclick="filterCategory('opt')">⚡ System UI & Scripts</button>
-                    <button class="category-btn" id="cat-ui" onclick="filterCategory('ui')">🎨 Game Custom Modding</button>
-                </div>
-
-                <div class="store-shelf">
-                    <div class="item-card" data-cat="opt" data-name="zxx cpu pro booster script">
-                        <div class="item-badge">HOT</div>
-                        <div><div class="item-icon">⚡</div><h3>ZXX CPU PRO Script</h3><p>ไฟล์สคริปต์ปรับแต่งการทำงานแกนระบบเบื้องหลัง</p></div>
-                        <div><div class="price-tag">250 ฿</div><button class="buy-button" onclick="addToCart('ZXX CPU PRO', 250)">Add to Cart</button></div>
-                    </div>
-                    <div class="item-card" data-cat="ui" data-name="glassmorphic design ui panels pack">
-                        <div class="item-badge">PREMIUM</div>
-                        <div><div class="item-icon">💎</div><h3>Glassmorphic UI Pack</h3><p>ดีไซน์หน้าต่างกระจกฝ้าหรูหราสำหรับใช้ตกแต่งเซิร์ฟเวอร์</p></div>
-                        <div><div class="price-tag">450 ฿</div><button class="buy-button" onclick="addToCart('Glassmorphic UI Pack', 450)">Add to Cart</button></div>
-                    </div>
-                    <div class="item-card" data-cat="opt" data-name="anti-trace database forensics wiper">
-                        <div class="item-badge">POPULAR</div>
-                        <div><div class="item-icon">🧹</div><h3>Anti-Trace System</h3><p>สคริปต์อัตโนมัติจัดเคลียร์ลบประวัติขยะระบบ</p></div>
-                        <div><div class="price-tag">180 ฿</div><button class="buy-button" onclick="addToCart('Anti-Trace System', 180)">Add to Cart</button></div>
-                    </div>
-                    <div class="item-card" data-cat="ui" data-name="fivem custom peripheral optimizing hud">
-                        <div class="item-badge">NEW</div>
-                        <div><div class="item-icon">🕹️</div><h3>FiveM Custom HUD</h3><p>กรอบอินเตอร์เฟสความเร็วต่ำหน้าจอเกมเพื่อความสมูท</p></div>
-                        <div><div class="price-tag">300 ฿</div><button class="buy-button" onclick="addToCart('FiveM Custom HUD', 300)">Add to Cart</button></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 📜 หน้าที่ 3: หน้าประวัติระบบ (HISTORY TRANSACTION TABLE) -->
-        <div class="app-view" id="view-history">
-            <h2 style="margin-bottom: 20px; font-size: 1.6rem;">📜 รายงาน Log บันทึกประวัติและธุรกรรมระบบ</h2>
-            <div class="history-table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>หมวดหมู่ฟังก์ชัน</th>
-                            <th>รายละเอียดบันทึกความเคลื่อนไหว</th>
-                            <th>ค่าเป้าหมาย (Value)</th>
-                            <th>เวลาทำรายการ</th>
-                            <th>สถานะตอบกลับ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyTableBody">
-                        <tr>
-                            <td>SYSTEM_INIT</td>
-                            <td style="color:var(--cyan-neon); font-weight:600;">เชื่อมต่อโครงสร้างระบบฐานข้อมูลสำเร็จ</td>
-                            <td>v2.6.1</td>
-                            <td>เมื่อสักครู่ที่ผ่านมา</td>
-                            <td><span class="status-badge">SUCCESS</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- SHOPPING CART PANEL OVERLAY -->
-    <div class="cart-modal" id="cartModal">
-        <div class="cart-header">
-            <h2 style="font-weight:700; color:var(--cyan-neon);">🛒 ตะกร้าสะสมระบบ</h2>
-            <button class="close-cart" onclick="toggleCart(false)">✕</button>
-        </div>
-        <div class="cart-items-list" id="cartItemsList"></div>
         
-        <!-- ฟังก์ชันกรอกโค้ดส่วนลดในตะกร้า -->
-        <div class="promo-section">
-            <input type="text" class="promo-input" id="couponInput" placeholder="กรอกโค้ดส่วนลดระบบ...">
-            <button class="promo-btn" onclick="applyCoupon()">ใช้งาน</button>
-        </div>
+        <!-- ปุ่มเมนูแท็บที่ 1 (Active ไว้เริ่มต้น) -->
+        <button onclick="switchTab(event, 'system-opt')" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-medium transition-all text-left cursor-pointer">
+          <span class="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] transition-all"></span>
+          System Optimizer
+        </button>
+        
+        <!-- ปุ่มเมนูแท็บที่ 2 -->
+        <button onclick="switchTab(event, 'deep-clean')" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400 hover:text-slate-200 font-medium transition-all text-left cursor-pointer">
+          <span class="h-2 w-2 rounded-full bg-slate-600 transition-all"></span>
+          Deep Cleaner
+        </button>
+        
+        <!-- ปุ่มเมนูแท็บที่ 3 -->
+        <button onclick="switchTab(event, 'latency-tweak')" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400 hover:text-slate-200 font-medium transition-all text-left cursor-pointer">
+          <span class="h-2 w-2 rounded-full bg-slate-600 transition-all"></span>
+          Latency Tweaks
+        </button>
+      </div>
 
-        <div class="cart-footer">
-            <div class="total-price-row"><span>ราคารวม:</span><span id="totalPriceText" style="color:var(--pink-neon);">0 ฿</span></div>
-            <button class="checkout-btn" onclick="checkoutSystem()">ตัดยอดเงินและดำเนินการสั่งซื้อ</button>
-        </div>
+      <!-- ส่วนท้ายแสดงเวอร์ชัน/เครดิตด้านล่าง Sidebar -->
+      <div class="px-3 py-2 border-t border-white/5 flex justify-between items-center text-[11px] text-slate-500">
+        <span>SYSTEM LAUNCHER v1.0</span>
+        <span class="text-cyan-500/60 font-semibold">READY</span>
+      </div>
     </div>
 
-    <script>
-        // กำหนดข้อมูลรัฐ (State Context) เริ่มต้นของหน้าเว็บ
-        let balance = 1500;
-        let points = 50;
-        let discountRate = 0;
-        let cart = [];
-        let isServerOnline = true;
+    <!-- ================= ฝั่งขวา: CONTENT PANEL ================= -->
+    <div class="w-2/3 p-6 overflow-y-auto flex flex-col gap-4">
+      
+      <!-- ---------------- TAB 1: SYSTEM OPTIMIZER ---------------- -->
+      <div id="system-opt" class="tab-content active">
+        <div class="border-b border-white/10 pb-3 mb-2">
+          <h2 class="text-xl font-bold text-white tracking-wide">System Optimizer</h2>
+          <p class="text-xs text-slate-400">ปรับแต่งการจัดการทรัพยากร CPU และความเสถียรของ Kernel</p>
+        </div>
 
-        // 1. ระบบจัดการสลับหน้า (SPA Architecture - ปราศจากการเรียกป๊อปอัพกวนใจ)
-        function switchView(viewName) {
-            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active-tab'));
-            
-            document.getElementById(`view-${viewName}`).classList.add('active-view');
-            document.getElementById(`tab-${viewName}`).classList.add('active-tab');
-        }
+        <!-- โปรแกรมย่อยที่ 1 -->
+        <div class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-slate-900/40 hover:border-white/10 hover:bg-slate-900/60 transition-all">
+          <div class="flex flex-col gap-1 max-w-[70%]">
+            <span class="text-sm font-semibold text-white">CPU Power Steering</span>
+            <span class="text-xs text-slate-400">บังคับให้ Windows กระจายงานลงกลุ่ม Threads ประสิทธิภาพสูงเพื่อลด Micro-stutter</span>
+          </div>
+          <button onclick="runProgram(this, 'CPU Power Steering')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] active:scale-95 transition-all cursor-pointer">
+            Run Script
+          </button>
+        </div>
 
-        // 2. ฟังก์ชันระบบบัญชี & กระเป๋าเงิน
-        function mockAddFunds(amount) {
-            balance += amount;
-            updateUI();
-            addLogToTable("WALLET_DEPOSIT", `เติมเงินเข้าระบบจำลองสำเร็จจำนวน +${amount} ฿`, `${amount} ฿`, "DONE");
-        }
+        <!-- โปรแกรมย่อยที่ 2 -->
+        <div class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-slate-900/40 hover:border-white/10 hover:bg-slate-900/60 transition-all">
+          <div class="flex flex-col gap-1 max-w-[70%]">
+            <span class="text-sm font-semibold text-white">RAM Cache Purge</span>
+            <span class="text-xs text-slate-400">เคลียร์ Standby List และคืนพื้นที่ Memory ที่ค้างอยู่ในระบบทั้งหมด</span>
+          </div>
+          <button onclick="runProgram(this, 'RAM Cache Purge')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] active:scale-95 transition-all cursor-pointer">
+            Run Script
+          </button>
+        </div>
+      </div>
 
-        function clearWallet() {
-            balance = 0;
-            updateUI();
-            addLogToTable("WALLET_RESET", "ล้างยอดเงินกระเป๋าจำลองในระบบ", "0 ฿", "WARNING");
-        }
+      <!-- ---------------- TAB 2: DEEP CLEANER ---------------- -->
+      <div id="deep-clean" class="tab-content">
+        <div class="border-b border-white/10 pb-3 mb-2">
+          <h2 class="text-xl font-bold text-white tracking-wide">Deep Cleaner</h2>
+          <p class="text-xs text-slate-400">ล้างไฟล์ขยะลึกระดับระบบและลบประวัติ Log ตกค้าง (Anti-Forensics)</p>
+        </div>
 
-        // 3. ฟังก์ชันระบบสุ่มแจกคูปองการตลาด
-        function generateCoupon() {
-            const discounts = [10, 20, 30, 50];
-            const randomPercent = discounts[Math.floor(Math.random() * discounts.length)];
-            const code = `SECXION${randomPercent}`;
-            
-            document.getElementById('couponDisplay').innerHTML = `🎟️ คุณได้รับโค้ด: <span style="color:var(--pink-neon); font-size:1.1rem;">${code}</span> (ลดทันที ${randomPercent}%)`;
-            addLogToTable("COUPON_GEN", `ระบบสุ่มแจกคูปองส่วนลดพิเศษ ${randomPercent}%`, code, "SUCCESS");
-        }
+        <!-- โปรแกรมย่อยที่ 1 -->
+        <div class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-slate-900/40 hover:border-white/10 hover:bg-slate-900/60 transition-all">
+          <div class="flex flex-col gap-1 max-w-[70%]">
+            <span class="text-sm font-semibold text-white">BAM / DAM Clearer</span>
+            <span class="text-xs text-slate-400">ล้างประวัติการเปิดแอปพลิเคชัน (Background Activity Moderator) ใน Registry</span>
+          </div>
+          <button onclick="runProgram(this, 'BAM / DAM Clearer')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-fuchsia-500 to-pink-600 text-white rounded-lg shadow-[0_0_15px_rgba(217,70,239,0.3)] hover:shadow-[0_0_20px_rgba(217,70,239,0.5)] active:scale-95 transition-all cursor-pointer">
+            Run Script
+          </button>
+        </div>
 
-        function applyCoupon() {
-            const input = document.getElementById('couponInput').value.trim().toUpperCase();
-            if(input === "SECXION10") discountRate = 0.10;
-            else if(input === "SECXION20") discountRate = 0.20;
-            else if(input === "SECXION30") discountRate = 0.30;
-            else if(input === "SECXION50") discountRate = 0.50;
-            else {
-                alert("❌ ไม่พบรหัสโค้ดส่วนลดนี้ในฐานข้อมูลเว็บ");
-                return;
-            }
-            document.getElementById('stat-discount').innerText = (discountRate * 100) + "%";
-            updateCartUI();
-            alert(`🎉 บังคับใช้โค้ดส่วนลด ${discountRate * 100}% ในตะกร้าสำเร็จ!`);
-            addLogToTable("COUPON_APPLY", "สิทธิ์ผู้ใช้เปิดรหัสคูปองส่วนลดในตะกร้า", `${discountRate*100}%`, "ACTIVE");
-        }
+        <!-- โปรแกรมย่อยที่ 2 -->
+        <div class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-slate-900/40 hover:border-white/10 hover:bg-slate-900/60 transition-all">
+          <div class="flex flex-col gap-1 max-w-[70%]">
+            <span class="text-sm font-semibold text-white">SRUM Log Purge</span>
+            <span class="text-xs text-slate-400">ลบฐานข้อมูลการใช้งานพลังงานและเน็ตเวิร์กของระบบเพื่อความเป็นส่วนตัว</span>
+          </div>
+          <button onclick="runProgram(this, 'SRUM Log Purge')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-fuchsia-500 to-pink-600 text-white rounded-lg shadow-[0_0_15px_rgba(217,70,239,0.3)] hover:shadow-[0_0_20px_rgba(217,70,239,0.5)] active:scale-95 transition-all cursor-pointer">
+            Run Script
+          </button>
+        </div>
+      </div>
 
-        function resetCouponStatus() {
-            discountRate = 0;
-            document.getElementById('stat-discount').innerText = "0%";
-            document.getElementById('couponDisplay').innerText = "กดปุ่มด้านบนเพื่อรับสิทธิ์โค้ดส่วนลดระบบ...";
-            updateCartUI();
-            addLogToTable("COUPON_RESET", "ล้างค่าฟังก์ชันส่วนลดระเบียงระบบทั้งหมด", "0%", "DONE");
-        }
+      <!-- ---------------- TAB 3: LATENCY TWEAKS ---------------- -->
+      <div id="latency-tweak" class="tab-content">
+        <div class="border-b border-white/10 pb-3 mb-2">
+          <h2 class="text-xl font-bold text-white tracking-wide">Latency Tweaks</h2>
+          <p class="text-xs text-slate-400">ปรับแต่งความเร็วการตอบสนองของเมาส์ คีย์บอร์ด และเครือข่าย</p>
+        </div>
 
-        // 4. ฟังก์ชันความบันเทิง มินิเกมระบบกล่องสุ่มรางวัล (Gacha System)
-        function rollGacha() {
-            if(points < 10) {
-                alert("❌ คะแนนสะสมของคุณไม่เพียงพอ! ต้องใช้ 10 pt (กดเพิ่มคะแนนทดลองระบบได้ฟรี)");
-                return;
-            }
-            points -= 10;
-            updateUI();
+        <!-- โปรแกรมย่อยที่ 1 -->
+        <div class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-slate-900/40 hover:border-white/10 hover:bg-slate-900/60 transition-all">
+          <div class="flex flex-col gap-1 max-w-[70%]">
+            <span class="text-sm font-semibold text-white">Mouse Queue Optimization</span>
+            <span class="text-xs text-slate-400">ปรับแต่งค่า MouseDataQueueSize เพื่อเพิ่มความสมูทและลดดีเลย์การลากเมาส์</span>
+          </div>
+          <button onclick="runProgram(this, 'Mouse Queue')" class="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] active:scale-95 transition-all cursor-pointer">
+            Run Script
+          </button>
+        </div>
+      </div>
 
-            const prizes = [
-                "VIP Status Rank (7 Days)",
-                "Exclusive Custom Cyberpunk HUD V2",
-                "Bonus Wallet Cash +50 Baht",
-                "Unreleased Low Latency Registry Script",
-                "Better Luck Next Time! (เกลือ)"
-            ];
-            const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
-            
-            if(randomPrize.includes("+50")) {
-                balance += 50;
-                updateUI();
-            }
+    </div>
+  </div>
 
-            document.getElementById('gachaDisplay').innerHTML = `🎁 รางวัลที่ได้: <span style="color:var(--cyan-neon);">${randomPrize}</span>`;
-            addLogToTable("GACHA_ROLL", `กดสุ่มไอเทมกิจกรรมของรางวัลจำลอง`, randomPrize, "SUCCESS");
-        }
+  <!-- ================= LOGIC CONTROL (JAVASCRIPT) ================= -->
+  <script>
+    // ฟังก์ชันสำหรับกดสลับแท็บเมนูฝั่งซ้าย
+    function switchTab(event, tabId) {
+      // 1. ซ่อนแท็บเนื้อหาทั้งหมด
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
+      
+      // 2. เคลียร์คลาสปุ่มกดทั้งหมดให้กลับเป็นสถานะปกติ (Unselected)
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => {
+        btn.className = "tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400 hover:text-slate-200 font-medium transition-all text-left cursor-pointer";
+        btn.querySelector('span').className = "h-2 w-2 rounded-full bg-slate-600 transition-all";
+      });
 
-        function addMockPoints() {
-            points += 20;
-            updateUI();
-            addLogToTable("POINT_ADD", "เพิ่มแต้มพ้อยท์ระบบจำลองให้ผู้ใช้", "+20 pt", "DONE");
-        }
+      // 3. แสดงแท็บที่ถูกเลือก
+      document.getElementById(tabId).classList.add('active');
 
-        // 5. ฟังก์ชันควบคุมระบบเซิร์ฟเวอร์หลังบ้าน
-        function toggleServerStatus() {
-            isServerOnline = !isServerOnline;
-            const statusBox = document.getElementById('stat-online');
-            if(isServerOnline) {
-                statusBox.innerText = "342";
-                statusBox.style.color = "#00f3ff";
-                addLogToTable("SERVER_STATUS", "เปิดการเชื่อมต่อระบบเซิร์ฟเวอร์หลักหลัก", "ONLINE", "RUNNING");
-            } else {
-                statusBox.innerText = "OFFLINE";
-                statusBox.style.color = "#ff6ec7";
-                addLogToTable("SERVER_STATUS", "ตัดการเชื่อมต่อระบบเซิร์ฟเวอร์บำรุงรักษา", "OFFLINE", "STOPPED");
-            }
-        }
+      // 4. เปลี่ยนดีไซน์ปุ่มที่ถูกกดให้เป็นสถานะ Active (ตามโทนสีของปุ่มหลัก)
+      const currentBtn = event.currentTarget;
+      currentBtn.className = "tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-medium transition-all text-left cursor-pointer";
+      currentBtn.querySelector('span').className = "h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] transition-all";
+    }
 
-        // 6. ระบบสัญญารับ-ส่งจัดการ ตะกร้าสินค้า
-        function toggleCart(isOpen) {
-            const modal = document.getElementById('cartModal');
-            if(isOpen) modal.classList.add('open');
-            else modal.classList.remove('open');
-        }
-
-        function addToCart(name, price) {
-            if(!isServerOnline) {
-                alert("❌ ขออภัย! เซิร์ฟเวอร์ปิดให้บริการชั่วคราว ดำเนินการไม่ได้");
-                return;
-            }
-            cart.push({ id: Date.now() + Math.random(), name: name, price: price });
-            updateCartUI();
-        }
-
-        function removeFromCart(id) {
-            cart = cart.filter(item => item.id !== id);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            document.getElementById('cartCount').innerText = cart.length;
-            const listContainer = document.getElementById('cartItemsList');
-            listContainer.innerHTML = '';
-            let rawTotal = 0;
-            
-            if(cart.length === 0) {
-                listContainer.innerHTML = '<p style="color:rgba(255,255,255,0.2); text-align:center; margin-top:40px;">ไม่มีสินค้าในตะกร้า</p>';
-            } else {
-                cart.forEach(item => {
-                    rawTotal += item.price;
-                    const div = document.createElement('div');
-                    div.classList.add('cart-item');
-                    div.innerHTML = `
-                        <div>
-                            <div style="font-weight:600; font-size:0.95rem;">${item.name}</div>
-                            <div style="color:var(--cyan-neon); font-size:0.85rem; font-weight:700;">${item.price} ฿</div>
-                        </div>
-                        <button style="background:transparent; border:none; color:var(--pink-neon); cursor:pointer;" onclick="removeFromCart(${item.id})">ลบ</button>
-                    `;
-                    listContainer.appendChild(div);
-                });
-            }
-            
-            let finalTotal = rawTotal - (rawTotal * discountRate);
-            document.getElementById('totalPriceText').innerText = finalTotal + ' ฿';
-        }
-
-        function checkoutSystem() {
-            if(cart.length === 0) return;
-            
-            let rawTotal = 0;
-            cart.forEach(i => rawTotal += i.price);
-            let finalTotal = rawTotal - (rawTotal * discountRate);
-
-            if(balance < finalTotal) {
-                alert("❌ ยอดเงินในกระเป๋าของคุณไม่เพียงพอสำหรับการตัดบัญชี! กรุณากดเติมเงินที่หน้าแรก");
-                return;
-            }
-
-            // ตัดยอดเงินจริงในสเตตระบบเว็บ
-            balance -= finalTotal;
-            // เพิ่มคะแนนรับโบนัสหลังการซื้อ
-            points += Math.floor(finalTotal / 10);
-            
-            cart.forEach(item => {
-                addLogToTable("SHOP_CHECKOUT", `ชำระค่าสินค้า: ${item.name}`, `-${item.price} ฿`, "DELIVERED");
-            });
-
-            alert("🛒 ดำเนินการตัดจ่ายและสั่งซื้อฟังก์ชันสำเร็จ! ข้อมูลถูกป้อนบันทึกเข้าหน้าประวัติระบบแล้ว");
-            
-            cart = [];
-            updateCartUI();
-            updateUI();
-            toggleCart(false);
-            switchView('history');
-        }
-
-        // 7. ระบบค้นหาและตัวกรองข้อมูลแบบยืดหยุ่นสูง (Live Filtering Search)
-        function liveSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            document.querySelectorAll('.item-card').forEach(card => {
-                const name = card.getAttribute('data-name');
-                card.style.display = name.includes(query) ? 'flex' : 'none';
-            });
-        }
-
-        function filterCategory(cat) {
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active-cat'));
-            event.target.classList.add('active-cat');
-            document.querySelectorAll('.item-card').forEach(card => {
-                const itemCat = card.getAttribute('data-cat');
-                card.style.display = (cat === 'all' || itemCat === cat) ? 'flex' : 'none';
-            });
-        }
-
-        // 8. ฟังชันการเขียนตาราง Log บันทึกประวัติหน้าเว็บแบบ Dynamic
-        function addLogToTable(action, detail, val, status) {
-            const tableBody = document.getElementById('historyTableBody');
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td style="font-family:monospace; color:var(--pink-neon); font-size:0.8rem;">${action}</td>
-                <td>${detail}</td>
-                <td style="font-weight:600; color:var(--cyan-neon);">${val}</td>
-                <td>เมื่อสักครู่</td>
-                <td><span class="status-badge" style="border-color:${status === 'SUCCESS' || status==='DONE' ? '#00ff88':'#ff6ec7'}; color:${status === 'SUCCESS' || status==='DONE' ? '#00ff88':'#ff6ec7'};">${status}</span></td>
-            `;
-            tableBody.insertBefore(tr, tableBody.firstChild);
-
-            // ปรับตัวเลขจำนวนออเดอร์สะสมจำลองบนหน้าหลักเพิ่มขึ้น
-            let salesBox = document.getElementById('stat-sales');
-            let currentSales = parseInt(salesBox.innerText.replace(/,/g, ''));
-            salesBox.innerText = (currentSales + 1).toLocaleString();
-        }
-
-        function clearHistoryLog() {
-            document.getElementById('historyTableBody').innerHTML = `
-                <tr>
-                    <td>LOG_RESET</td>
-                    <td style="color:var(--pink-neon);">สั่งการล้างลบตารางรายงานบันทึกประวัติเบื้องหลังเรียบร้อย</td>
-                    <td>-</td>
-                    <td>เมื่อสักครู่</td>
-                    <td><span class="status-badge" style="color:yellow; border-color:yellow;">CLEARED</span></td>
-                </tr>
-            `;
-            alert("🧹 เคลียร์บันทึกข้อมูลตาราง Log ทั้งหมดเรียบร้อยแล้วครับ");
-        }
-
-        function updateUI() {
-            document.getElementById('userBalance').innerText = balance.toLocaleString();
-            document.getElementById('stat-points').innerText = points;
-        }
-
-        // จำลองลูปประมวลผลเพิ่มจำนวนยอดผู้เข้าชมเว็บแอปพลิเคชันทุกๆ 3 วินาที
-        setInterval(() => {
-            if(isServerOnline && document.getElementById('view-home').classList.contains('active-view')) {
-                let onlineBox = document.getElementById('stat-online');
-                let num = parseInt(onlineBox.innerText);
-                num += Math.floor(Math.random() * 5) - 2;
-                if(num < 300) num = 320;
-                onlineBox.innerText = num;
-            }
-        }, 3000);
-    </script>
+    // ฟังก์ชันจำลองการทำงานเมื่อกดปุ่ม Run (มี Loading State สั้นๆ 2 วินาที)
+    function runProgram(button, programName) {
+      // ป้องกันการกดซ้ำระหว่างทำงาน
+      if (button.disabled) return;
+      
+      button.disabled = true;
+      const originalText = button.innerText;
+      
+      // เปลี่ยนสถานะปุ่มเป็นกำลังรันสคริปต์
+      button.innerText = "Executing...";
+      button.style.opacity = "0.6";
+      
+      // จำลองการรันเสร็จสิ้น (ในงานจริงตรงนี้จะสั่งให้ส่งคำสั่งไป Backend)
+      setTimeout(() => {
+        button.innerText = "Success ✓";
+        button.style.opacity = "1";
+        // เปลี่ยนเป็นสีเขียวชั่วคราว
+        button.style.backgroundImage = "linear-gradient(to right, #10b981, #059669)"; 
+        
+        // เซ็ตให้ปุ่มกลับมาพร้อมกดใหม่อีกครั้งหลังจากแสดงคำว่า Success
+        setTimeout(() => {
+          button.innerText = originalText;
+          button.style.backgroundImage = "";
+          button.disabled = false;
+        }, 1500);
+        
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
