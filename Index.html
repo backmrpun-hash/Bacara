@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STACKX HUB | FULLY RESPONSIVE MULTI-PAGE UI</title>
+    <title>STACKX HUB | ULTIMATE 100+ FUNCTIONS TWEAKER</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Fredoka:wght@400;600;700&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -40,26 +40,10 @@
             background-attachment: fixed;
         }
 
-        /* --- 🌌 BACKGROUND SPARKS --- */
         .sparkles { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .sparkle { position: absolute; background: #fff; border-radius: 50%; animation: floatUp infinite linear; opacity: 0.15; }
 
-        /* --- 🔔 TOAST NOTIFICATION --- */
-        #toastContainer {
-            position: fixed; top: 20px; right: 20px; left: 20px; z-index: 99999;
-            display: flex; flex-direction: column; gap: 10px; pointer-events: none;
-        }
-        .toast {
-            background: rgba(20, 14, 35, 0.95); border-left: 4px solid var(--cyan-neon);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(15px);
-            padding: 14px 20px; border-radius: var(--round-medium); color: #fff;
-            font-weight: 600; text-align: center; pointer-events: auto;
-            transform: translateY(-50px); opacity: 0;
-            animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
-            transition: all 0.3s ease;
-        }
-
-        /* --- 🧭 NAVIGATION BAR (RESPONSIVE) --- */
+        /* --- 🧭 NAVIGATION BAR --- */
         nav {
             margin: 15px auto; width: 92%; max-width: 1300px;
             background: rgba(15, 10, 26, 0.7); backdrop-filter: blur(25px);
@@ -88,7 +72,7 @@
             display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 0.9rem;
             width: 100%; justify-content: center;
         }
-        .cart-trigger:hover { transform: scale(1.02); box-shadow: 0 0 15px var(--cyan-glow); }
+        .cart-trigger:hover { box-shadow: 0 0 15px var(--cyan-glow); }
         .cart-count {
             background: var(--cyan-neon); color: #000; font-size: 0.8rem;
             width: 20px; height: 20px; border-radius: 50%; display: flex;
@@ -98,7 +82,6 @@
         /* --- 📦 MAIN CONTAINER CONTAINER --- */
         .container { width: 92%; max-width: 1300px; margin: 10px auto 40px auto; flex: 1; z-index: 10; }
 
-        /* SPA View Control */
         .app-view { display: none; }
         .app-view.active-view { display: block; animation: viewIn 0.4s ease-out forwards; }
 
@@ -108,29 +91,49 @@
             border: 1px solid var(--glass-border); border-radius: var(--round-large);
             padding: 35px 20px; text-align: center; position: relative; overflow: hidden; margin-bottom: 25px;
         }
-        .hero-banner h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; text-shadow: 0 0 20px var(--purple-glow); line-height: 1.2; }
+        .hero-banner h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; text-shadow: 0 0 20px var(--purple-glow); }
         .hero-banner p { color: rgba(255,255,255,0.6); margin-bottom: 20px; font-size: 0.95rem; }
         
-        .promo-btn {
-            background: linear-gradient(90deg, var(--cyan-neon), var(--purple-neon));
-            color: #000; font-weight: 700; padding: 12px 30px; border: none;
-            border-radius: 50px; font-size: 1rem; cursor: pointer; transition: 0.3s; width: 100%; max-width: 280px;
-        }
-        .promo-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px var(--purple-glow); color: #fff; }
-
         .stats-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px; }
-        .stat-box {
-            background: var(--bg-card); border: 1px solid var(--glass-border);
-            padding: 20px; border-radius: var(--round-medium); text-align: center;
-        }
+        .stat-box { background: var(--bg-card); border: 1px solid var(--glass-border); padding: 20px; border-radius: var(--round-medium); text-align: center; }
         .stat-num { font-size: 2rem; font-weight: 700; color: var(--cyan-neon); text-shadow: 0 0 10px var(--cyan-glow); }
         .stat-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 5px; }
 
-        /* --- 🛒 PAGE 2: STORE PAGE --- */
-        .store-header {
-            display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;
+        /* --- 🛠️ 100+ FUNCTIONS TWEAKER INTERFACE --- */
+        .vault-title { font-size: 1.5rem; margin-bottom: 5px; color: var(--cyan-neon); text-shadow: 0 0 10px var(--cyan-glow); }
+        .vault-desc { color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-bottom: 20px; }
+        
+        .vault-section {
+            background: rgba(10, 6, 18, 0.9); border: 1px solid var(--glass-border);
+            border-radius: var(--round-large); padding: 20px; margin-bottom: 25px;
         }
-        .store-header h2 { font-size: 1.6rem; }
+        .section-header { font-size: 1.1rem; color: var(--pink-neon); margin-bottom: 15px; border-left: 4px solid var(--pink-neon); padding-left: 10px; font-weight: 700; }
+        
+        /* ฟังก์ชันกริด ยืดหยุ่นปรับขนาดตามจอออโต้ */
+        .buttons-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;
+        }
+        .fn-btn {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.8); padding: 12px 8px; border-radius: var(--round-medium);
+            font-size: 0.8rem; font-weight: 500; cursor: pointer; text-align: center;
+            transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px;
+        }
+        .fn-btn:hover {
+            background: rgba(190, 77, 255, 0.15); border-color: var(--purple-neon);
+            color: #fff; transform: translateY(-2px); box-shadow: 0 5px 12px rgba(190, 77, 255, 0.2);
+        }
+        .fn-btn span { font-size: 0.65rem; color: var(--cyan-neon); font-family: 'Fira Code', monospace; }
+
+        /* หน้าต่าง Console Log ด่านล่างสำหรับจำลองการรันโค้ด */
+        .console-box {
+            background: #020104; border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: var(--round-medium); padding: 15px; font-family: 'Fira Code', monospace;
+            font-size: 0.8rem; color: #00ff88; min-height: 80px; max-height: 120px; overflow-y: auto; margin-top: 15px;
+        }
+
+        /* --- 🛒 PAGE 2: STORE PAGE --- */
+        .store-header { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
         .search-box { position: relative; width: 100%; }
         .search-box input {
             width: 100%; background: var(--bg-card); border: 1px solid var(--glass-border);
@@ -139,64 +142,33 @@
         .search-box input:focus { border-color: var(--cyan-neon); box-shadow: 0 0 15px var(--cyan-glow); }
 
         .store-layout { display: flex; flex-direction: column; gap: 20px; }
-        
-        /* สไลด์ข้างบนสำหรับมือถือ */
-        .store-sidebar { 
-            display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px;
-            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-        }
-        .store-sidebar::-webkit-scrollbar { height: 4px; }
-        .store-sidebar::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
-
+        .store-sidebar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; }
         .category-btn {
             background: var(--bg-card); border: 1px solid var(--glass-border);
             color: rgba(255,255,255,0.7); padding: 10px 20px; text-align: center;
-            font-size: 0.9rem; font-weight: 600; border-radius: 50px;
-            cursor: pointer; transition: 0.3s; white-space: nowrap; flex-shrink: 0;
+            font-size: 0.9rem; font-weight: 600; border-radius: 50px; cursor: pointer; white-space: nowrap; flex-shrink: 0;
         }
-        .category-btn.active-cat {
-            background: linear-gradient(90deg, rgba(0, 243, 255, 0.2), rgba(190, 77, 255, 0.1));
-            border-color: var(--cyan-neon); color: #fff; font-weight: 700;
-        }
+        .category-btn.active-cat { background: linear-gradient(90deg, rgba(0, 243, 255, 0.2), rgba(190, 77, 255, 0.1)); border-color: var(--cyan-neon); color: #fff; }
 
-        .store-shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        .store-shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
         .item-card {
-            background: var(--bg-card); border: 1px solid var(--glass-border);
-            border-radius: var(--round-large); padding: 20px; text-align: center;
-            transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative;
+            background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--round-large);
+            padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative;
         }
-        .item-card:hover { border-color: var(--pink-neon); box-shadow: 0 10px 25px rgba(190, 77, 255, 0.15); }
-        
-        .item-badge {
-            position: absolute; top: 12px; right: 12px; background: rgba(0, 243, 255, 0.1);
-            padding: 2px 10px; border-radius: 50px; font-size: 0.7rem; color: var(--cyan-neon);
-            font-weight: 700; border: 1px solid var(--cyan-neon);
-        }
+        .item-badge { position: absolute; top: 12px; right: 12px; background: rgba(0, 243, 255, 0.1); padding: 2px 10px; border-radius: 50px; font-size: 0.7rem; color: var(--cyan-neon); font-weight: 700; border: 1px solid var(--cyan-neon); }
         .item-icon { font-size: 2.2rem; margin: 10px 0 5px 0; }
-        .item-card h3 { font-size: 1.15rem; margin-bottom: 5px; }
-        .item-card p { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
         .price-tag { font-size: 1.4rem; color: var(--pink-neon); font-weight: 700; margin: 10px 0; }
-        
-        .buy-button {
-            background: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid var(--glass-border);
-            width: 100%; padding: 11px; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.3s; font-size: 0.9rem;
-        }
+        .buy-button { background: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid var(--glass-border); width: 100%; padding: 11px; border-radius: 50px; cursor: pointer; font-weight: 700; }
         .item-card:hover .buy-button { background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); border-color: transparent; }
 
         /* --- 📜 PAGE 3: HISTORY LOG PAGE --- */
-        .history-table-wrapper {
-            background: var(--bg-card); border: 1px solid var(--glass-border);
-            border-radius: var(--round-large); overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+        .history-table-wrapper { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--round-large); overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
         th, td { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
-        th { background: rgba(255,255,255,0.02); font-weight: 600; color: rgba(255,255,255,0.6); }
-        .status-badge {
-            background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid #00ff88;
-            padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 600;
-        }
+        th { background: rgba(255,255,255,0.02); color: rgba(255,255,255,0.6); }
+        .status-badge { background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid #00ff88; padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
 
-        /* --- 🛒 SHOPPING CART OVERLAY (RESPONSIVE) --- */
+        /* --- 🛒 SHOPPING CART OVERLAY --- */
         .cart-modal {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
             background: rgba(12, 8, 22, 0.98); backdrop-filter: blur(20px);
@@ -205,67 +177,36 @@
         }
         .cart-modal.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .close-cart { background: transparent; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; padding: 5px; }
+        .close-cart { background: transparent; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
         .cart-items-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
-        .cart-item {
-            background: rgba(255,255,255,0.03); padding: 12px; border-radius: var(--round-medium);
-            display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05);
-        }
-        .cart-item style-name { font-size: 0.95rem; }
-        .total-price-row { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; padding: 0 5px; }
-        .checkout-btn {
-            background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon));
-            color: #fff; border: none; width: 100%; padding: 14px; border-radius: 50px;
-            font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.3s;
-        }
+        .cart-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: var(--round-medium); display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
+        .total-price-row { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; }
+        .checkout-btn { background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 50px; font-weight: 700; cursor: pointer; }
 
-        /* --- 🖥️ MEDIA QUERY FOR DESKTOP (จอคอมพิวเตอร์กว้างกว่า 768px) --- */
+        /* --- 🖥️ DESKTOP RESPONSIVE LAYOUT --- */
         @media (min-width: 768px) {
             nav { flex-direction: row; justify-content: space-between; padding: 12px 30px; margin: 20px auto; }
-            .logo { font-size: 1.8rem; }
             .nav-center { width: auto; gap: 8px; }
             .nav-tab { padding: 10px 24px; font-size: 1rem; max-width: none; }
             .cart-trigger { width: auto; font-size: 1rem; }
-            
-            .hero-banner { padding: 60px; margin-bottom: 40px; }
-            .hero-banner h1 { font-size: 3rem; }
-            .hero-banner p { font-size: 1.1rem; }
-            
-            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
-            .stat-box { padding: 25px; }
-            .stat-num { font-size: 2.5rem; }
-
-            .store-header { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+            .hero-banner { padding: 50px; }
+            .hero-banner h1 { font-size: 2.8rem; }
+            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+            .buttons-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+            .store-header { flex-direction: row; justify-content: space-between; align-items: center; }
             .search-box { max-width: 360px; }
-            
             .store-layout { grid-template-columns: 260px 1fr; }
-            .store-sidebar { flex-direction: column; overflow-x: visible; padding-bottom: 0; gap: 10px; }
+            .store-sidebar { flex-direction: column; overflow-x: visible; }
             .category-btn { text-align: left; border-radius: var(--round-medium); padding: 14px 20px; }
-            .store-shelf { gap: 25px; }
-
             .cart-modal { width: 420px; right: -450px; border-top-left-radius: var(--round-super); border-bottom-left-radius: var(--round-super); }
-            
-            #toastContainer { right: 30px; top: 30px; left: auto; width: auto; }
-            .toast { min-width: 320px; text-align: left; transform: translateX(120%); }
         }
 
-        /* --- ANIMATIONS KEYFRAMES --- */
-        @keyframes viewIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes toastIn { 
-            0% { transform: translateY(-50px); opacity: 0; } 
-            100% { transform: translateY(0); opacity: 1; } 
-        }
-        /* ถ้าเป็นคอมให้เลื่อนจากขวาเข้าแทน */
-        @media (min-width: 768px) {
-            @keyframes toastIn { 0% { transform: translateX(120%); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
-        }
+        @keyframes viewIn { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes floatUp { 0% { transform: translateY(105vh); } 100% { transform: translateY(-5vh); } }
     </style>
 </head>
 <body>
 
-    <!-- Notification system -->
-    <div id="toastContainer"></div>
     <div class="sparkles" id="sparklesContainer"></div>
 
     <!-- NAVIGATION BAR -->
@@ -284,36 +225,34 @@
     <!-- CONTENT CONTAINER -->
     <div class="container">
 
-        <!-- 🏠 หน้าที่ 1: หน้าหลัก (HOME) -->
+        <!-- 🏠 หน้าที่ 1: หน้าหลัก (HOME + 100+ FUNCTIONS VAULT) -->
         <div class="app-view active-view" id="view-home">
             <div class="hero-banner">
                 <h1>STACKX CONTROL CENTER</h1>
-                <p>แดชบอร์ดจำลองนวัตกรรม UI ล้ำสมัย ควบคุม จัดการ ทุกอย่างในจุดเดียวผ่านจอมือถือและพีซีของคุณ</p>
-                <button class="promo-btn" onclick="switchView('store')">ดูสินค้าทั้งหมดในระบบ</button>
+                <p>แดชบอร์ดจำลองระบบจัดการและคลังทวีคความแรงแบบจัดเต็ม คลุมทุกส่วนโครงสร้างระบบ</p>
             </div>
 
-            <!-- ระบบกล่องสถิติเคลื่อนไหวสด (Live Counter Simulation) -->
             <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-num" id="stat-user">14,240</div>
-                    <div class="stat-label">👥 สมาชิกผู้ใช้งานรวม</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-num" id="stat-dl">89,450</div>
-                    <div class="stat-label">🚀 ยอดดาวน์โหลดสคริปต์</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-num" id="stat-status" style="color: #00ff88;">ONLINE</div>
-                    <div class="stat-label">🟢 สถานะเซิร์ฟเวอร์หลัก</div>
-                </div>
+                <div class="stat-box"><div class="stat-num" id="stat-user">14,240</div><div class="stat-label">👥 Active Nodes</div></div>
+                <div class="stat-box"><div class="stat-num" id="stat-dl">89,450</div><div class="stat-label">🚀 Optimizations Run</div></div>
+                <div class="stat-box"><div class="stat-num" style="color: #00ff88;">READY</div><div class="stat-label">🟢 Core Engine Status</div></div>
             </div>
+
+            <!-- แผงหน้าต่างคลังฟังก์ชัน 100+ ปุ่ม -->
+            <h2 class="vault-title">⚔️ MULTI-FUNCTION TWEAKER VAULT</h2>
+            <p class="vault-desc">กดเพื่อจำลองการเรียกใช้งานสคริปต์ปรับแต่งความเร็วระดับลึกและลบไฟล์ประวัติตกค้าง</p>
+
+            <div id="vaultSectionsContainer"></div>
+
+            <!-- หน้าจอจำลองสถานะ Terminal Output บรรทัดล่าง -->
+            <div class="console-box" id="terminalOutput">> System Engine Ready. Select a tweak function above...</div>
         </div>
 
         <!-- 🛒 หน้าที่ 2: หน้าร้านค้า (STORE) -->
         <div class="app-view" id="view-store">
             <div class="store-header">
                 <div>
-                    <h2>คลังสินค้าและระบบทดลอง</h2>
+                    <h2 style="font-size: 1.6rem;">คลังสินค้าและระบบทดลอง</h2>
                     <p style="color: rgba(255,255,255,0.4); font-size: 0.85rem;">พิมพ์ค้นหาไอเทมหรือเลือกหมวดหมู่เพื่อกรองข้อมูลแบบ Real-time</p>
                 </div>
                 <div class="search-box">
@@ -329,83 +268,25 @@
                 </div>
 
                 <div class="store-shelf">
-                    <!-- ชิ้นที่ 1 -->
                     <div class="item-card" data-cat="opt" data-name="zxx cpu pro booster">
                         <div class="item-badge">HOT</div>
-                        <div>
-                            <div class="item-icon">⚙️</div>
-                            <h3>ZXX CPU PRO Booster</h3>
-                            <p>สคริปต์อัจฉริยะจัดเรียงโครงสร้างแกน CPU เพิ่มความเสถียรลดการหน่วง</p>
-                        </div>
-                        <div>
-                            <div class="price-tag">290 ฿</div>
-                            <button class="buy-button" onclick="addToCart('ZXX CPU PRO', 290)">Add to Cart</button>
-                        </div>
+                        <div><div class="item-icon">⚙️</div><h3>ZXX CPU PRO Booster</h3><p>จัดเรียงโครงสร้างแกน CPU เพิ่มความเสถียรลดการหน่วง</p></div>
+                        <div><div class="price-tag">290 ฿</div><button class="buy-button" onclick="addToCart('ZXX CPU PRO', 290)">Add to Cart</button></div>
                     </div>
-                    <!-- ชิ้นที่ 2 -->
                     <div class="item-card" data-cat="ui" data-name="glassmorphism inventory panels ui">
                         <div class="item-badge">PREMIUM</div>
-                        <div>
-                            <div class="item-icon">💎</div>
-                            <h3>Glassmorphism UI</h3>
-                            <p>ดีไซน์ช่องเก็บของสไตล์กระจกฝ้า แอนิเมชันลากไอเทมลื่นไหลระยิบระยับ</p>
-                        </div>
-                        <div>
-                            <div class="price-tag">450 ฿</div>
-                            <button class="buy-button" onclick="addToCart('Glass Inventory', 450)">Add to Cart</button>
-                        </div>
+                        <div><div class="item-icon">💎</div><h3>Glassmorphism UI</h3><p>ดีไซน์ช่องเก็บของสไตล์กระจกฝ้า แอนิเมชันลากไอเทมลื่นไหล</p></div>
+                        <div><div class="price-tag">450 ฿</div><button class="buy-button" onclick="addToCart('Glass Inventory', 450)">Add to Cart</button></div>
                     </div>
-                    <!-- ชิ้นที่ 3 -->
                     <div class="item-card" data-cat="opt" data-name="anti-trace forensics cleaner">
                         <div class="item-badge">POPULAR</div>
-                        <div>
-                            <div class="item-icon">🧹</div>
-                            <h3>Anti-Trace Cleaner</h3>
-                            <p>สคริปต์ล้างไฟล์ขยะตกค้าง ลบแคชตัวเกม คืนพื้นที่และหน่วยความจำความเร็วสูง</p>
-                        </div>
-                        <div>
-                            <div class="price-tag">190 ฿</div>
-                            <button class="buy-button" onclick="addToCart('Anti-Trace Cleaner', 190)">Add to Cart</button>
-                        </div>
+                        <div><div class="item-icon">🧹</div><h3>Anti-Trace Cleaner</h3><p>สคริปต์ล้างไฟล์ขยะตกค้าง คืนพื้นที่ความเร็วสูง</p></div>
+                        <div><div class="price-tag">190 ฿</div><button class="buy-button" onclick="addToCart('Anti-Trace Cleaner', 190)">Add to Cart</button></div>
                     </div>
-                    <!-- ชิ้นที่ 4 -->
                     <div class="item-card" data-cat="ui" data-name="cyberpunk hud dashboard status">
                         <div class="item-badge">NEW</div>
-                        <div>
-                            <div class="item-icon">🛸</div>
-                            <h3>Cyberpunk HUD</h3>
-                            <p>กรอบเกจวัดค่าพลังชีวิต เกราะ อาหารสไตล์ไซเบอร์นีออนส่องสว่างสะดุดตา</p>
-                        </div>
-                        <div>
-                            <div class="price-tag">320 ฿</div>
-                            <button class="buy-button" onclick="addToCart('Cyberpunk HUD', 320)">Add to Cart</button>
-                        </div>
-                    </div>
-                    <!-- ชิ้นที่ 5 -->
-                    <div class="item-card" data-cat="opt" data-name="network ping stabilizer pack">
-                        <div class="item-badge">RECOMMEND</div>
-                        <div>
-                            <div class="item-icon">🌐</div>
-                            <h3>Ping Stabilizer</h3>
-                            <p>ปรับแต่งแพ็กเก็ตเน็ตเวิร์กจำลองภายในเครื่องเพื่อการตอบสนองข้อมูลที่นิ่งขึ้น</p>
-                        </div>
-                        <div>
-                            <div class="price-tag">250 ฿</div>
-                            <button class="buy-button" onclick="addToCart('Ping Stabilizer', 250)">Add to Cart</button>
-                        </div>
-                    </div>
-                    <!-- ชิ้นที่ 6 -->
-                    <div class="item-card" data-cat="ui" data-name="minimalist scoreboard crosshair flex">
-                        <div class="item-badge">SIMPLE</div>
-                        <div>
-                            <div class="item-icon">📊</div>
-                            <h3>Minimal Scoreboard</h3>
-                            <p>หน้าต่างกระดานคะแนนแบบมินิมอล บางเบา ไม่รกหูรกตาตอนเปิดใช้งาน</p>
-                        </div>
-                        <div>
-                            <div class="price-tag">150 ฿</div>
-                            <button class="buy-button" onclick="addToCart('Minimal Scoreboard', 150)">Add to Cart</button>
-                        </div>
+                        <div><div class="item-icon">🛸</div><h3>Cyberpunk HUD</h3><p>กรอบเกจวัดค่าพลังชีวิต เกราะ สไตล์ไซเบอร์นีออน</p></div>
+                        <div><div class="price-tag">320 ฿</div><button class="buy-button" onclick="addToCart('Cyberpunk HUD', 320)">Add to Cart</button></div>
                     </div>
                 </div>
             </div>
@@ -426,20 +307,7 @@
                         </tr>
                     </thead>
                     <tbody id="historyTableBody">
-                        <tr>
-                            <td>#STX-99812</td>
-                            <td>ZXX CPU PRO Booster</td>
-                            <td>290 ฿</td>
-                            <td>เมื่อสักครู่ที่ผ่านมา</td>
-                            <td><span class="status-badge">จัดส่งสำเร็จ</span></td>
-                        </tr>
-                        <tr>
-                            <td>#STX-99745</td>
-                            <td>Cyberpunk HUD Panel</td>
-                            <td>320 ฿</td>
-                            <td>1 ชั่วโมงที่แล้ว</td>
-                            <td><span class="status-badge">จัดส่งสำเร็จ</span></td>
-                        </tr>
+                        <tr><td>#STX-99812</td><td style="color:var(--cyan-neon); font-weight:600;">ZXX CPU PRO Booster</td><td>290 ฿</td><td>เมื่อสักครู่ที่ผ่านมา</td><td><span class="status-badge">จัดส่งสำเร็จ</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -447,7 +315,7 @@
 
     </div>
 
-    <!-- SHOPPING CART SLIDE OVERLAY PANEL -->
+    <!-- SHOPPING CART PANEL -->
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
             <h2 style="font-weight:700; color:var(--cyan-neon);">🛒 ตะกร้าสะสม</h2>
@@ -455,71 +323,137 @@
         </div>
         <div class="cart-items-list" id="cartItemsList"></div>
         <div class="cart-footer">
-            <div class="total-price-row">
-                <span>ราคารวม:</span>
-                <span id="totalPriceText" style="color:var(--pink-neon);">0 ฿</span>
-            </div>
+            <div class="total-price-row"><span>ราคารวม:</span><span id="totalPriceText" style="color:var(--pink-neon);">0 ฿</span></div>
             <button class="checkout-btn" onclick="checkoutMockup()">ยืนยันจำลองการชำระเงิน</button>
         </div>
     </div>
 
-    <!-- CORE INTERACTIVE ENGINE -->
     <script>
         let cart = [];
 
-        // 1. ระบบสลับหน้าหลัก (SPA View Switcher)
+        // 1. ระบบสลับหน้าหลัก (SPA - NO POPUP NOTIFICATION)
+        document.addEventListener("DOMContentLoaded", function() {
+            generate100Functions();
+        });
+
         function switchView(viewName) {
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active-tab'));
             
             document.getElementById(`view-${viewName}`).classList.add('active-view');
             document.getElementById(`tab-${viewName}`).classList.add('active-tab');
-            
-            showToast(`🚀 สลับไปยังหน้า: ${viewName.toUpperCase()}`);
         }
 
-        // 2. ระบบแจ้งเตือนกล่องข้อความมุมจอ (Toast Notification)
-        function showToast(message) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.classList.add('toast');
-            toast.innerText = message;
-            container.appendChild(toast);
+        // 2. ลูปสร้างชุดฟังก์ชันอัดแน่น 100+ รายการแบบ Dynamic ลงหน้าเว็บ
+        function generate100Functions() {
+            const container = document.getElementById('vaultSectionsContainer');
             
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 400);
-            }, 2200);
+            const categories = [
+                { title: "⚡ Core System Optimization (01-25)", prefix: "SYS_OPT_", icon: "⚙️", count: 25 },
+                { title: "🌐 Network & Latency Packet Tuning (26-50)", prefix: "NET_TWEAK_", icon: "🛰️", count: 25 },
+                { title: "🎮 Gaming Performance & Input Throttle (51-75)", prefix: "GAME_FPS_", icon: "🕹️", count: 25 },
+                { title: "🧹 Anti-Forensics & System Log Eraser (76-105)", prefix: "LOG_CL_", icon: "💀", count: 30 }
+            ];
+
+            let absoluteIndex = 1;
+
+            categories.forEach(cat => {
+                const section = document.createElement('div');
+                section.classList.add('vault-section');
+                
+                const header = document.createElement('div');
+                header.classList.add('section-header');
+                header.innerText = cat.title;
+                section.appendChild(header);
+
+                const grid = document.createElement('div');
+                grid.classList.add('buttons-grid');
+
+                for(let i = 1; i <= cat.count; i++) {
+                    const btn = document.createElement('button');
+                    btn.classList.add('fn-btn');
+                    
+                    let fnName = "";
+                    if(cat.prefix.includes("SYS")) fnName = getSysFnName(i);
+                    else if(cat.prefix.includes("NET")) fnName = getNetFnName(i);
+                    else if(cat.prefix.includes("GAME")) fnName = getGameFnName(i);
+                    else fnName = getLogFnName(i);
+
+                    btn.innerHTML = `${cat.icon} ${fnName} <span>[ID: ${String(absoluteIndex).padStart(3, '0')}]</span>`;
+                    
+                    // เมื่อกดปุ่มฟังก์ชันให้รันยิงสเตตัสเข้าแผงคอลโซลด้านล่างแทนการขึ้นป๊อปอัพ
+                    btn.onclick = (function(index, name) {
+                        return function() { triggerConsoleSim(index, name); };
+                    })(absoluteIndex, fnName);
+
+                    grid.appendChild(btn);
+                    absoluteIndex++;
+                }
+
+                section.appendChild(grid);
+                container.appendChild(section);
+            });
         }
 
-        // 3. เปิด/ปิด แผงหน้าต่างตะกร้าสินค้า
+        // คลังชื่อฟังก์ชันจำลองเพื่อความสมจริง
+        function getSysFnName(i) {
+            const list = ["Core_Steer", "Kernel_Idle", "Ram_Purge", "Cache_Flush", "Thread_Sync", "Paging_Exec", "VRAM_Alloc", "DirectX_Boost", "Svc_Disable", "SysMain_Off", "AppX_Clean", "WinDef_Low", "UAC_Bypass", "Heap_Clean", "Handle_Drop", "CPU_Unpark", "Power_Thrott", "GPU_Sched", "IRQ_Priority", "IO_Boost", "Task_Kill", "Drv_Refresh", "Registry_Compact", "Win_FastBoot", "Bcdedit_Set"];
+            return list[i-1] || `Sys_Tweak_${i}`;
+        }
+        function getNetFnName(i) {
+            const list = ["TCP_NoDelay", "Nagle_Disable", "DNS_Flush", "MTU_Optimize", "Ping_Stabilize", "IpStack_Reset", "Wifi_Throttle", "Lan_Priority", "Packet_Coalesce", "TTL_Set", "Bandwidth_Uncap", "Winsock_Fix", "DHCP_Force", "IPv6_Disable", "ACK_Frequency", "Autotuning_Set", "NetDMA_Enable", "ECN_Capability", "RSC_Tuning", "Chimney_Off", "Network_Thrott", "QoS_Packet", "Sack_Opts", "Fast_Recovery", "KeepAlive_Time"];
+            return list[i-1] || `Net_Tune_${i}`;
+        }
+        function getGameFnName(i) {
+            const list = ["Mouse_Data_Q", "Kbd_Response", "FPS_Uncap", "Gpu_Clocks_Max", "FivM_Cache_Fix", "Texture_Stream", "Shad_Cache_Ext", "V_Sync_ForceOff", "Low_Lat_Mode", "Dx12_Pipeline", "Audio_Buffer_Low", "GameBar_Disable", "DVR_TurnOff", "HAGS_Enable", "FSE_Enforce", "Affinity_Mask", "Priority_High", "Ram_Lock_Pages", "Input_Buffer_Flush", "DPI_Awareness", "Refresh_Rate_Max", "G_Sync_Syncing", "Aniso_Filtering", "MipMap_Bias", "Lod_Detail"];
+            return list[i-1] || `Game_Boost_${i}`;
+        }
+        function getLogFnName(i) {
+            const list = ["BAM_Reg_Wipe", "DAM_Clean", "SRUM_Db_Drop", "Shimcache_Purge", "Amcache_Delete", "Prefetch_Empty", "EventLog_Clear", "DiagTrack_Stop", "USN_Journal_Wipe", "Recycle_Force", "Temp_Wipe", "Wer_Report_Del", "IconCache_Reset", "Shell_History", "Run_Diag_Wipe", "JumpList_Clear", "Recent_Files_Del", "Muicache_Clean", "AppCompat_Wipe", "WER_Disable", "Sys_Restore_Drop", "Shadow_Copy_Del", "Browser_Cache", "DNS_Cache_Wipe", "Crypto_Log_Del", "Win_Update_Cache", "Installer_Trash", "Dump_File_Wipe", "Log_Rotation_Stop", "Trace_Session_Kill"];
+            return list[i-1] || `Log_Eraser_${i}`;
+        }
+
+        // 3. ฟังก์ชันการรันจำลองข้อความบน Terminal Console ด้านล่าง
+        function triggerConsoleSim(id, name) {
+            const terminal = document.getElementById('terminalOutput');
+            const hex = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
+            
+            terminal.innerHTML = `
+                <span style="color:#be4dff;">[EXEC]</span> Calling Function ID: ${String(id).padStart(3, '0')} (${name})<br>
+                <span style="color:#00f3ff;">[INFO]</span> Injecting Registry Tweak HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet...<br>
+                <span style="color:#00ff88;">[SUCCESS]</span> Thread status: OK | Memory Address shifted at 0x${hex} -> Execution Completed!
+            `;
+            terminal.scrollTop = terminal.scrollHeight;
+            
+            // แอบเพิ่มตัวเลขความสำเร็จบนหน้าแรกให้ขยับขึ้นเล็กน้อยตามการกด
+            let dlBox = document.getElementById('stat-dl');
+            let currentDl = parseInt(dlBox.innerText.replace(/,/g, ''));
+            dlBox.innerText = (currentDl + 1).toLocaleString();
+        }
+
+        // 4. แผงควบคุมตะกร้าสินค้า
         function toggleCart(isOpen) {
             const modal = document.getElementById('cartModal');
             if(isOpen) modal.classList.add('open');
             else modal.classList.remove('open');
         }
 
-        // 4. เพิ่มสินค้าลงตะกร้า
         function addToCart(name, price) {
             cart.push({ id: Date.now() + Math.random(), name: name, price: price });
             updateCartUI();
-            showToast(`➕ คว้า "${name}" เข้าคลังตะกร้าเรียบร้อย!`);
         }
 
-        // 5. ลบสินค้าออกจากตะกร้า
-        function removeFromCart(id, name) {
+        function removeFromCart(id) {
             cart = cart.filter(item => item.id !== id);
             updateCartUI();
-            showToast(`❌ นำ "${name}" ออกแล้ว`);
         }
 
-        // 6. อัปเดตโครงสร้าง UI ตะกร้าสินค้า
         function updateCartUI() {
             document.getElementById('cartCount').innerText = cart.length;
             const listContainer = document.getElementById('cartItemsList');
             listContainer.innerHTML = '';
-            
             let total = 0;
+            
             if(cart.length === 0) {
                 listContainer.innerHTML = '<p style="color:rgba(255,255,255,0.25); text-align:center; margin-top:40px;">ตะกร้าว่างเปล่า</p>';
             } else {
@@ -532,7 +466,7 @@
                             <div style="font-weight:600; font-size:0.95rem;">${item.name}</div>
                             <div style="color:var(--cyan-neon); font-size:0.85rem; font-weight:700;">${item.price} ฿</div>
                         </div>
-                        <button style="background:transparent; border:none; color:var(--pink-neon); cursor:pointer; font-size:0.9rem;" onclick="removeFromCart(${item.id}, '${item.name}')">ลบ</button>
+                        <button style="background:transparent; border:none; color:var(--pink-neon); cursor:pointer;" onclick="removeFromCart(${item.id})">ลบ</button>
                     `;
                     listContainer.appendChild(div);
                 });
@@ -540,13 +474,8 @@
             document.getElementById('totalPriceText').innerText = total + ' ฿';
         }
 
-        // 7. ระบบจำลองซื้อเสร็จแล้วเพิ่มเข้าตารางประวัติ
         function checkoutMockup() {
-            if(cart.length === 0) {
-                showToast('⚠️ ไม่มีสินค้าให้ชำระเงินในตะกร้า');
-                return;
-            }
-            
+            if(cart.length === 0) return;
             const tableBody = document.getElementById('historyTableBody');
             cart.forEach(item => {
                 const randomBillId = Math.floor(10000 + Math.random() * 90000);
@@ -560,15 +489,13 @@
                 `;
                 tableBody.insertBefore(tr, tableBody.firstChild);
             });
-
-            alert('🎉 บันทึกการชำระเงินจำลองสำเร็จ! รายการถูกส่งไปเพิ่มในแผง "หน้าประวัติซื้อ" แล้วเรียบร้อยครับ');
+            alert('🎉 บันทึกการชำระเงินจำลองสำเร็จ! ส่งรายการไปหน้าประวัติแล้วครับ');
             cart = [];
             updateCartUI();
             toggleCart(false);
             switchView('history');
         }
 
-        // 8. ระบบ Live Search กรองแบบพิมพ์สด
         function liveSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             document.querySelectorAll('.item-card').forEach(card => {
@@ -577,30 +504,25 @@
             });
         }
 
-        // 9. ตัวคัดกรองสลับหมวดหมู่สินค้าด้านข้าง
         function filterCategory(cat) {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active-cat'));
             event.target.classList.add('active-cat');
-
             document.querySelectorAll('.item-card').forEach(card => {
                 const itemCat = card.getAttribute('data-cat');
                 card.style.display = (cat === 'all' || itemCat === cat) ? 'flex' : 'none';
             });
         }
 
-        // 10. แอนิเมชันรันสถิติสุ่มเพิ่มตัวเลขหน้าแรก
+        // 5. รันลูปเพิ่มตัวเลขจำลองหน้าแรกอัตโนมัติ
         let userCount = 14240;
-        let dlCount = 89450;
         setInterval(() => {
             if(document.getElementById('view-home').classList.contains('active-view')) {
                 userCount += Math.floor(Math.random() * 2);
-                dlCount += Math.floor(Math.random() * 3);
                 document.getElementById('stat-user').innerText = userCount.toLocaleString();
-                document.getElementById('stat-dl').innerText = dlCount.toLocaleString();
             }
-        }, 3000);
+        }, 4000);
 
-        // 11. สร้างละอองฉากหลังสุ่มตำแหน่ง
+        // 6. สร้างละอองฉากหลัง
         const sparks = document.getElementById('sparklesContainer');
         for (let i = 0; i < 15; i++) {
             const sparkle = document.createElement('div');
