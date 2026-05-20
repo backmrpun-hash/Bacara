@@ -3,24 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STACKX FiveM Premium Launcher</title>
+    <title>STACKX FiveM - Premium Launcher</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* ปรับโทนสีเป็นสีฟ้านีออนเอกลักษณ์ของ FiveM */
-            --theme-rgb: 0, 191, 255; 
-            --bg-dark: #05070a;
-            --panel-bg: rgba(10, 14, 20, 0.55);
-            --border-color: rgba(255, 255, 255, 0.04);
+            /* โทนสีม่วง พาสเทล ดำ ขาว ตามบรีฟ */
+            --theme-purple: #b388ff;
+            --theme-purple-glow: #7c4dff;
+            --bg-dark: #0d0b14;
+            --panel-bg: rgba(25, 20, 38, 0.65);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-cute-white: #f3effa;
+            /* เพิ่มความโค้งมนระดับพรีเมียมน่ารัก (Cute Roundness) */
+            --radius-main: 24px;
+            --radius-sub: 16px;
         }
 
         * {
             margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
             user-select: none;
+        }
+
+        /* ใช้ฟอนต์ Comfortaa คู่กับ Mitr เพื่อความ Cute และอ่านภาษาไทยสวย */
+        body, input, button {
+            font-family: 'Comfortaa', 'Mitr', sans-serif;
         }
 
         body {
@@ -31,136 +40,187 @@
             position: relative;
         }
 
-        /* แสงไฟออร่าสะท้อนกระจายพื้นหลัง (Ambient Light) */
+        /* แสงออร่าสะท้อนพื้นหลังแบบนุ่มนวลโทนม่วง */
         .bg-glow-1, .bg-glow-2 {
-            position: absolute; width: 550px; height: 550px;
+            position: absolute; width: 600px; height: 600px;
             border-radius: 50%;
-            filter: blur(160px); opacity: 0.15;
+            filter: blur(180px); opacity: 0.2;
             z-index: 0; pointer-events: none;
+            transition: all 1s ease;
         }
-        .bg-glow-1 { top: -10%; left: 10%; background: rgb(var(--theme-rgb)); }
-        .bg-glow-2 { bottom: -10%; right: 10%; background: #0044ff; }
+        .bg-glow-1 { top: -15%; left: 10%; background: var(--theme-purple); }
+        .bg-glow-2 { bottom: -15%; right: 10%; background: #4a148c; }
 
-        /* กรอบด้านนอกสุดแบบเรืองแสงไล่เฉด */
+        /* ตัวกรอบนอกสุด โค้ดความโค้งมนน่ารัก 24px */
         .launcher-wrapper {
             position: relative; z-index: 10;
-            padding: 1px; border-radius: 16px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.8) 40%, rgba(rgb(--theme-rgb), 0.25));
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+            padding: 1px; border-radius: var(--radius-main);
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(0,0,0,0.8) 50%, rgba(179, 136, 255, 0.3));
+            box-shadow: 0 30px 70px rgba(5, 3, 10, 0.85);
+            overflow: hidden;
+            transition: all 0.5s ease;
         }
 
-        /* ตัวคอนเทนเนอร์หลัก สไตล์กระจกฝ้าหรูหรา (Glassmorphism) */
+        /* หน้าต่างหลักสไตล์กระจกฝ้าละมุน */
         .launcher-container {
             width: 860px; height: 610px;
-            backdrop-filter: blur(30px) saturate(150%);
-            background-color: rgba(8, 10, 15, 0.88);
-            border-radius: 16px;
+            backdrop-filter: blur(35px) saturate(160%);
+            background-color: rgba(15, 12, 22, 0.9);
+            border-radius: var(--radius-main);
             display: flex; flex-direction: column; overflow: hidden;
+            position: relative;
         }
 
         /* แถบหัวหน้าต่างควบคุม */
         .launcher-header {
-            height: 45px; background: rgba(0, 0, 0, 0.4);
+            height: 50px; background: rgba(0, 0, 0, 0.3);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 20px; border-bottom: 1px solid var(--border-color);
+            padding: 0 25px; border-bottom: 1px solid var(--border-color);
         }
 
-        .brand { display: flex; align-items: center; gap: 8px; }
-        .logo-text { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 2px; color: #fff; }
-        .x-text { color: rgb(var(--theme-rgb)); }
-        .game-text { font-size: 11px; font-weight: 600; background: rgba(0, 191, 255, 0.15); padding: 2px 8px; border-radius: 4px; color: #00bfff; margin-left: 5px; border: 1px solid rgba(0, 191, 255, 0.2); }
-        .logo-icon { color: rgb(var(--theme-rgb)); filter: drop-shadow(0 0 5px rgb(var(--theme-rgb))); }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .logo-text { font-weight: 700; font-size: 18px; letter-spacing: 1px; color: #fff; }
+        .x-text { color: var(--theme-purple); text-shadow: 0 0 10px var(--theme-purple); }
+        .game-text { font-size: 11px; font-weight: 500; background: rgba(179, 136, 255, 0.15); padding: 3px 10px; border-radius: 30px; color: var(--theme-purple); margin-left: 5px; border: 1px solid rgba(179, 136, 255, 0.25); }
+        .logo-icon { color: var(--theme-purple); filter: drop-shadow(0 0 8px var(--theme-purple)); font-size: 18px; }
 
-        .window-controls { display: flex; gap: 4px; }
+        .window-controls { display: flex; gap: 6px; }
         .control-btn {
-            background: transparent; border: none; color: #444; width: 35px; height: 35px;
-            cursor: pointer; border-radius: 6px; transition: 0.2s; font-size: 12px;
+            background: transparent; border: none; color: #555; width: 35px; height: 35px;
+            cursor: pointer; border-radius: 50%; transition: 0.2s; font-size: 12px;
         }
-        .control-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
-        .close-btn:hover { background: #ff2200; color: #fff; }
+        .control-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
+        .close-btn:hover { background: #ff5252; color: #fff; }
 
-        .launcher-content { flex: 1; padding: 25px 35px; display: flex; flex-direction: column; gap: 20px; }
+        /* ========================================== */
+        /* 🔑 สไตล์หน้าใส่คีย์ (🔑 Auth Screen หน้าแรก) */
+        /* ========================================== */
+        .auth-screen {
+            position: absolute; top: 50px; left: 0; width: 100%; height: calc(100% - 50px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 100; background: rgba(15, 12, 22, 0.95);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1; pointer-events: all;
+        }
 
-        /* โซนการ์ดเดี่ยวแบบพรีเมียมตรงกลาง */
-        .card-zone { display: flex; justify-content: center; align-items: center; height: 260px; }
+        .auth-screen.hide {
+            opacity: 0; pointer-events: none; transform: scale(1.05);
+        }
 
-        .mode-card { position: relative; border-radius: 14px; padding: 1px; width: 300px; height: 230px; }
+        .auth-box {
+            width: 400px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px;
+        }
+
+        .auth-title { font-size: 26px; font-weight: 700; color: #fff; }
+        .auth-subtitle { font-size: 13px; color: #9c8fb3; font-weight: 300; margin-top: -10px; }
+
+        .key-input-wrapper {
+            position: relative; width: 100%; padding: 1px; border-radius: var(--radius-sub);
+            background: linear-gradient(135deg, var(--border-color), rgba(179, 136, 255, 0.4));
+        }
+
+        .key-input {
+            width: 100%; height: 52px; background: #14111c; border: none;
+            border-radius: calc(var(--radius-sub) - 1px); padding: 0 20px;
+            color: #fff; font-size: 15px; text-align: center; letter-spacing: 2px;
+            outline: none; transition: all 0.3s ease;
+        }
+        .key-input:focus { background: #191424; box-shadow: 0 0 15px rgba(179, 136, 255, 0.2); }
+
+        .btn-login {
+            width: 100%; height: 50px; border: none; border-radius: var(--radius-sub);
+            background: linear-gradient(90deg, #7c4dff, #b388ff); color: #0d0b14;
+            font-size: 15px; font-weight: 700; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(124, 77, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(124, 77, 255, 0.5); }
+
+        /* ========================================== */
+        /* 🏠 สไตล์หน้าหลักตัวโปรแกรม (Main Dashboard) */
+        /* ========================================== */
+        .launcher-content { flex: 1; padding: 30px 40px; display: flex; flex-direction: column; gap: 25px; }
+
+        /* โซนการ์ดตรงกลางโค้งมนละมุน */
+        .card-zone { display: flex; justify-content: center; align-items: center; height: 240px; }
+        .mode-card { position: relative; border-radius: var(--radius-sub); padding: 1px; width: 320px; height: 220px; }
+        
         .card-inner {
-            width: 100%; height: 100%; border-radius: 13px;
-            background: linear-gradient(145deg, #0e131f, #06080d);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px;
+            width: 100%; height: 100%; border-radius: calc(var(--radius-sub) - 1px);
+            background: linear-gradient(145deg, #1b1629, #0e0b14);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;
             position: relative; z-index: 2;
         }
 
         .mode-badge {
-            font-family: 'Orbitron', sans-serif; font-size: 9px; font-weight: 800;
-            padding: 4px 12px; border-radius: 20px; color: rgb(var(--theme-rgb)); 
-            border: 1px solid rgba(rgb(--theme-rgb), 0.3); background: rgba(rgb(--theme-rgb), 0.05);
-            letter-spacing: 1px;
+            font-size: 10px; font-weight: 700; padding: 5px 14px; border-radius: 30px; 
+            color: var(--theme-purple); border: 1px solid rgba(179, 136, 255, 0.3); 
+            background: rgba(179, 136, 255, 0.06); letter-spacing: 1px;
         }
 
-        .card-title { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 36px; letter-spacing: 3px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
-        .card-sub { font-size: 12px; color: #6f7d95; font-weight: 400; letter-spacing: 1px; }
+        .card-title { font-weight: 700; font-size: 38px; letter-spacing: 1px; color: #fff; text-shadow: 0 0 15px rgba(179, 136, 255, 0.2); }
+        .card-sub { font-size: 13px; color: #9c8fb3; font-weight: 400; }
 
         .mode-card .card-border-glow {
             position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 15px; background: radial-gradient(circle, rgb(var(--theme-rgb)) 0%, transparent 70%);
-            z-index: 1; filter: drop-shadow(0 0 12px rgb(var(--theme-rgb)));
+            border-radius: var(--radius-sub); background: radial-gradient(circle, var(--theme-purple) 0%, transparent 75%);
+            z-index: 1; filter: drop-shadow(0 0 15px var(--theme-purple));
         }
 
-        /* แดชบอร์ดและแผงปุ่มควบคุม */
+        /* ตารางแดชบอร์ดด้านล่าง */
         .dashboard-grid { display: flex; gap: 20px; align-items: stretch; }
-        .control-panel { display: flex; flex-direction: column; gap: 12px; width: 190px; }
+        .control-panel { display: flex; flex-direction: column; gap: 12px; width: 200px; }
 
+        /* ปุ่มกดสไตล์มนๆ มินิมอล */
         .btn-action {
-            border: none; border-radius: 10px; height: 48px; position: relative;
+            border: none; border-radius: var(--radius-sub); height: 50px; position: relative;
             cursor: pointer; overflow: hidden; display: flex; justify-content: center; align-items: center;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .btn-text { font-weight: 700; font-size: 13px; letter-spacing: 1px; color: #fff; z-index: 2; }
+        .btn-text { font-weight: 700; font-size: 13px; color: #fff; z-index: 2; }
 
-        .btn-secondary { background: #0b111e; border: 1px solid rgba(255,255,255,0.04); }
-        .btn-secondary:hover { background: #121b2f; transform: translateY(-2px); }
+        .btn-secondary { background: #161221; border: 1px solid var(--border-color); color: #b5a9cc; }
+        .btn-secondary:hover { background: #211b30; transform: translateY(-2px); color: #fff; }
 
-        .btn-main { background: rgb(var(--theme-rgb)); box-shadow: 0 4px 20px rgba(rgb(--theme-rgb), 0.3); }
-        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgb(var(--theme-rgb)); }
-        .btn-main .btn-text { color: #000; font-weight: 800; } /* ตัวหนังสือสีดำตัดกับพื้นปุ่มสีฟ้าสว่าง */
+        .btn-main { background: linear-gradient(90deg, #7c4dff, #b388ff); box-shadow: 0 4px 20px rgba(124, 77, 255, 0.25); }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--theme-purple); }
+        .btn-main .btn-text { color: #0d0b14; font-weight: 700; }
 
-        /* กล่องข้อความอธิบาย */
+        /* แผงหน้าต่างกระจกอธิบายข้อมูล */
         .info-panel {
-            flex: 1; background: var(--panel-bg); border-radius: 12px;
-            border: 1px solid var(--border-color); padding: 18px 22px; position: relative;
+            flex: 1; background: var(--panel-bg); border-radius: var(--radius-sub);
+            border: 1px solid var(--border-color); padding: 20px 24px; position: relative;
             overflow: hidden;
         }
         .panel-glow-line {
-            position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgb(var(--theme-rgb)), transparent);
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--theme-purple), transparent);
         }
-        .panel-title { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 800; color: rgb(var(--theme-rgb)); margin-bottom: 6px; letter-spacing: 1px; }
-        .panel-desc { color: #7f8a9e; font-size: 12.5px; line-height: 1.6; font-weight: 300; }
+        .panel-title { font-size: 14px; font-weight: 700; color: var(--theme-purple); margin-bottom: 8px; }
+        .panel-desc { color: #b5a9cc; font-size: 13px; line-height: 1.6; font-weight: 300; }
 
-        /* แถบดาวน์โหลดประจุไฟ (Loading Progress) */
+        /* แถบดาวน์โหลดโหลดประจุ */
         .status-zone { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
-        .status-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 500; letter-spacing: 1px; color: #3b4554; }
-        .status-left { display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; color: #78869c; }
+        .status-header { display: flex; justify-content: space-between; font-size: 11px; color: #5c536e; font-weight: 500; }
+        .status-left { display: flex; align-items: center; gap: 6px; color: #9c8fb3; }
 
-        .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #00ffaa; box-shadow: 0 0 8px #00ffaa; animation: dotPulse 1.5s infinite alternate; }
+        .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: #b388ff; box-shadow: 0 0 8px #b388ff; animation: dotPulse 1.5s infinite alternate; }
         @keyframes dotPulse { 0% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        .bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.01); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.01); }
-        .bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, transparent, rgb(var(--theme-rgb)), #fff, rgb(var(--theme-rgb))); background-size: 200% 100%; border-radius: 10px; transition: width 0.1s ease; animation: flowEff 1.5s infinite linear; }
+        .bar-container { width: 100%; height: 5px; background: rgba(255,255,255,0.02); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.01); }
+        .bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, transparent, var(--theme-purple), #fff, var(--theme-purple)); background-size: 200% 100%; border-radius: 10px; transition: width 0.1s ease; animation: flowEff 1.5s infinite linear; }
         @keyframes flowEff { 0% { background-position: 0% 0%; } 100% { background-position: -200% 0%; } }
 
-        /* แถบสถานะด้านล่างสุด (Footer) */
+        /* แถบล่างสุดของเมนู */
         .launcher-footer {
-            height: 35px; background: rgba(0,0,0,0.5); border-top: 1px solid var(--border-color);
-            display: flex; align-items: center; padding: 0 25px; font-size: 10px;
-            font-family: 'Orbitron', sans-serif; color: #3b4554; gap: 35px;
+            height: 40px; background: rgba(0,0,0,0.4); border-top: 1px solid var(--border-color);
+            display: flex; align-items: center; padding: 0 30px; font-size: 11px;
+            color: #5c536e; gap: 40px;
         }
-        .text-white { color: #78869c; }
-        .text-theme { color: rgb(var(--theme-rgb)); font-weight: bold; }
+        .text-white { color: #9c8fb3; }
+        .text-theme { color: var(--theme-purple); font-weight: 700; }
         .animate-flicker { animation: flick 2s infinite alternate; }
-        @keyframes flick { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; color: #00ffaa; } }
+        @keyframes flick { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; color: #d1b3ff; } }
     </style>
 </head>
 <body>
@@ -173,7 +233,7 @@
             
             <header class="launcher-header">
                 <div class="brand">
-                    <span class="logo-icon">⚡</span>
+                    <span class="logo-icon">✨</span>
                     <span class="logo-text">STACK<span class="x-text">X</span> <span class="game-text">FIVEM</span></span>
                 </div>
                 <div class="window-controls">
@@ -182,13 +242,29 @@
                 </div>
             </header>
 
+            <div class="auth-screen" id="auth-page">
+                <div class="auth-box">
+                    <div style="font-size: 40px;">🔮</div>
+                    <h2 class="auth-title">Welcome to STACKX</h2>
+                    <p class="auth-subtitle">Please enter your license key to unlock software.</p>
+                    
+                    <div class="key-input-wrapper">
+                        <input type="text" class="key-input" id="license-key-field" placeholder="STACKX-XXXX-XXXX-XXXX" autocomplete="off">
+                    </div>
+                    
+                    <button class="btn-login" onclick="validateLicenseKey()">
+                        <span>LOGIN SYSTEM</span>
+                    </button>
+                </div>
+            </div>
+
             <div class="launcher-content">
                 
                 <div class="card-zone">
                     <div class="mode-card">
                         <div class="card-border-glow"></div>
                         <div class="card-inner">
-                            <div class="mode-badge">PREMIUM PRODUCT</div>
+                            <div class="mode-badge">PREMIUM CUTE EDITION</div>
                             <h2 class="card-title">STACKX CORE</h2>
                             <p class="card-sub">Next-Gen FiveM Optimization</p>
                         </div>
@@ -230,13 +306,28 @@
             <footer class="launcher-footer">
                 <div>BYPASS SERVICE: <span class="text-white animate-flicker">SECURE ACTIVE</span></div>
                 <div>PRODUCT TYPE: <span class="text-white">PREMIUM VIP LICENSE</span></div>
-                <div>STATUS: <span class="text-theme">READY TO LOAD</span></div>
+                <div>STATUS: <span class="text-theme" id="bottom-status-text">KEY VERIFIED</span></div>
             </footer>
 
         </div>
     </div>
 
     <script>
+        // ฟังก์ชันตรวจสอบคีย์และเปลี่ยนหน้าแอนิเมชันสไลด์หายไปอย่างนุ่มนวล
+         Aurora
+        function validateLicenseKey() {
+            const keyField = document.getElementById('license-key-field');
+            
+            if (keyField.value.trim() === "") {
+                alert("กรุณากรอก License Key ของคุณก่อนเข้าใช้งานค่ะ! 💜");
+                return;
+            }
+
+            // ซ่อนหน้าใส่คีย์ด้วยแอนิเมชันจางหายไปนุ่มๆ
+            document.getElementById('auth-page').classList.add('hide');
+        }
+
+        // ฟังก์ชันเมื่อกดปุ่มรันและโหลดแถบหลอดไฟเพื่อส่งค่าไปหา C# ตัวเดิมที่คุณเตรียมไว้
         function triggerInject() {
             const bar = document.getElementById('progress-bar');
             const statusMain = document.getElementById('status-main-text');
@@ -253,11 +344,11 @@
                     statusMain.innerText = "PRODUCT INITIALIZED";
                     statusSub.innerText = "SUCCESSFULLY COMPLETED";
 
-                    // ส่งพัสดุ JSON ไร้สายไปยังฟังก์ชันตรวจจับฝั่ง C# ผ่านระบบ WebView2 Bridge
+                    // ส่งสัญญาณ JSON โครงสร้างเดิมข้ามระบบไปที่ C# (โค้ดเก่าคุณฝั่งหลังบ้านจะดักจับใช้งานต่อได้เลยทันที)
                     if (window.chrome && window.chrome.webview) {
                         const payload = {
                             action: "launch_cheat",
-                            mode: "aimlock" // คีย์โครงสร้างเดิมที่จะถูกจับคู่เข้ากับฟังก์ชัน ExecuteAimlockFunction ใน C# ของคุณ
+                            mode: "aimlock" 
                         };
                         window.chrome.webview.postMessage(JSON.stringify(payload));
                     }
