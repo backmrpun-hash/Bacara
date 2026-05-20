@@ -3,268 +3,421 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STACKX PANEL</title>
-    <!-- นำเข้าฟอนต์ Kanit เพื่อความสวยงาม -->
+    <title>METAVERSE X | FIVEM ADVANCED UI</title>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Prompt:wght@200;400;600&display=swap" rel="stylesheet">
+
     <style>
-        /* ==========================================================================
-           CSS Style - STACKX โทนม่วง-ดำ (Purple & Black Theme)
-           ========================================================================== */
-        
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Kanit', sans-serif;
-            /* พื้นหลังธีมมืด */
-            background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1470') no-repeat center center fixed;
-            background-size: cover;
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff007f;
+            --neon-purple: #9400d3;
+            --dark-core: #05050a;
+            --glass-panel: rgba(7, 7, 15, 0.45);
+            --glass-border: rgba(0, 240, 255, 0.15);
         }
 
-        /* เลเยอร์สีดำโปร่งแสงทับพื้นหลังเพิ่มความชัดให้เมนู */
-        .overlay {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--dark-core);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND MATRIX DATA STREAM ANIMATION --- */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 12, 0.75);
-            z-index: 1;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 0.15;
+            pointer-events: none;
         }
 
-        /* ตัว Panel กลางจอ */
-        .panel {
-            position: relative;
-            z-index: 2;
-            background: rgba(15, 12, 22, 0.95); /* ดำอมม่วงเข้ม */
-            width: 350px;
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #8a2be2; /* เส้นขอบสีม่วง (Neon Purple) */
-            box-shadow: 0 0 25px rgba(138, 43, 226, 0.5); /* แสงออร่าสีม่วง */
-            text-align: center;
-            color: #ffffff;
-            box-sizing: border-box;
+        .bg-animation canvas {
+            display: block;
         }
 
-        h2 { 
-            color: #a020f0; /* สีม่วงหลัก */
-            margin-top: 0;
-            margin-bottom: 25px; 
-            text-transform: uppercase; 
-            letter-spacing: 3px;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(160, 32, 240, 0.6);
+        /* --- Cyber Grid Overlay --- */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
+            transform: perspective(500px) rotateX(60deg) translateY(-30%) scale(2);
+            animation: gridMove 20s linear infinite;
         }
 
-        /* ส่วน Login (ระบบใช้คีย์) */
-        .login-box input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #3a2a4a;
-            background: #161122; /* ดำหม่นม่วง */
-            color: #fff;
-            outline: none;
-            box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
-            text-align: center; /* ให้พิมพ์คีย์ตรงกลาง */
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        
-        .login-box input:focus {
-            border-color: #a020f0;
-            box-shadow: 0 0 8px rgba(160, 32, 240, 0.4);
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 1000px; }
         }
 
-        .btn-login {
-            background: #8a2be2; /* ปุ่มสีม่วง */
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            width: 100%;
-            font-family: 'Kanit', sans-serif;
-            text-transform: uppercase;
-            transition: 0.3s;
-            letter-spacing: 1px;
-        }
-        
-        .btn-login:hover {
-            background: #9932cc;
-            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
-        }
-
-        /* ส่วนเมนู (ซ่อนไว้ก่อน Login) */
-        #menu-section { 
-            display: none; 
-        }
-
-        .menu-item {
+        /* --- Header / Navbar Animation --- */
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5px;
-            border-bottom: 1px solid #2a1f3d;
-            font-size: 15px;
-        }
-        
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-
-        /* สวิตช์ เปิด-ปิด Custom Toggle Switch (สีม่วง) */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 48px;
-            height: 24px;
-        }
-
-        .switch input { 
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
+            padding: 25px 5%;
+            position: fixed;
+            width: 100%;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #251c33;
-            transition: .3s;
-            border-radius: 24px;
-            border: 1px solid #4a3568;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            animation: slideDown 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        .slider:before {
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+            animation: flicker 3s infinite alternate;
+        }
+
+        .logo span { color: var(--neon-magenta); text-shadow: 0 0 10px var(--neon-magenta); }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 0;
+            transition: 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
             position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 3px;
-            bottom: 3px;
-            background-color: #9b8bb4;
-            transition: .3s;
-            border-radius: 50%;
+            bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+            transition: 0.3s ease;
         }
 
-        input:checked + .slider {
-            background-color: #8a2be2; /* เปลี่ยนเป็นสีม่วงเมื่อเปิด */
-            border-color: #a020f0;
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 8px var(--neon-cyan); }
+
+        /* --- Hero Section & Entrance --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
         }
 
-        input:checked + .slider:before {
-            transform: translateX(24px);
-            background-color: #ffffff;
+        .title-wrapper {
+            position: relative;
+            animation: scaleUp 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
-        
-        /* ข้อความแจ้งเตือนเมื่อคีย์ผิด */
-        .error-msg {
-            color: #ff4444;
-            font-size: 13px;
-            margin-top: 10px;
-            display: none;
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5.5rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fff 40%, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        /* Glitch Effect Line */
+        .glitch-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-cyan);
+            letter-spacing: 12px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            border-right: 3px solid var(--neon-cyan);
+            white-space: nowrap;
+            animation: typewriter 3s steps(30) infinite alternate, blink 0.6s infinite;
+            overflow: hidden;
+            max-width: fit-content;
+        }
+
+        /* --- Interactive Glowing Buttons --- */
+        .btn-box {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeIn 1s 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .cyber-btn {
+            font-family: 'Orbitron', sans-serif;
+            padding: 18px 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #fff;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            clip-path: polygon(90% 0, 100% 34%, 100% 100%, 10% 100%, 0 66%, 0 0);
+            cursor: pointer;
+            position: relative;
+            transition: 0.5s;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+            text-decoration: none;
+        }
+
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .cyber-btn:hover::before { left: 100%; }
+
+        .cyber-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--dark-core);
+            box-shadow: 0 0 35px var(--neon-cyan);
+            font-weight: 900;
+        }
+
+        .cyber-btn.alt {
+            border-color: var(--neon-magenta);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.1);
+        }
+        .cyber-btn.alt:hover {
+            background: var(--neon-magenta);
+            box-shadow: 0 0 35px var(--neon-magenta);
+        }
+
+        /* --- Hologram Glass Cards --- */
+        .cards-container {
+            display: flex;
+            gap: 30px;
+            width: 100%;
+            max-width: 1100px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeIn 1.2s 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .holo-card {
+            background: var(--glass-panel);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            padding: 35px 25px;
+            border-radius: 16px;
+            width: 320px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* แสงวิ่งวาบขอบตอนโฮเวอร์ */
+        .holo-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0,240,255,0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .holo-card:hover {
+            transform: translateY(-12px) scale(1.03) rotateX(5deg) rotateY(5deg);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.15);
+        }
+
+        .holo-card:hover::after { opacity: 1; }
+
+        .holo-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--neon-cyan);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .holo-card p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* --- ANIMATIONS TIMELINE KEYFRAMES --- */
+        @keyframes slideDown {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes scaleUp {
+            0% { transform: scale(0.8); opacity: 0; filter: blur(10px); }
+            100% { transform: scale(1); opacity: 1; filter: blur(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes typewriter {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+            }
+            20%, 24%, 55% { text-shadow: none; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; letter-spacing: 4px; }
+            .nav-links { display: none; }
+            .btn-box { flex-direction: column; width: 100%; max-width: 280px; }
+            .glitch-sub { font-size: 0.9rem; letter-spacing: 6px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- เลเยอร์พื้นหลังโปร่งแสง -->
-    <div class="overlay"></div>
-
-    <!-- ตัวโครง STACKX Panel -->
-    <div class="panel">
-        <h2>STACKX</h2>
-        
-        <!-- โซนที่ 1: หน้าต่างล็อกอินแบบใช้คีย์ -->
-        <div id="login-section" class="login-box">
-            <input type="text" id="access-key" placeholder="กรอกคีย์ของคุณ (ENTER KEY)" autocomplete="off">
-            <button class="btn-login" onclick="checkKey()">ยืนยันคีย์</button>
-            <div id="error-message" class="error-msg">คีย์ไม่ถูกต้อง หรือหมดอายุ!</div>
-        </div>
-
-        <!-- โซนที่ 2: หน้าต่างเมนูฟังก์ชัน (จะแสดงเมื่อคีย์ถูกต้อง) -->
-        <div id="menu-section">
-            
-            <div class="menu-item">
-                <span>ล็อกเป้าอัตโนมัติ (Aimbot)</span>
-                <label class="switch">
-                    <input type="checkbox" onchange="toggleFeature('Aimbot', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="menu-item">
-                <span>ลดแรงดีดปืน (No Recoil)</span>
-                <label class="switch">
-                    <input type="checkbox" onchange="toggleFeature('No Recoil', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="menu-item">
-                <span>แสดงสายตาตัวละคร (ESP Line)</span>
-                <label class="switch">
-                    <input type="checkbox" onchange="toggleFeature('ESP Line', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-
-            <div class="menu-item">
-                <span>เพิ่มความเร็ว (Speed Move)</span>
-                <label class="switch">
-                    <input type="checkbox" onchange="toggleFeature('Speed Move', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-        </div>
+    <!-- DATA MATRIX STREAM BACKGROUND -->
+    <div class="bg-animation">
+        <canvas id="matrixCanvas"></canvas>
     </div>
 
-    <!-- ==========================================================================
-       JavaScript ระบบควบคุมหน้าต่างและคีย์
-       ========================================================================== */ -->
+    <!-- 3D CYBER GRID OVERLAY -->
+    <div class="grid-overlay"></div>
+
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <div class="logo">NEO<span>CORE</span></div>
+        <ul class="nav-links">
+            <li><a href="#">System</a></li>
+            <li><a href="#">Database</a></li>
+            <li><a href="#">Access_Point</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO DISPLAY -->
+    <section class="hero">
+        <div class="title-wrapper">
+            <h1>CHRONOS</h1>
+        </div>
+        <div class="glitch-sub" id="typewriter">NEXT-GEN ROLEPLAY</div>
+        
+        <!-- BUTTONS WITH INTERACTION -->
+        <div class="btn-box">
+            <a href="fivem://connect/YOUR_IP" class="cyber-btn">Initialize Link</a>
+            <a href="#" class="cyber-btn alt">Secure Discord</a>
+        </div>
+
+        <!-- 3D FLOATING GLASS CARDS -->
+        <div class="cards-container">
+            <div class="holo-card">
+                <h3>// 01 . HYPER_SYNC</h3>
+                <p>นวัตกรรมการเชื่อมต่อข้อมูลโครงสร้างแกนกลางของเซิร์ฟเวอร์แบบ Real-time ขจัดปัญหาความหน่วง มอบความลื่นไหลระดับสิบ</p>
+            </div>
+            <div class="holo-card">
+                <h3>// 02 . CYBER_LOGIC</h3>
+                <p>สคริปต์ UI และระบบฟังก์ชันถูกดีไซน์ขึ้นจากศูนย์ด้วยสไตล์นีออนกลาส เพื่อประสบการณ์ผู้เล่นที่สมจริงและล้ำหน้ายุคสมัย</p>
+            </div>
+            <div class="holo-card">
+                <h3>// 03 . DISK_OPTIMIZE</h3>
+                <p>ระบบเคลียร์ดาต้าขยะส่วนเกินและฟิกซ์สตรีมมิ่งไฟล์กราฟิก ช่วยดันเฟรมเรตคอมพิวเตอร์ของคุณให้พุ่งสูงสุด (FPS Boost)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MATRIX BACKGROUND SCRIPT -->
     <script>
-        // ฟังก์ชันตรวจสอบคีย์ (ตั้งค่าคีย์สำหรับทดสอบไว้คือ STACKX-FREE)
-        function checkKey() {
-            var inputKey = document.getElementById("access-key").value.trim();
-            var errorMsg = document.getElementById("error-message");
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
 
-            // สามารถเปลี่ยนคีย์ที่ต้องการให้ผ่านตรงเงื่อนไขนี้ได้เลยครับ
-            if (inputKey === "STACKX-FREE" || inputKey === "admin") {
-                // ซ่อนหน้ากรอกคีย์ แล้วเปิดหน้าเมนูฟังก์ชัน
-                document.getElementById("login-section").style.display = "none";
-                document.getElementById("menu-section").style.display = "block";
-            } else {
-                // แสดงข้อความเตือนเมื่อคีย์ไม่ตรง
-                errorMsg.style.display = "block";
-                errorMsg.innerText = "คีย์ไม่ถูกต้อง! (ลองใช้: STACKX-FREE)";
+        // ตั้งค่าขนาดหน้าจออัตโนมัติ
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // ตัวอักษรดูล้ำๆ (ไซเบอร์/ดิจิตอล)
+        const katakana = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ01';
+        const alphabet = katakana.split('');
+
+        const fontSize = 16;
+        let columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        // วาดสายฝนโค้ด Matrix
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 5, 10, 0.05)'; // ทำให้เกิดเอฟเฟกต์หางยาวจางๆ
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00f0ff'; // สี Cyan นีออน
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
             }
         }
 
-        // ฟังก์ชันเก็บสถานะการเปิด-ปิดเมนู
-        function toggleFeature(featureName, isChecked) {
-            if (isChecked) {
-                console.log("STACKX -> " + featureName + ": [ON]");
-            } else {
-                console.log("STACKX -> " + featureName + ": [OFF]");
-            }
-        }
+        // วิ่งลูปแอนิเมชันความเร็วสูง
+        setInterval(drawMatrix, 30);
     </script>
 
 </body>
