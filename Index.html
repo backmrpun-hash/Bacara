@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STACKX HUB | ULTIMATE 100+ FUNCTIONS TWEAKER</title>
+    <title>SECXION STORE | WEB APP CORE INTERACTIVE</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Fredoka:wght@400;600;700&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -18,8 +18,8 @@
             --pink-glow: rgba(255, 110, 199, 0.4);
             --cyan-neon: #00f3ff;
             --cyan-glow: rgba(0, 243, 255, 0.3);
-            --bg-dark: #060409;
-            --bg-card: rgba(18, 13, 30, 0.8);
+            --bg-dark: #07050e;
+            --bg-card: rgba(20, 15, 35, 0.7);
             --glass-border: rgba(190, 77, 255, 0.15);
             --round-super: 40px;
             --round-large: 24px;
@@ -35,18 +35,15 @@
             background-color: var(--bg-dark); color: #fff;
             min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;
             background-image: 
-                radial-gradient(circle at 80% 20%, rgba(255, 110, 199, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(190, 77, 255, 0.15) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(255, 110, 199, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(190, 77, 255, 0.12) 0%, transparent 50%);
             background-attachment: fixed;
         }
 
-        .sparkles { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .sparkle { position: absolute; background: #fff; border-radius: 50%; animation: floatUp infinite linear; opacity: 0.15; }
-
-        /* --- 🧭 NAVIGATION BAR --- */
+        /* --- 🧭 NAVIGATION BAR (NO POPUPS) --- */
         nav {
             margin: 15px auto; width: 92%; max-width: 1300px;
-            background: rgba(15, 10, 26, 0.7); backdrop-filter: blur(25px);
+            background: rgba(15, 10, 26, 0.75); backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border); padding: 12px 20px; border-radius: var(--round-large);
             display: flex; flex-direction: column; gap: 12px; align-items: center;
             position: sticky; top: 15px; z-index: 1000; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
@@ -66,11 +63,14 @@
             box-shadow: 0 6px 20px var(--purple-glow);
         }
 
+        .nav-right { display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center; }
+        .wallet-display { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; }
+        .wallet-display span { color: #00ff88; font-weight: 700; }
+
         .cart-trigger {
             background: rgba(0, 243, 255, 0.05); border: 1px solid var(--cyan-neon);
             padding: 8px 18px; border-radius: 50px; cursor: pointer; font-weight: 700;
             display: flex; align-items: center; gap: 8px; transition: 0.3s; font-size: 0.9rem;
-            width: 100%; justify-content: center;
         }
         .cart-trigger:hover { box-shadow: 0 0 15px var(--cyan-glow); }
         .cart-count {
@@ -79,57 +79,43 @@
             align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* --- 📦 MAIN CONTAINER CONTAINER --- */
+        /* --- 📦 MAIN CONTAINER --- */
         .container { width: 92%; max-width: 1300px; margin: 10px auto 40px auto; flex: 1; z-index: 10; }
 
         .app-view { display: none; }
-        .app-view.active-view { display: block; animation: viewIn 0.4s ease-out forwards; }
+        .app-view.active-view { display: block; animation: viewIn 0.3s ease-out forwards; }
 
-        /* --- 🏠 PAGE 1: HOME PAGE --- */
+        /* --- 🏠 PAGE 1: HOME DASHBOARD --- */
         .hero-banner {
             background: linear-gradient(135deg, rgba(35, 15, 60, 0.6), rgba(15, 10, 25, 0.8));
             border: 1px solid var(--glass-border); border-radius: var(--round-large);
-            padding: 35px 20px; text-align: center; position: relative; overflow: hidden; margin-bottom: 25px;
+            padding: 35px 20px; text-align: center; margin-bottom: 25px;
         }
         .hero-banner h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; text-shadow: 0 0 20px var(--purple-glow); }
-        .hero-banner p { color: rgba(255,255,255,0.6); margin-bottom: 20px; font-size: 0.95rem; }
         
-        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px; }
-        .stat-box { background: var(--bg-card); border: 1px solid var(--glass-border); padding: 20px; border-radius: var(--round-medium); text-align: center; }
-        .stat-num { font-size: 2rem; font-weight: 700; color: var(--cyan-neon); text-shadow: 0 0 10px var(--cyan-glow); }
-        .stat-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 5px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
+        .stat-box { background: var(--bg-card); border: 1px solid var(--glass-border); padding: 15px; border-radius: var(--round-medium); text-align: center; }
+        .stat-num { font-size: 1.6rem; font-weight: 700; color: var(--cyan-neon); }
+        .stat-label { color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-top: 3px; }
 
-        /* --- 🛠️ 100+ FUNCTIONS TWEAKER INTERFACE --- */
-        .vault-title { font-size: 1.5rem; margin-bottom: 5px; color: var(--cyan-neon); text-shadow: 0 0 10px var(--cyan-glow); }
-        .vault-desc { color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-bottom: 20px; }
+        /* ฟังก์ชันเว็บบอร์ดล้ำๆ: ส่วนร่วมกิจกรรมหน้าร้าน */
+        .web-features-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .feature-card { background: rgba(12, 8, 24, 0.85); border: 1px solid var(--glass-border); border-radius: var(--round-large); padding: 20px; }
+        .feature-title { font-size: 1.2rem; font-weight: 700; color: var(--pink-neon); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         
-        .vault-section {
-            background: rgba(10, 6, 18, 0.9); border: 1px solid var(--glass-border);
-            border-radius: var(--round-large); padding: 20px; margin-bottom: 25px;
+        .flex-btn-group { display: flex; flex-wrap: wrap; gap: 10px; }
+        .action-btn {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff;
+            padding: 10px 16px; border-radius: var(--round-medium); cursor: pointer; font-size: 0.85rem; font-weight: 600;
+            transition: 0.2s; display: flex; align-items: center; gap: 6px;
         }
-        .section-header { font-size: 1.1rem; color: var(--pink-neon); margin-bottom: 15px; border-left: 4px solid var(--pink-neon); padding-left: 10px; font-weight: 700; }
-        
-        /* ฟังก์ชันกริด ยืดหยุ่นปรับขนาดตามจอออโต้ */
-        .buttons-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;
-        }
-        .fn-btn {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.8); padding: 12px 8px; border-radius: var(--round-medium);
-            font-size: 0.8rem; font-weight: 500; cursor: pointer; text-align: center;
-            transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px;
-        }
-        .fn-btn:hover {
-            background: rgba(190, 77, 255, 0.15); border-color: var(--purple-neon);
-            color: #fff; transform: translateY(-2px); box-shadow: 0 5px 12px rgba(190, 77, 255, 0.2);
-        }
-        .fn-btn span { font-size: 0.65rem; color: var(--cyan-neon); font-family: 'Fira Code', monospace; }
+        .action-btn:hover { background: var(--purple-neon); border-color: transparent; transform: translateY(-2px); box-shadow: 0 5px 15px var(--purple-glow); }
 
-        /* หน้าต่าง Console Log ด่านล่างสำหรับจำลองการรันโค้ด */
-        .console-box {
-            background: #020104; border: 1px solid rgba(0, 243, 255, 0.2);
-            border-radius: var(--round-medium); padding: 15px; font-family: 'Fira Code', monospace;
-            font-size: 0.8rem; color: #00ff88; min-height: 80px; max-height: 120px; overflow-y: auto; margin-top: 15px;
+        /* กล่องสุ่มอนิเมชันจำลอง */
+        .gacha-display {
+            background: #030206; border: 1px solid rgba(0, 243, 255, 0.2); border-radius: var(--round-medium);
+            padding: 15px; margin-top: 15px; text-align: center; min-height: 60px; display: flex; align-items: center; justify-content: center;
+            font-weight: 600; color: #00ff88; font-size: 0.95rem;
         }
 
         /* --- 🛒 PAGE 2: STORE PAGE --- */
@@ -158,7 +144,7 @@
         .item-badge { position: absolute; top: 12px; right: 12px; background: rgba(0, 243, 255, 0.1); padding: 2px 10px; border-radius: 50px; font-size: 0.7rem; color: var(--cyan-neon); font-weight: 700; border: 1px solid var(--cyan-neon); }
         .item-icon { font-size: 2.2rem; margin: 10px 0 5px 0; }
         .price-tag { font-size: 1.4rem; color: var(--pink-neon); font-weight: 700; margin: 10px 0; }
-        .buy-button { background: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid var(--glass-border); width: 100%; padding: 11px; border-radius: 50px; cursor: pointer; font-weight: 700; }
+        .buy-button { background: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid var(--glass-border); width: 100%; padding: 11px; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.2s; }
         .item-card:hover .buy-button { background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); border-color: transparent; }
 
         /* --- 📜 PAGE 3: HISTORY LOG PAGE --- */
@@ -173,13 +159,18 @@
             position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
             background: rgba(12, 8, 22, 0.98); backdrop-filter: blur(20px);
             border-left: 1px solid var(--glass-border); z-index: 99999;
-            padding: 30px 20px; display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 30px 20px; display: flex; flex-direction: column; transition: 0.3s ease-in-out;
         }
         .cart-modal.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .close-cart { background: transparent; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
         .cart-items-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
         .cart-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: var(--round-medium); display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
+        
+        .promo-section { margin-bottom: 15px; display: flex; gap: 8px; }
+        .promo-input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 50px; color: #fff; outline: none; font-size: 0.85rem; }
+        .promo-btn { background: var(--cyan-neon); color: #000; border: none; padding: 8px 18px; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+
         .total-price-row { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; }
         .checkout-btn { background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 50px; font-weight: 700; cursor: pointer; }
 
@@ -188,11 +179,11 @@
             nav { flex-direction: row; justify-content: space-between; padding: 12px 30px; margin: 20px auto; }
             .nav-center { width: auto; gap: 8px; }
             .nav-tab { padding: 10px 24px; font-size: 1rem; max-width: none; }
-            .cart-trigger { width: auto; font-size: 1rem; }
+            .nav-right { width: auto; gap: 15px; }
             .hero-banner { padding: 50px; }
             .hero-banner h1 { font-size: 2.8rem; }
-            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-            .buttons-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+            .web-features-grid { grid-template-columns: repeat(2, 1fr); }
             .store-header { flex-direction: row; justify-content: space-between; align-items: center; }
             .search-box { max-width: 360px; }
             .store-layout { grid-template-columns: 260px 1fr; }
@@ -201,113 +192,158 @@
             .cart-modal { width: 420px; right: -450px; border-top-left-radius: var(--round-super); border-bottom-left-radius: var(--round-super); }
         }
 
-        @keyframes viewIn { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes floatUp { 0% { transform: translateY(105vh); } 100% { transform: translateY(-5vh); } }
+        @keyframes viewIn { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="sparkles" id="sparklesContainer"></div>
-
     <!-- NAVIGATION BAR -->
     <nav>
-        <div class="logo" onclick="switchView('home')">💥 Stack<span>X</span></div>
+        <div class="logo" onclick="switchView('home')">🪐 Secxion<span>Store</span></div>
         <div class="nav-center">
             <button class="nav-tab active-tab" id="tab-home" onclick="switchView('home')">🏠 หน้าแรก</button>
             <button class="nav-tab" id="tab-store" onclick="switchView('store')">🛒 ร้านค้า</button>
-            <button class="nav-tab" id="tab-history" onclick="switchView('history')">📜 ประวัติซื้อ</button>
+            <button class="nav-tab" id="tab-history" onclick="switchView('history')">📜 ประวัติระบบ</button>
         </div>
-        <div class="cart-trigger" onclick="toggleCart(true)">
-            ตะกร้าสินค้า <div class="cart-count" id="cartCount">0</div>
+        <div class="nav-right">
+            <div class="wallet-display">💰 เงินของคุณ: <span id="userBalance">1,500</span> ฿</div>
+            <div class="cart-trigger" onclick="toggleCart(true)">
+                ตะกร้า <div class="cart-count" id="cartCount">0</div>
+            </div>
         </div>
     </nav>
 
     <!-- CONTENT CONTAINER -->
     <div class="container">
 
-        <!-- 🏠 หน้าที่ 1: หน้าหลัก (HOME + 100+ FUNCTIONS VAULT) -->
+        <!-- 🏠 หน้าที่ 1: หน้าหลัก (DASHBOARD + WEB SYSTEM APP FUNCTIONS) -->
         <div class="app-view active-view" id="view-home">
             <div class="hero-banner">
-                <h1>STACKX CONTROL CENTER</h1>
-                <p>แดชบอร์ดจำลองระบบจัดการและคลังทวีคความแรงแบบจัดเต็ม คลุมทุกส่วนโครงสร้างระบบ</p>
+                <h1>WEB INTERACTIVE SYSTEM</h1>
+                <p>ศูนย์รวมระบบฟังก์ชันจำลองการทำงานบนหน้าเว็บแอปพลิเคชันอย่างเต็มรูปแบบ</p>
             </div>
 
+            <!-- แผงสถิติรวมของระบบตัวเว็บ -->
             <div class="stats-grid">
-                <div class="stat-box"><div class="stat-num" id="stat-user">14,240</div><div class="stat-label">👥 Active Nodes</div></div>
-                <div class="stat-box"><div class="stat-num" id="stat-dl">89,450</div><div class="stat-label">🚀 Optimizations Run</div></div>
-                <div class="stat-box"><div class="stat-num" style="color: #00ff88;">READY</div><div class="stat-label">🟢 Core Engine Status</div></div>
+                <div class="stat-box"><div class="stat-num" id="stat-online">342</div><div class="stat-label">🟢 ออนไลน์ขณะนี้</div></div>
+                <div class="stat-box"><div class="stat-num" id="stat-sales">1,204</div><div class="stat-label">📦 ออเดอร์ทั้งหมด</div></div>
+                <div class="stat-box"><div class="stat-num" id="stat-discount">0%</div><div class="stat-label">🎟️ ส่วนลดปัจจุบัน</div></div>
+                <div class="stat-box"><div class="stat-num" style="color: #be4dff;" id="stat-points">0</div><div class="stat-label">✨ พ้อยท์สะสม</div></div>
             </div>
 
-            <!-- แผงหน้าต่างคลังฟังก์ชัน 100+ ปุ่ม -->
-            <h2 class="vault-title">⚔️ MULTI-FUNCTION TWEAKER VAULT</h2>
-            <p class="vault-desc">กดเพื่อจำลองการเรียกใช้งานสคริปต์ปรับแต่งความเร็วระดับลึกและลบไฟล์ประวัติตกค้าง</p>
+            <!-- คลังฟังก์ชันระบบการทำงานของตัวเว็บ (Web Application Functions Vault) -->
+            <h2 style="font-size: 1.4rem; margin-bottom: 15px; color: var(--cyan-neon);">🛠️ WEB APPLICATION INTERACTIVE FUNCTIONS</h2>
+            
+            <div class="web-features-grid">
+                
+                <!-- หมวดหมู่ระบบสมาชิกและกระเป๋าเงิน -->
+                <div class="feature-card">
+                    <div class="feature-title">💳 ระบบบัญชี & การเงิน (Wallet Feature)</div>
+                    <div class="flex-btn-group">
+                        <button class="action-btn" onclick="mockAddFunds(100)">💵 เติมเงินจำลอง +100 ฿</button>
+                        <button class="action-btn" onclick="mockAddFunds(500)">💵 เติมเงินจำลอง +500 ฿</button>
+                        <button class="action-btn" onclick="clearWallet()">🗑️ ล้างยอดเงินเป็น 0</button>
+                    </div>
+                </div>
 
-            <div id="vaultSectionsContainer"></div>
+                <!-- หมวดหมู่ระบบโปรโมชันและคูปอง -->
+                <div class="feature-card">
+                    <div class="feature-title">🎟️ ระบบการตลาด & โค้ดส่วนลด (Marketing & Coupon)</div>
+                    <div class="flex-btn-group">
+                        <button class="action-btn" onclick="generateCoupon()">🎲 สุ่มรับโค้ดส่วนลดในระบบ</button>
+                        <button class="action-btn" onclick="resetCouponStatus()">🔄 รีเซ็ตสิทธิ์การใช้โค้ดทั้งหมด</button>
+                    </div>
+                    <div class="gacha-display" id="couponDisplay">กดปุ่มด้านบนเพื่อรับสิทธิ์โค้ดส่วนลดระบบ...</div>
+                </div>
 
-            <!-- หน้าจอจำลองสถานะ Terminal Output บรรทัดล่าง -->
-            <div class="console-box" id="terminalOutput">> System Engine Ready. Select a tweak function above...</div>
+                <!-- หมวดหมู่ระบบกิจกรรมความบันเทิงหน้าเว็บ -->
+                <div class="feature-card">
+                    <div class="feature-title">🎁 ฟังก์ชันกิจกรรมลูกค้า (Engagement & Gacha Mini-game)</div>
+                    <div class="flex-btn-group">
+                        <button class="action-btn" onclick="rollGacha()">🎰 สุ่มกล่องของรางวัลฟรี (ใช้ 10 พ้อยท์)</button>
+                        <button class="action-btn" onclick="addMockPoints()">✨ รับพ้อยท์ทดสอบระบบ +20 pt</button>
+                    </div>
+                    <div class="gacha-display" id="gachaDisplay">ผลการสุ่มของรางวัลหน้าร้านจะแสดงตรงนี้...</div>
+                </div>
+
+                <!-- หมวดหมู่ระบบควบคุมเซิร์ฟเวอร์หลังบ้าน -->
+                <div class="feature-card">
+                    <div class="feature-title">🖥️ ฟังก์ชันจำลองเซิร์ฟเวอร์หลังบ้าน (Site Server Control)</div>
+                    <div class="flex-btn-group">
+                        <button class="action-btn" onclick="toggleServerStatus()">🔌 สลับสถานะเซิร์ฟเวอร์ (เปิด/ปิด)</button>
+                        <button class="action-btn" onclick="clearHistoryLog()">🧹 สั่งล้างประวัติตารางธุรกรรมทั้งหมด</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <!-- 🛒 หน้าที่ 2: หน้าร้านค้า (STORE) -->
+        <!-- 🛒 หน้าที่ 2: หน้าร้านค้า (STORE + REALTIME FILTER & SEARCH) -->
         <div class="app-view" id="view-store">
             <div class="store-header">
                 <div>
-                    <h2 style="font-size: 1.6rem;">คลังสินค้าและระบบทดลอง</h2>
-                    <p style="color: rgba(255,255,255,0.4); font-size: 0.85rem;">พิมพ์ค้นหาไอเทมหรือเลือกหมวดหมู่เพื่อกรองข้อมูลแบบ Real-time</p>
+                    <h2 style="font-size: 1.6rem;">🛒 ระบบหน้าร้านและการจัดส่ง</h2>
+                    <p style="color: rgba(255,255,255,0.4); font-size: 0.85rem;">ฟังก์ชันตัวกรองหมวดหมู่สินค้าแยกประเภทแบบไม่ต้องโหลดหน้าใหม่</p>
                 </div>
                 <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="พิมพ์เพื่อค้นหาไอเทม..." oninput="liveSearch()">
+                    <input type="text" id="searchInput" placeholder="ค้นหาชื่อสินค้าในระบบแอปพลิเคชัน..." oninput="liveSearch()">
                 </div>
             </div>
 
             <div class="store-layout">
                 <div class="store-sidebar">
-                    <button class="category-btn active-cat" id="cat-all" onclick="filterCategory('all')">⭐ ทั้งหมด</button>
-                    <button class="category-btn" id="cat-opt" onclick="filterCategory('opt')">⚡ System Optimizer</button>
-                    <button class="category-btn" id="cat-ui" onclick="filterCategory('ui')">🎨 Interface Design</button>
+                    <button class="category-btn active-cat" id="cat-all" onclick="filterCategory('all')">⭐ คลังทั้งหมด</button>
+                    <button class="category-btn" id="cat-opt" onclick="filterCategory('opt')">⚡ System UI & Scripts</button>
+                    <button class="category-btn" id="cat-ui" onclick="filterCategory('ui')">🎨 Game Custom Modding</button>
                 </div>
 
                 <div class="store-shelf">
-                    <div class="item-card" data-cat="opt" data-name="zxx cpu pro booster">
+                    <div class="item-card" data-cat="opt" data-name="zxx cpu pro booster script">
                         <div class="item-badge">HOT</div>
-                        <div><div class="item-icon">⚙️</div><h3>ZXX CPU PRO Booster</h3><p>จัดเรียงโครงสร้างแกน CPU เพิ่มความเสถียรลดการหน่วง</p></div>
-                        <div><div class="price-tag">290 ฿</div><button class="buy-button" onclick="addToCart('ZXX CPU PRO', 290)">Add to Cart</button></div>
+                        <div><div class="item-icon">⚡</div><h3>ZXX CPU PRO Script</h3><p>ไฟล์สคริปต์ปรับแต่งการทำงานแกนระบบเบื้องหลัง</p></div>
+                        <div><div class="price-tag">250 ฿</div><button class="buy-button" onclick="addToCart('ZXX CPU PRO', 250)">Add to Cart</button></div>
                     </div>
-                    <div class="item-card" data-cat="ui" data-name="glassmorphism inventory panels ui">
+                    <div class="item-card" data-cat="ui" data-name="glassmorphic design ui panels pack">
                         <div class="item-badge">PREMIUM</div>
-                        <div><div class="item-icon">💎</div><h3>Glassmorphism UI</h3><p>ดีไซน์ช่องเก็บของสไตล์กระจกฝ้า แอนิเมชันลากไอเทมลื่นไหล</p></div>
-                        <div><div class="price-tag">450 ฿</div><button class="buy-button" onclick="addToCart('Glass Inventory', 450)">Add to Cart</button></div>
+                        <div><div class="item-icon">💎</div><h3>Glassmorphic UI Pack</h3><p>ดีไซน์หน้าต่างกระจกฝ้าหรูหราสำหรับใช้ตกแต่งเซิร์ฟเวอร์</p></div>
+                        <div><div class="price-tag">450 ฿</div><button class="buy-button" onclick="addToCart('Glassmorphic UI Pack', 450)">Add to Cart</button></div>
                     </div>
-                    <div class="item-card" data-cat="opt" data-name="anti-trace forensics cleaner">
+                    <div class="item-card" data-cat="opt" data-name="anti-trace database forensics wiper">
                         <div class="item-badge">POPULAR</div>
-                        <div><div class="item-icon">🧹</div><h3>Anti-Trace Cleaner</h3><p>สคริปต์ล้างไฟล์ขยะตกค้าง คืนพื้นที่ความเร็วสูง</p></div>
-                        <div><div class="price-tag">190 ฿</div><button class="buy-button" onclick="addToCart('Anti-Trace Cleaner', 190)">Add to Cart</button></div>
+                        <div><div class="item-icon">🧹</div><h3>Anti-Trace System</h3><p>สคริปต์อัตโนมัติจัดเคลียร์ลบประวัติขยะระบบ</p></div>
+                        <div><div class="price-tag">180 ฿</div><button class="buy-button" onclick="addToCart('Anti-Trace System', 180)">Add to Cart</button></div>
                     </div>
-                    <div class="item-card" data-cat="ui" data-name="cyberpunk hud dashboard status">
+                    <div class="item-card" data-cat="ui" data-name="fivem custom peripheral optimizing hud">
                         <div class="item-badge">NEW</div>
-                        <div><div class="item-icon">🛸</div><h3>Cyberpunk HUD</h3><p>กรอบเกจวัดค่าพลังชีวิต เกราะ สไตล์ไซเบอร์นีออน</p></div>
-                        <div><div class="price-tag">320 ฿</div><button class="buy-button" onclick="addToCart('Cyberpunk HUD', 320)">Add to Cart</button></div>
+                        <div><div class="item-icon">🕹️</div><h3>FiveM Custom HUD</h3><p>กรอบอินเตอร์เฟสความเร็วต่ำหน้าจอเกมเพื่อความสมูท</p></div>
+                        <div><div class="price-tag">300 ฿</div><button class="buy-button" onclick="addToCart('FiveM Custom HUD', 300)">Add to Cart</button></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 📜 หน้าที่ 3: หน้าประวัติซื้อ (HISTORY LOG) -->
+        <!-- 📜 หน้าที่ 3: หน้าประวัติระบบ (HISTORY TRANSACTION TABLE) -->
         <div class="app-view" id="view-history">
-            <h2 style="margin-bottom: 20px; font-size: 1.6rem;">📜 ประวัติการทำรายการล่าสุด</h2>
+            <h2 style="margin-bottom: 20px; font-size: 1.6rem;">📜 รายงาน Log บันทึกประวัติและธุรกรรมระบบ</h2>
             <div class="history-table-wrapper">
                 <table>
                     <thead>
                         <tr>
-                            <th>เลขที่บิล (ID)</th>
-                            <th>ชื่อสินค้าที่สั่งซื้อ</th>
-                            <th>ยอดชำระ</th>
+                            <th>หมวดหมู่ฟังก์ชัน</th>
+                            <th>รายละเอียดบันทึกความเคลื่อนไหว</th>
+                            <th>ค่าเป้าหมาย (Value)</th>
                             <th>เวลาทำรายการ</th>
-                            <th>สถานะระบบ</th>
+                            <th>สถานะตอบกลับ</th>
                         </tr>
                     </thead>
                     <tbody id="historyTableBody">
-                        <tr><td>#STX-99812</td><td style="color:var(--cyan-neon); font-weight:600;">ZXX CPU PRO Booster</td><td>290 ฿</td><td>เมื่อสักครู่ที่ผ่านมา</td><td><span class="status-badge">จัดส่งสำเร็จ</span></td></tr>
+                        <tr>
+                            <td>SYSTEM_INIT</td>
+                            <td style="color:var(--cyan-neon); font-weight:600;">เชื่อมต่อโครงสร้างระบบฐานข้อมูลสำเร็จ</td>
+                            <td>v2.6.1</td>
+                            <td>เมื่อสักครู่ที่ผ่านมา</td>
+                            <td><span class="status-badge">SUCCESS</span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -315,27 +351,35 @@
 
     </div>
 
-    <!-- SHOPPING CART PANEL -->
+    <!-- SHOPPING CART PANEL OVERLAY -->
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
-            <h2 style="font-weight:700; color:var(--cyan-neon);">🛒 ตะกร้าสะสม</h2>
+            <h2 style="font-weight:700; color:var(--cyan-neon);">🛒 ตะกร้าสะสมระบบ</h2>
             <button class="close-cart" onclick="toggleCart(false)">✕</button>
         </div>
         <div class="cart-items-list" id="cartItemsList"></div>
+        
+        <!-- ฟังก์ชันกรอกโค้ดส่วนลดในตะกร้า -->
+        <div class="promo-section">
+            <input type="text" class="promo-input" id="couponInput" placeholder="กรอกโค้ดส่วนลดระบบ...">
+            <button class="promo-btn" onclick="applyCoupon()">ใช้งาน</button>
+        </div>
+
         <div class="cart-footer">
             <div class="total-price-row"><span>ราคารวม:</span><span id="totalPriceText" style="color:var(--pink-neon);">0 ฿</span></div>
-            <button class="checkout-btn" onclick="checkoutMockup()">ยืนยันจำลองการชำระเงิน</button>
+            <button class="checkout-btn" onclick="checkoutSystem()">ตัดยอดเงินและดำเนินการสั่งซื้อ</button>
         </div>
     </div>
 
     <script>
+        // กำหนดข้อมูลรัฐ (State Context) เริ่มต้นของหน้าเว็บ
+        let balance = 1500;
+        let points = 50;
+        let discountRate = 0;
         let cart = [];
+        let isServerOnline = true;
 
-        // 1. ระบบสลับหน้าหลัก (SPA - NO POPUP NOTIFICATION)
-        document.addEventListener("DOMContentLoaded", function() {
-            generate100Functions();
-        });
-
+        // 1. ระบบจัดการสลับหน้า (SPA Architecture - ปราศจากการเรียกป๊อปอัพกวนใจ)
         function switchView(viewName) {
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active-tab'));
@@ -344,94 +388,102 @@
             document.getElementById(`tab-${viewName}`).classList.add('active-tab');
         }
 
-        // 2. ลูปสร้างชุดฟังก์ชันอัดแน่น 100+ รายการแบบ Dynamic ลงหน้าเว็บ
-        function generate100Functions() {
-            const container = document.getElementById('vaultSectionsContainer');
+        // 2. ฟังก์ชันระบบบัญชี & กระเป๋าเงิน
+        function mockAddFunds(amount) {
+            balance += amount;
+            updateUI();
+            addLogToTable("WALLET_DEPOSIT", `เติมเงินเข้าระบบจำลองสำเร็จจำนวน +${amount} ฿`, `${amount} ฿`, "DONE");
+        }
+
+        function clearWallet() {
+            balance = 0;
+            updateUI();
+            addLogToTable("WALLET_RESET", "ล้างยอดเงินกระเป๋าจำลองในระบบ", "0 ฿", "WARNING");
+        }
+
+        // 3. ฟังก์ชันระบบสุ่มแจกคูปองการตลาด
+        function generateCoupon() {
+            const discounts = [10, 20, 30, 50];
+            const randomPercent = discounts[Math.floor(Math.random() * discounts.length)];
+            const code = `SECXION${randomPercent}`;
             
-            const categories = [
-                { title: "⚡ Core System Optimization (01-25)", prefix: "SYS_OPT_", icon: "⚙️", count: 25 },
-                { title: "🌐 Network & Latency Packet Tuning (26-50)", prefix: "NET_TWEAK_", icon: "🛰️", count: 25 },
-                { title: "🎮 Gaming Performance & Input Throttle (51-75)", prefix: "GAME_FPS_", icon: "🕹️", count: 25 },
-                { title: "🧹 Anti-Forensics & System Log Eraser (76-105)", prefix: "LOG_CL_", icon: "💀", count: 30 }
+            document.getElementById('couponDisplay').innerHTML = `🎟️ คุณได้รับโค้ด: <span style="color:var(--pink-neon); font-size:1.1rem;">${code}</span> (ลดทันที ${randomPercent}%)`;
+            addLogToTable("COUPON_GEN", `ระบบสุ่มแจกคูปองส่วนลดพิเศษ ${randomPercent}%`, code, "SUCCESS");
+        }
+
+        function applyCoupon() {
+            const input = document.getElementById('couponInput').value.trim().toUpperCase();
+            if(input === "SECXION10") discountRate = 0.10;
+            else if(input === "SECXION20") discountRate = 0.20;
+            else if(input === "SECXION30") discountRate = 0.30;
+            else if(input === "SECXION50") discountRate = 0.50;
+            else {
+                alert("❌ ไม่พบรหัสโค้ดส่วนลดนี้ในฐานข้อมูลเว็บ");
+                return;
+            }
+            document.getElementById('stat-discount').innerText = (discountRate * 100) + "%";
+            updateCartUI();
+            alert(`🎉 บังคับใช้โค้ดส่วนลด ${discountRate * 100}% ในตะกร้าสำเร็จ!`);
+            addLogToTable("COUPON_APPLY", "สิทธิ์ผู้ใช้เปิดรหัสคูปองส่วนลดในตะกร้า", `${discountRate*100}%`, "ACTIVE");
+        }
+
+        function resetCouponStatus() {
+            discountRate = 0;
+            document.getElementById('stat-discount').innerText = "0%";
+            document.getElementById('couponDisplay').innerText = "กดปุ่มด้านบนเพื่อรับสิทธิ์โค้ดส่วนลดระบบ...";
+            updateCartUI();
+            addLogToTable("COUPON_RESET", "ล้างค่าฟังก์ชันส่วนลดระเบียงระบบทั้งหมด", "0%", "DONE");
+        }
+
+        // 4. ฟังก์ชันความบันเทิง มินิเกมระบบกล่องสุ่มรางวัล (Gacha System)
+        function rollGacha() {
+            if(points < 10) {
+                alert("❌ คะแนนสะสมของคุณไม่เพียงพอ! ต้องใช้ 10 pt (กดเพิ่มคะแนนทดลองระบบได้ฟรี)");
+                return;
+            }
+            points -= 10;
+            updateUI();
+
+            const prizes = [
+                "VIP Status Rank (7 Days)",
+                "Exclusive Custom Cyberpunk HUD V2",
+                "Bonus Wallet Cash +50 Baht",
+                "Unreleased Low Latency Registry Script",
+                "Better Luck Next Time! (เกลือ)"
             ];
-
-            let absoluteIndex = 1;
-
-            categories.forEach(cat => {
-                const section = document.createElement('div');
-                section.classList.add('vault-section');
-                
-                const header = document.createElement('div');
-                header.classList.add('section-header');
-                header.innerText = cat.title;
-                section.appendChild(header);
-
-                const grid = document.createElement('div');
-                grid.classList.add('buttons-grid');
-
-                for(let i = 1; i <= cat.count; i++) {
-                    const btn = document.createElement('button');
-                    btn.classList.add('fn-btn');
-                    
-                    let fnName = "";
-                    if(cat.prefix.includes("SYS")) fnName = getSysFnName(i);
-                    else if(cat.prefix.includes("NET")) fnName = getNetFnName(i);
-                    else if(cat.prefix.includes("GAME")) fnName = getGameFnName(i);
-                    else fnName = getLogFnName(i);
-
-                    btn.innerHTML = `${cat.icon} ${fnName} <span>[ID: ${String(absoluteIndex).padStart(3, '0')}]</span>`;
-                    
-                    // เมื่อกดปุ่มฟังก์ชันให้รันยิงสเตตัสเข้าแผงคอลโซลด้านล่างแทนการขึ้นป๊อปอัพ
-                    btn.onclick = (function(index, name) {
-                        return function() { triggerConsoleSim(index, name); };
-                    })(absoluteIndex, fnName);
-
-                    grid.appendChild(btn);
-                    absoluteIndex++;
-                }
-
-                section.appendChild(grid);
-                container.appendChild(section);
-            });
-        }
-
-        // คลังชื่อฟังก์ชันจำลองเพื่อความสมจริง
-        function getSysFnName(i) {
-            const list = ["Core_Steer", "Kernel_Idle", "Ram_Purge", "Cache_Flush", "Thread_Sync", "Paging_Exec", "VRAM_Alloc", "DirectX_Boost", "Svc_Disable", "SysMain_Off", "AppX_Clean", "WinDef_Low", "UAC_Bypass", "Heap_Clean", "Handle_Drop", "CPU_Unpark", "Power_Thrott", "GPU_Sched", "IRQ_Priority", "IO_Boost", "Task_Kill", "Drv_Refresh", "Registry_Compact", "Win_FastBoot", "Bcdedit_Set"];
-            return list[i-1] || `Sys_Tweak_${i}`;
-        }
-        function getNetFnName(i) {
-            const list = ["TCP_NoDelay", "Nagle_Disable", "DNS_Flush", "MTU_Optimize", "Ping_Stabilize", "IpStack_Reset", "Wifi_Throttle", "Lan_Priority", "Packet_Coalesce", "TTL_Set", "Bandwidth_Uncap", "Winsock_Fix", "DHCP_Force", "IPv6_Disable", "ACK_Frequency", "Autotuning_Set", "NetDMA_Enable", "ECN_Capability", "RSC_Tuning", "Chimney_Off", "Network_Thrott", "QoS_Packet", "Sack_Opts", "Fast_Recovery", "KeepAlive_Time"];
-            return list[i-1] || `Net_Tune_${i}`;
-        }
-        function getGameFnName(i) {
-            const list = ["Mouse_Data_Q", "Kbd_Response", "FPS_Uncap", "Gpu_Clocks_Max", "FivM_Cache_Fix", "Texture_Stream", "Shad_Cache_Ext", "V_Sync_ForceOff", "Low_Lat_Mode", "Dx12_Pipeline", "Audio_Buffer_Low", "GameBar_Disable", "DVR_TurnOff", "HAGS_Enable", "FSE_Enforce", "Affinity_Mask", "Priority_High", "Ram_Lock_Pages", "Input_Buffer_Flush", "DPI_Awareness", "Refresh_Rate_Max", "G_Sync_Syncing", "Aniso_Filtering", "MipMap_Bias", "Lod_Detail"];
-            return list[i-1] || `Game_Boost_${i}`;
-        }
-        function getLogFnName(i) {
-            const list = ["BAM_Reg_Wipe", "DAM_Clean", "SRUM_Db_Drop", "Shimcache_Purge", "Amcache_Delete", "Prefetch_Empty", "EventLog_Clear", "DiagTrack_Stop", "USN_Journal_Wipe", "Recycle_Force", "Temp_Wipe", "Wer_Report_Del", "IconCache_Reset", "Shell_History", "Run_Diag_Wipe", "JumpList_Clear", "Recent_Files_Del", "Muicache_Clean", "AppCompat_Wipe", "WER_Disable", "Sys_Restore_Drop", "Shadow_Copy_Del", "Browser_Cache", "DNS_Cache_Wipe", "Crypto_Log_Del", "Win_Update_Cache", "Installer_Trash", "Dump_File_Wipe", "Log_Rotation_Stop", "Trace_Session_Kill"];
-            return list[i-1] || `Log_Eraser_${i}`;
-        }
-
-        // 3. ฟังก์ชันการรันจำลองข้อความบน Terminal Console ด้านล่าง
-        function triggerConsoleSim(id, name) {
-            const terminal = document.getElementById('terminalOutput');
-            const hex = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
+            const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
             
-            terminal.innerHTML = `
-                <span style="color:#be4dff;">[EXEC]</span> Calling Function ID: ${String(id).padStart(3, '0')} (${name})<br>
-                <span style="color:#00f3ff;">[INFO]</span> Injecting Registry Tweak HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet...<br>
-                <span style="color:#00ff88;">[SUCCESS]</span> Thread status: OK | Memory Address shifted at 0x${hex} -> Execution Completed!
-            `;
-            terminal.scrollTop = terminal.scrollHeight;
-            
-            // แอบเพิ่มตัวเลขความสำเร็จบนหน้าแรกให้ขยับขึ้นเล็กน้อยตามการกด
-            let dlBox = document.getElementById('stat-dl');
-            let currentDl = parseInt(dlBox.innerText.replace(/,/g, ''));
-            dlBox.innerText = (currentDl + 1).toLocaleString();
+            if(randomPrize.includes("+50")) {
+                balance += 50;
+                updateUI();
+            }
+
+            document.getElementById('gachaDisplay').innerHTML = `🎁 รางวัลที่ได้: <span style="color:var(--cyan-neon);">${randomPrize}</span>`;
+            addLogToTable("GACHA_ROLL", `กดสุ่มไอเทมกิจกรรมของรางวัลจำลอง`, randomPrize, "SUCCESS");
         }
 
-        // 4. แผงควบคุมตะกร้าสินค้า
+        function addMockPoints() {
+            points += 20;
+            updateUI();
+            addLogToTable("POINT_ADD", "เพิ่มแต้มพ้อยท์ระบบจำลองให้ผู้ใช้", "+20 pt", "DONE");
+        }
+
+        // 5. ฟังก์ชันควบคุมระบบเซิร์ฟเวอร์หลังบ้าน
+        function toggleServerStatus() {
+            isServerOnline = !isServerOnline;
+            const statusBox = document.getElementById('stat-online');
+            if(isServerOnline) {
+                statusBox.innerText = "342";
+                statusBox.style.color = "#00f3ff";
+                addLogToTable("SERVER_STATUS", "เปิดการเชื่อมต่อระบบเซิร์ฟเวอร์หลักหลัก", "ONLINE", "RUNNING");
+            } else {
+                statusBox.innerText = "OFFLINE";
+                statusBox.style.color = "#ff6ec7";
+                addLogToTable("SERVER_STATUS", "ตัดการเชื่อมต่อระบบเซิร์ฟเวอร์บำรุงรักษา", "OFFLINE", "STOPPED");
+            }
+        }
+
+        // 6. ระบบสัญญารับ-ส่งจัดการ ตะกร้าสินค้า
         function toggleCart(isOpen) {
             const modal = document.getElementById('cartModal');
             if(isOpen) modal.classList.add('open');
@@ -439,6 +491,10 @@
         }
 
         function addToCart(name, price) {
+            if(!isServerOnline) {
+                alert("❌ ขออภัย! เซิร์ฟเวอร์ปิดให้บริการชั่วคราว ดำเนินการไม่ได้");
+                return;
+            }
             cart.push({ id: Date.now() + Math.random(), name: name, price: price });
             updateCartUI();
         }
@@ -452,13 +508,13 @@
             document.getElementById('cartCount').innerText = cart.length;
             const listContainer = document.getElementById('cartItemsList');
             listContainer.innerHTML = '';
-            let total = 0;
+            let rawTotal = 0;
             
             if(cart.length === 0) {
-                listContainer.innerHTML = '<p style="color:rgba(255,255,255,0.25); text-align:center; margin-top:40px;">ตะกร้าว่างเปล่า</p>';
+                listContainer.innerHTML = '<p style="color:rgba(255,255,255,0.2); text-align:center; margin-top:40px;">ไม่มีสินค้าในตะกร้า</p>';
             } else {
                 cart.forEach(item => {
-                    total += item.price;
+                    rawTotal += item.price;
                     const div = document.createElement('div');
                     div.classList.add('cart-item');
                     div.innerHTML = `
@@ -471,31 +527,42 @@
                     listContainer.appendChild(div);
                 });
             }
-            document.getElementById('totalPriceText').innerText = total + ' ฿';
+            
+            let finalTotal = rawTotal - (rawTotal * discountRate);
+            document.getElementById('totalPriceText').innerText = finalTotal + ' ฿';
         }
 
-        function checkoutMockup() {
+        function checkoutSystem() {
             if(cart.length === 0) return;
-            const tableBody = document.getElementById('historyTableBody');
+            
+            let rawTotal = 0;
+            cart.forEach(i => rawTotal += i.price);
+            let finalTotal = rawTotal - (rawTotal * discountRate);
+
+            if(balance < finalTotal) {
+                alert("❌ ยอดเงินในกระเป๋าของคุณไม่เพียงพอสำหรับการตัดบัญชี! กรุณากดเติมเงินที่หน้าแรก");
+                return;
+            }
+
+            // ตัดยอดเงินจริงในสเตตระบบเว็บ
+            balance -= finalTotal;
+            // เพิ่มคะแนนรับโบนัสหลังการซื้อ
+            points += Math.floor(finalTotal / 10);
+            
             cart.forEach(item => {
-                const randomBillId = Math.floor(10000 + Math.random() * 90000);
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>#STX-${randomBillId}</td>
-                    <td style="color:var(--cyan-neon); font-weight:600;">${item.name}</td>
-                    <td>${item.price} ฿</td>
-                    <td>เมื่อสักครู่ที่ผ่านมา</td>
-                    <td><span class="status-badge">จัดส่งสำเร็จ</span></td>
-                `;
-                tableBody.insertBefore(tr, tableBody.firstChild);
+                addLogToTable("SHOP_CHECKOUT", `ชำระค่าสินค้า: ${item.name}`, `-${item.price} ฿`, "DELIVERED");
             });
-            alert('🎉 บันทึกการชำระเงินจำลองสำเร็จ! ส่งรายการไปหน้าประวัติแล้วครับ');
+
+            alert("🛒 ดำเนินการตัดจ่ายและสั่งซื้อฟังก์ชันสำเร็จ! ข้อมูลถูกป้อนบันทึกเข้าหน้าประวัติระบบแล้ว");
+            
             cart = [];
             updateCartUI();
+            updateUI();
             toggleCart(false);
             switchView('history');
         }
 
+        // 7. ระบบค้นหาและตัวกรองข้อมูลแบบยืดหยุ่นสูง (Live Filtering Search)
         function liveSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             document.querySelectorAll('.item-card').forEach(card => {
@@ -513,26 +580,53 @@
             });
         }
 
-        // 5. รันลูปเพิ่มตัวเลขจำลองหน้าแรกอัตโนมัติ
-        let userCount = 14240;
-        setInterval(() => {
-            if(document.getElementById('view-home').classList.contains('active-view')) {
-                userCount += Math.floor(Math.random() * 2);
-                document.getElementById('stat-user').innerText = userCount.toLocaleString();
-            }
-        }, 4000);
+        // 8. ฟังชันการเขียนตาราง Log บันทึกประวัติหน้าเว็บแบบ Dynamic
+        function addLogToTable(action, detail, val, status) {
+            const tableBody = document.getElementById('historyTableBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-family:monospace; color:var(--pink-neon); font-size:0.8rem;">${action}</td>
+                <td>${detail}</td>
+                <td style="font-weight:600; color:var(--cyan-neon);">${val}</td>
+                <td>เมื่อสักครู่</td>
+                <td><span class="status-badge" style="border-color:${status === 'SUCCESS' || status==='DONE' ? '#00ff88':'#ff6ec7'}; color:${status === 'SUCCESS' || status==='DONE' ? '#00ff88':'#ff6ec7'};">${status}</span></td>
+            `;
+            tableBody.insertBefore(tr, tableBody.firstChild);
 
-        // 6. สร้างละอองฉากหลัง
-        const sparks = document.getElementById('sparklesContainer');
-        for (let i = 0; i < 15; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            const size = Math.random() * 3 + 2;
-            sparkle.style.width = size + 'px'; sparkle.style.height = size + 'px';
-            sparkle.style.left = Math.random() * 100 + 'vw'; sparkle.style.top = Math.random() * 100 + 'vh';
-            sparkle.style.animationDuration = (Math.random() * 7 + 6) + 's';
-            sparks.appendChild(sparkle);
+            // ปรับตัวเลขจำนวนออเดอร์สะสมจำลองบนหน้าหลักเพิ่มขึ้น
+            let salesBox = document.getElementById('stat-sales');
+            let currentSales = parseInt(salesBox.innerText.replace(/,/g, ''));
+            salesBox.innerText = (currentSales + 1).toLocaleString();
         }
+
+        function clearHistoryLog() {
+            document.getElementById('historyTableBody').innerHTML = `
+                <tr>
+                    <td>LOG_RESET</td>
+                    <td style="color:var(--pink-neon);">สั่งการล้างลบตารางรายงานบันทึกประวัติเบื้องหลังเรียบร้อย</td>
+                    <td>-</td>
+                    <td>เมื่อสักครู่</td>
+                    <td><span class="status-badge" style="color:yellow; border-color:yellow;">CLEARED</span></td>
+                </tr>
+            `;
+            alert("🧹 เคลียร์บันทึกข้อมูลตาราง Log ทั้งหมดเรียบร้อยแล้วครับ");
+        }
+
+        function updateUI() {
+            document.getElementById('userBalance').innerText = balance.toLocaleString();
+            document.getElementById('stat-points').innerText = points;
+        }
+
+        // จำลองลูปประมวลผลเพิ่มจำนวนยอดผู้เข้าชมเว็บแอปพลิเคชันทุกๆ 3 วินาที
+        setInterval(() => {
+            if(isServerOnline && document.getElementById('view-home').classList.contains('active-view')) {
+                let onlineBox = document.getElementById('stat-online');
+                let num = parseInt(onlineBox.innerText);
+                num += Math.floor(Math.random() * 5) - 2;
+                if(num < 300) num = 320;
+                onlineBox.innerText = num;
+            }
+        }, 3000);
     </script>
 </body>
 </html>
