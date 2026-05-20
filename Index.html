@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STACKX | NEXT-GEN INTERACTIVE CORE</title>
+    <title>STACKX | NEXT-GEN SYSTEM CORE</title>
     
     <!-- Google Fonts & Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -18,31 +18,32 @@
         }
 
         body {
-            background-color: #05020a;
-            overflow-x: hidden;
+            background-color: #040108;
+            overflow: hidden;
         }
 
-        /* เอฟเฟกต์กระจกฝ้าความละเอียดสูง (Premium Glassmorphism) */
+        /* Premium Glassmorphism */
         .glass-panel {
-            background: rgba(13, 8, 28, 0.45);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(190, 77, 255, 0.18);
+            background: rgba(12, 6, 26, 0.5);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(190, 77, 255, 0.15);
         }
 
-        /* ระบบเรืองแสง (Neon Glow Shadow) */
-        .glow-purple { box-shadow: 0 0 30px rgba(190, 77, 255, 0.25); }
-        .glow-cyan { box-shadow: 0 0 30px rgba(0, 243, 255, 0.2); }
+        /* Neon Glow System */
+        .glow-purple { box-shadow: 0 0 40px rgba(190, 77, 255, 0.2); }
+        .glow-cyan { box-shadow: 0 0 40px rgba(0, 243, 255, 0.15); }
         .glow-text-purple { text-shadow: 0 0 15px rgba(190, 77, 255, 0.6); }
+        .glow-text-cyan { text-shadow: 0 0 15px rgba(0, 243, 255, 0.6); }
 
-        /* ซ่อนหน้าเมนู */
-        .app-view { display: none; opacity: 0; transform: translateY(15px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* Dynamic View Switching Anim */
+        .app-view { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .app-view.active-view { display: block; opacity: 1; transform: translateY(0); }
 
-        /* แอนิเมชันปุ่มแสงวิ่งรอบขอบสุดล้ำ (Glow Gradient Border Run) */
+        /* Advanced Border Glow Animation */
         .animate-glow-border {
             position: relative;
-            background: linear-gradient(135deg, rgba(20, 12, 43, 0.8), rgba(8, 5, 18, 0.9));
+            background: linear-gradient(135deg, rgba(18, 9, 38, 0.8), rgba(6, 3, 13, 0.9));
             transition: all 0.3s;
         }
         .animate-glow-border::before {
@@ -54,260 +55,262 @@
         }
         @keyframes borderGlowMove { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
 
-        /* Custom Scrollbar ซ่อนเนียนตาแบบแอปยุคใหม่ */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        /* Custom Mini Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(190, 77, 255, 0.2); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(190, 77, 255, 0.4); }
     </style>
 </head>
-<body class="min-h-screen text-white flex flex-col items-center justify-center p-4 relative antialiased">
+<body class="w-screen h-screen text-white flex items-center justify-center p-4 relative antialiased">
 
-    <!-- ================= 🔮 BACKGROUND GLOW ANIMATION ORBS ================= -->
+    <!-- ================= 🔮 BACKGROUND VECTOR ANIM FLUIDS ================= -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-[10%] left-[15%] w-96 h-96 bg-[#be4dff]/15 rounded-full filter blur-[100px] animate-pulse" style="animation-duration: 8s;"></div>
-        <div class="absolute bottom-[15%] right-[10%] w-[450px] h-[450px] bg-[#00f3ff]/10 rounded-full filter blur-[120px] animate-pulse" style="animation-duration: 12s;"></div>
-        <div class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#ff6ec7]/5 rounded-full filter blur-[150px]"></div>
+        <div class="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-[#be4dff]/10 rounded-full filter blur-[120px] animate-pulse" style="animation-duration: 9s;"></div>
+        <div class="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#00f3ff]/8 rounded-full filter blur-[120px] animate-pulse" style="animation-duration: 14s;"></div>
     </div>
 
-    <!-- ================= 🗲 MAIN DASHBOARD CONTEXT (STACKX LAUNCHER) ================= -->
-    <div class="glass-panel glow-purple w-full max-w-[1150px] h-[720px] rounded-[32px] flex flex-col z-10 overflow-hidden transition-all duration-500">
+
+    <!-- ================= 🚪 SCREEN 1: THE ACCES GATE (หน้ากดเข้าสู่ระบบ) ================= -->
+    <div id="gateScreen" class="z-10 w-full max-w-[420px] text-center p-8 rounded-[32px] glass-panel glow-purple transition-all duration-500 transform scale-100">
+        <!-- Brand Logo Big -->
+        <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-tr from-[#be4dff] to-[#00f3ff] flex items-center justify-center shadow-xl shadow-purple-500/20">
+            <span class="text-black font-extrabold text-2xl tracking-tighter">S</span>
+        </div>
+        <h2 class="text-2xl font-bold tracking-widest font-mono glow-text-purple mb-1">STACK<span class="text-[#00f3ff]">X</span> ENGINE</h2>
+        <p class="text-xs text-gray-400 mb-8 tracking-wide">NEXT-GEN SYSTEM OPTIMIZATION SUITE</p>
+
+        <!-- ปุ่มกดเข้าหน้าหลักที่ต้องการ (Interactive Cyberpunk Action Button) -->
+        <button onclick="enterDashboard()" class="animate-glow-border w-full py-4 rounded-2xl font-bold text-sm tracking-widest text-white hover:shadow-[0_0_30px_rgba(190,77,255,0.35)] transition-all duration-300 active:scale-[0.98] cursor-pointer block overflow-hidden">
+            <span class="bg-gradient-to-r from-white via-purple-200 to-[#00f3ff] bg-clip-text text-transparent">LAUNCH CORE DASHBOARD</span>
+        </button>
+
+        <div class="text-[10px] text-gray-500 font-mono mt-6 uppercase tracking-widest">SECXION SOFTWARE INC @2026</div>
+    </div>
+
+
+    <!-- ================= 🖥️ SCREEN 2: MAIN COMMAND DASHBOARD (ระบบจัดการเต็มรูปแบบ) ================= -->
+    <div id="mainDashboard" class="hidden opacity-0 scale-95 glass-panel glow-purple w-full max-w-[1180px] h-[740px] rounded-[32px] flex flex-col z-10 overflow-hidden transition-all duration-500">
         
-        <!-- แถบหัวบนสุดของโปรแกรม (Top Header Bar) -->
-        <div class="flex items-center justify-between px-6 py-4 border-b border-purple-500/10 bg-black/20">
-            <!-- LOGO BRAND STACKX -->
+        <!-- ╔════════════════════════════════════════════════╗
+               🔝 TOP BAR CONTROL INTERFACE 
+             ╚════════════════════════════════════════════════╝ -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-purple-500/10 bg-black/30">
+            <!-- Brand & Version Platform -->
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#be4dff] to-[#00f3ff] flex items-center justify-center shadow-lg shadow-purple-500/20">
-                    <span class="text-black font-extrabold text-sm tracking-tighter">S</span>
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#be4dff] to-[#00f3ff] flex items-center justify-center">
+                    <span class="text-black font-extrabold text-xs">S</span>
                 </div>
-                <h1 class="text-xl font-bold tracking-wider font-mono glow-text-purple">STACK<span class="text-[#00f3ff]">X</span></h1>
-                <span class="bg-purple-500/10 text-[#be4dff] text-[10px] font-bold px-2 py-0.5 rounded-full border border-purple-500/20 ml-2">CORE V2</span>
+                <h1 class="text-lg font-bold tracking-wider font-mono glow-text-purple">STACK<span class="text-[#00f3ff]">X</span></h1>
+                <div class="h-4 w-[1px] bg-white/10 mx-1"></div>
+                <span class="text-[10px] font-mono font-bold text-gray-400 bg-white/5 border border-white/5 px-2 py-0.5 rounded-md">BUILD_v2.6.5_STABLE</span>
             </div>
 
-            <!-- กล่องแสดงสถานะกระเป๋าเงินจำลองแบบล้ำสมัย -->
-            <div class="flex items-center gap-4">
-                <div class="glass-panel bg-purple-950/20 rounded-2xl px-4 py-2 flex items-center gap-2 border border-purple-500/10">
-                    <span class="text-xs text-gray-400">AVAILABLE BALANCE</span>
-                    <span id="userBalance" class="text-sm font-mono font-bold text-[#00ff88] tracking-wide">1,500</span>
-                    <span class="text-xs text-[#00ff88]">฿</span>
+            <!-- Hardware Spec Display Real-time -->
+            <div class="hidden md:flex items-center gap-6 text-[11px] font-mono text-gray-400">
+                <div class="flex items-center gap-2">
+                    <span class="text-purple-400">🎨 GPU:</span>
+                    <span class="text-gray-200 font-semibold">NVIDIA RTX 4050</span>
                 </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-purple-400">🧠 CPU:</span>
+                    <span class="text-gray-200 font-semibold">AMD Ryzen 7 8845HS</span>
+                </div>
+            </div>
 
-                <!-- ตะกร้าสินค้าสะสมทรงมน -->
-                <button onclick="toggleCart(true)" class="glass-panel bg-white/5 hover:bg-[#be4dff]/20 rounded-2xl px-4 py-2 flex items-center gap-3 border border-white/5 transition-all duration-300 group cursor-pointer">
-                    <span class="text-sm group-hover:scale-110 transition-transform duration-300">🛒</span>
-                    <span class="text-xs font-semibold hidden sm:inline">CART</span>
-                    <span id="cartCount" class="bg-gradient-to-r from-[#be4dff] to-[#ff6ec7] text-white text-[11px] font-bold font-mono px-2 py-0.5 rounded-lg shadow-md shadow-purple-500/40">0</span>
+            <!-- Window Control & Profile Simulator -->
+            <div class="flex items-center gap-3">
+                <div class="glass-panel bg-purple-950/20 px-3 py-1.5 rounded-xl border border-purple-500/10 flex items-center gap-2 text-xs font-mono">
+                    <span class="w-1.5 h-1.5 bg-[#00ff88] rounded-full"></span>
+                    <span class="text-gray-400">AGENT:</span>
+                    <span class="text-[#00ff88] font-bold">PUNNAWICH</span>
+                </div>
+                <!-- ปุ่ม Logout ถอยออกหน้าแรก -->
+                <button onclick="exitDashboard()" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/5 hover:border-red-500/30 flex items-center justify-center text-xs transition-all cursor-pointer" title="Disconnect Core">
+                    🚪
                 </button>
             </div>
         </div>
 
-        <!-- หน้าต่างแยกส่วนหลัก (Sidebar Navigation + Dynamic Dashboard Content) -->
+        <!-- ╔════════════════════════════════════════════════╗
+               🎛️ MAIN SPLIT VIEW (SIDEBAR + WORKSPACE)
+             ╚════════════════════════════════════════════════╝ -->
         <div class="flex-1 flex overflow-hidden">
             
-            <!-- ---------------- ฝั่งซ้าย: NEXT-GEN SIDEBAR MENU ---------------- -->
-            <div class="w-1/4 max-w-[240px] border-r border-purple-500/10 p-4 flex flex-col justify-between bg-black/10">
-                <div class="flex flex-col gap-2">
-                    <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-2 mb-2">SYSTEM MENU</span>
+            <!-- 👈 SIDEBAR NAVIGATION BAR -->
+            <div class="w-1/4 max-w-[240px] border-r border-purple-500/10 p-4 flex flex-col justify-between bg-black/15">
+                <div class="flex flex-col gap-1.5">
+                    <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-2 mb-2">SYSTEM CONSOLE</span>
                     
-                    <!-- เมนูที่ 1 -->
-                    <button id="tab-home" onclick="switchTab('home')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 bg-gradient-to-r from-[#be4dff]/20 to-[#ff6ec7]/10 text-white border border-[#be4dff]/30 shadow-lg shadow-purple-500/5 cursor-pointer">
-                        <span class="text-base text-[#be4dff]">🏠</span> หน้าแรก Dashboard
+                    <button id="tab-overview" onclick="switchTab('overview')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 bg-gradient-to-r from-[#be4dff]/20 to-[#ff6ec7]/10 text-white border border-[#be4dff]/30 shadow-lg shadow-purple-500/5 cursor-pointer">
+                        <span class="text-base text-[#be4dff]">📊</span> ภาพรวมระบบ (Overview)
                     </button>
                     
-                    <!-- เมนูที่ 2 -->
-                    <button id="tab-store" onclick="switchTab('store')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer">
-                        <span class="text-base">🛒</span> ร้านค้าโมดูล
+                    <button id="tab-tweaks" onclick="switchTab('tweaks')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer">
+                        <span class="text-base">⚡</span> การปรับแต่งด่วน (Tweaks)
                     </button>
                     
-                    <!-- เมนูที่ 3 -->
-                    <button id="tab-history" onclick="switchTab('history')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer">
-                        <span class="text-base">📜</span> คลังประวัติธุรกรรม
+                    <button id="tab-logs" onclick="switchTab('logs')" class="tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer">
+                        <span class="text-base">📜</span> บันทึกเคอร์เนล (Kernel Logs)
                     </button>
                 </div>
 
-                <!-- เครดิตแบรนด์ด้านล่างซ้าย -->
-                <div class="glass-panel p-3 rounded-2xl text-center bg-gradient-to-b from-purple-950/20 to-black/40 border border-purple-500/10">
-                    <span class="text-[10px] block text-gray-500 font-mono">POWERED BY</span>
-                    <span class="text-xs font-bold text-gray-300 font-mono tracking-widest">SECXION LAB</span>
+                <!-- Footer Sidebar Signature -->
+                <div class="glass-panel p-3 rounded-2xl text-center bg-gradient-to-b from-purple-950/20 to-black/30 border border-purple-500/10">
+                    <span class="text-[9px] block text-gray-500 font-mono">CORE SYSTEM POWER</span>
+                    <span class="text-xs font-bold text-[#00f3ff] font-mono tracking-widest glow-text-cyan">SECXION LAB</span>
                 </div>
             </div>
 
-            <!-- ---------------- ฝั่งขวา: CONTENT VIEWPORT ---------------- -->
+            <!-- 👉 DYNAMIC WORKSPACE CONTENT -->
             <div class="flex-1 p-6 overflow-y-auto bg-black/5">
                 
-                <!-- 🏠 VIEW 1: HOME PANEL -->
-                <div class="app-view active-view" id="view-home">
-                    <!-- ป้ายแบนเนอร์เรืองแสง (Glow Hero Banner) -->
-                    <div class="animate-glow-border rounded-[24px] p-6 mb-6 overflow-hidden shadow-xl shadow-purple-500/5 flex flex-col justify-center min-h-[130px]">
-                        <h2 class="text-xl md:text-2xl font-bold tracking-wide bg-gradient-to-r from-white via-purple-200 to-[#00f3ff] bg-clip-text text-transparent">STACKX INTERACTIVE HUB</h2>
-                        <p class="text-xs text-gray-400 mt-1.5 leading-relaxed">แพลตฟอร์มปรับแต่งระบบเว็บแอปพลิเคชันรูปแบบใหม่ อัดแน่นด้วยสเตตจำลองแบบเรียลไทม์หลังบ้าน</p>
+                <!-- 📊 PAGE 1: OVERVIEW COMPONENT -->
+                <div class="app-view active-view" id="view-overview">
+                    <!-- Hero Status Banner -->
+                    <div class="animate-glow-border rounded-[24px] p-6 mb-6 shadow-xl flex flex-col justify-center min-h-[120px]">
+                        <h2 class="text-xl font-bold tracking-wide bg-gradient-to-r from-white via-purple-200 to-[#00f3ff] bg-clip-text text-transparent">ENGINE PERFORMANCE ACTIVE</h2>
+                        <p class="text-xs text-gray-400 mt-1 leading-relaxed">โมดูลความเสถียรต่ำสุดตรวจพบคอร์เกนระบบทำงานปกติ กำลังจัดการสตรีมข้อมูลผ่านอินเตอร์เฟสแก้วฝ้า</p>
                     </div>
 
-                    <!-- แผงสถิติรูปทรงโมเดิร์น (Grid Status Blocks) -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                        <div class="glass-panel bg-white/[0.02] hover:bg-purple-500/[0.04] p-4 rounded-2xl text-center transition-all duration-300 hover:-translate-y-1">
-                            <span class="text-[10px] text-gray-400 font-bold block mb-1">🟢 LIVE USERS</span>
-                            <div id="stat-online" class="text-xl font-mono font-bold text-[#00f3ff] tracking-wider">342</div>
+                    <!-- Live Hardware Telemetry Blocks -->
+                    <h3 class="text-[10px] font-bold text-gray-500 tracking-wider uppercase mb-3 px-1">📊 INTERACTIVE HARDWARE TELEMETRY</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="glass-panel bg-white/[0.01] p-4 rounded-2xl text-center transition-all hover:-translate-y-0.5">
+                            <span class="text-[9px] text-gray-400 font-bold block mb-1">🔥 CPU CLOCK FREQ</span>
+                            <div id="stat-cpu" class="text-lg font-mono font-bold text-[#00f3ff] tracking-wider">4.35 GHz</div>
                         </div>
-                        <div class="glass-panel bg-white/[0.02] hover:bg-purple-500/[0.04] p-4 rounded-2xl text-center transition-all duration-300 hover:-translate-y-1">
-                            <span class="text-[10px] text-gray-400 font-bold block mb-1">📦 TOTAL ORDERS</span>
-                            <div id="stat-sales" class="text-xl font-mono font-bold text-[#be4dff] tracking-wider">1,204</div>
+                        <div class="glass-panel bg-white/[0.01] p-4 rounded-2xl text-center transition-all hover:-translate-y-0.5">
+                            <span class="text-[9px] text-gray-400 font-bold block mb-1">🎮 GPU LOAD STATE</span>
+                            <div id="stat-gpu" class="text-lg font-mono font-bold text-[#be4dff] tracking-wider">12 %</div>
                         </div>
-                        <div class="glass-panel bg-white/[0.02] hover:bg-purple-500/[0.04] p-4 rounded-2xl text-center transition-all duration-300 hover:-translate-y-1">
-                            <span class="text-[10px] text-gray-400 font-bold block mb-1">🎟️ DISCOUNT RATE</span>
-                            <div id="stat-discount" class="text-xl font-mono font-bold text-[#ff6ec7] tracking-wider">0%</div>
+                        <div class="glass-panel bg-white/[0.01] p-4 rounded-2xl text-center transition-all hover:-translate-y-0.5">
+                            <span class="text-[9px] text-gray-400 font-bold block mb-1">🧊 SYSTEM TEMP CORE</span>
+                            <div id="stat-temp" class="text-lg font-mono font-bold text-[#ff6ec7] tracking-wider">58 °C</div>
                         </div>
-                        <div class="glass-panel bg-white/[0.02] hover:bg-purple-500/[0.04] p-4 rounded-2xl text-center transition-all duration-300 hover:-translate-y-1">
-                            <span class="text-[10px] text-gray-400 font-bold block mb-1">✨ LOYALTY POINTS</span>
-                            <div id="stat-points" class="text-xl font-mono font-bold text-[#00ff88] tracking-wider">0</div>
+                        <div class="glass-panel bg-white/[0.01] p-4 rounded-2xl text-center transition-all hover:-translate-y-0.5">
+                            <span class="text-[9px] text-gray-400 font-bold block mb-1">🎚️ LATENCY QUEUE SIZE</span>
+                            <div id="stat-latency" class="text-lg font-mono font-bold text-[#00ff88] tracking-wider">0.45 ms</div>
                         </div>
                     </div>
 
-                    <!-- รายการบอร์ดฟังก์ชันควบคุม (Interactive Command Cards) -->
-                    <h3 class="text-xs font-bold text-gray-400 tracking-wider uppercase mb-3 px-1">🛠️ CORE WEB FUNCTIONS VAULT</h3>
-                    
+                    <!-- Mini Actions Inside Dashboard Overview -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- กล่องที่ 1: ระบบเงิน -->
-                        <div class="glass-panel bg-white/[0.01] p-4 rounded-[22px] flex flex-col justify-between border border-white/5">
-                            <div class="text-xs font-bold text-purple-400 mb-3 flex items-center gap-2">💳 WALLET CORE ENGINE</div>
-                            <div class="flex flex-wrap gap-2">
-                                <button onclick="mockAddFunds(100)" class="bg-purple-500/10 hover:bg-purple-500/20 text-[#be4dff] border border-purple-500/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all cursor-pointer">เติมเงิน +100 ฿</button>
-                                <button onclick="mockAddFunds(500)" class="bg-purple-500/10 hover:bg-purple-500/20 text-[#be4dff] border border-purple-500/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all cursor-pointer">เติมเงิน +500 ฿</button>
-                                <button onclick="clearWallet()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs px-3 py-2 rounded-xl transition-all cursor-pointer">ล้างกระเป๋า</button>
+                        <div class="glass-panel p-5 rounded-[22px] border border-white/5 flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xs font-bold text-purple-400 mb-1">🚀 QUICK LATENCY PURGE</h4>
+                                <p class="text-[11px] text-gray-400 mb-4">บังคับสั่งเคลียร์ขยะหน่วยความจำสแต็กชั่วคราวเพื่อลด Ping ในทันที</p>
                             </div>
+                            <button onclick="triggerPurge()" class="w-full sm:w-auto self-start bg-purple-500/10 hover:bg-purple-500/20 text-[#be4dff] border border-purple-500/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all cursor-pointer">
+                                🔌 สั่งกวาดล้างสแต็กหน่วยความจำ
+                            </button>
                         </div>
 
-                        <!-- กล่องที่ 2: คูปองส่วนลด -->
-                        <div class="glass-panel bg-white/[0.01] p-4 rounded-[22px] border border-white/5">
-                            <div class="text-xs font-bold text-pink-400 mb-3">🎟️ MARKETING & COUPON DROP</div>
-                            <div class="flex gap-2 mb-3">
-                                <button onclick="generateCoupon()" class="bg-pink-500/10 hover:bg-pink-500/20 text-[#ff6ec7] border border-pink-500/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all cursor-pointer">🎲 สุ่มรับรหัสโค้ด</button>
-                                <button onclick="resetCouponStatus()" class="bg-white/5 hover:bg-white/10 text-gray-400 text-xs px-3 py-2 rounded-xl transition-all cursor-pointer">🔄 รีเซ็ตคูปอง</button>
+                        <div class="glass-panel p-5 rounded-[22px] border border-white/5 flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xs font-bold text-cyan-400 mb-1">🎮 FIVEM SPECIALIZED PROFILE</h4>
+                                <p class="text-[11px] text-gray-400 mb-4">สลับสเตตโปรไฟล์ไปที่โหมดเร่งประสิทธิภาพของแพลตฟอร์ม FiveM HUD</p>
                             </div>
-                            <div id="couponDisplay" class="bg-black/30 rounded-xl p-2.5 text-xs font-mono text-gray-400 border border-white/5 min-h-[36px] flex items-center">ระบบสแตนด์บายรอรับสิทธิ์ส่วนลด...</div>
-                        </div>
-
-                        <!-- กล่องที่ 3: ระบบกาชาความบันเทิง -->
-                        <div class="glass-panel bg-white/[0.01] p-4 rounded-[22px] border border-white/5">
-                            <div class="text-xs font-bold text-cyan-400 mb-3">🎁 LOOTBOX GACHA MINI-GAME</div>
-                            <div class="flex gap-2 mb-3">
-                                <button onclick="rollGacha()" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-[#00f3ff] border border-cyan-500/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all cursor-pointer">🎰 สุ่มกล่องกิจกรรม (-10 pt)</button>
-                                <button onclick="addMockPoints()" class="bg-white/5 hover:bg-white/10 text-gray-300 text-xs px-3 py-2 rounded-xl transition-all cursor-pointer">✨ รับพ้อยท์ทดสอบ +20 pt</button>
-                            </div>
-                            <div id="gachaDisplay" class="bg-black/30 rounded-xl p-2.5 text-xs font-mono text-[#00ff88] border border-white/5 min-h-[36px] flex items-center">ผลการเสี่ยงสุ่มรางวัลจะรายงานผลขึ้นที่นี่...</div>
-                        </div>
-
-                        <!-- กล่องที่ 4: เซิร์ฟเวอร์คอนโทรล -->
-                        <div class="glass-panel bg-white/[0.01] p-4 rounded-[22px] flex flex-col justify-between border border-white/5">
-                            <div class="text-xs font-bold text-orange-400 mb-3">🖥️ SERVER MANAGEMENT INTERFACE</div>
-                            <div class="flex flex-wrap gap-2">
-                                <button onclick="toggleServerStatus()" class="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/20 text-xs font-semibold px-3 py-2 rounded-xl transition-all cursor-pointer">🔌 สลับออนไลน์เซิร์ฟเวอร์</button>
-                                <button onclick="clearHistoryLog()" class="bg-white/5 hover:bg-red-500/10 hover:text-red-400 text-gray-400 text-xs px-3 py-2 rounded-xl transition-all cursor-pointer">🧹 ล้างข้อมูลประวัติคลังทั้งหมด</button>
-                            </div>
+                            <button id="fivemBtn" onclick="toggleFiveMMode()" class="w-full sm:w-auto self-start bg-cyan-500/10 hover:bg-cyan-500/20 text-[#00f3ff] border border-cyan-500/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all cursor-pointer">
+                                ⚡ เปิดใช้งาน FiveM Profile Mode
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 🛒 VIEW 2: STORE PANEL -->
-                <div class="app-view" id="view-store">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4 mb-4">
+                <!-- ⚡ PAGE 2: TWEAKS COMPONENT -->
+                <div class="app-view" id="view-tweaks">
+                    <div class="border-b border-white/5 pb-3 mb-4">
+                        <h2 class="text-base font-bold text-white">⚡ SYSTEM CORE REGISTRY TWEAKS</h2>
+                        <p class="text-xs text-gray-400 mt-0.5">เปิด-ปิดสวิตช์ฟังก์ชันการปรับแต่งเคอร์เนลความหน่วงต่ำระดับโครงสร้างสคริปต์</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Tweak Card 1 -->
+                        <div class="glass-panel p-4 rounded-2xl flex items-center justify-between border border-white/5">
+                            <div>
+                                <span class="text-xs font-bold text-gray-200 block">ZXX CPU Thread Steering</span>
+                                <span class="text-[10px] text-gray-400 font-mono">Registry: CPUPriorityClass -> High</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" onchange="toggleTweak('CPU Thread Steering', this.checked)" class="sr-only peer">
+                                <div class="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#be4dff]"></div>
+                            </label>
+                        </div>
+
+                        <!-- Tweak Card 2 -->
+                        <div class="glass-panel p-4 rounded-2xl flex items-center justify-between border border-white/5">
+                            <div>
+                                <span class="text-xs font-bold text-gray-200 block">Mouse Data Queue Buffer Fix</span>
+                                <span class="text-[10px] text-gray-400 font-mono">Registry: MouseQueueSize -> 20 (Low)</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" onchange="toggleTweak('Mouse Data Queue', this.checked)" class="sr-only peer">
+                                <div class="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#be4dff]"></div>
+                            </label>
+                        </div>
+
+                        <!-- Tweak Card 3 -->
+                        <div class="glass-panel p-4 rounded-2xl flex items-center justify-between border border-white/5">
+                            <div>
+                                <span class="text-xs font-bold text-gray-200 block">Anti-Forensics Artifact Wiper</span>
+                                <span class="text-[10px] text-gray-400 font-mono">Automated: BAM/DAM Logs Purger</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" onchange="toggleTweak('Anti-Forensics Wiper', this.checked)" class="sr-only peer">
+                                <div class="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#be4dff]"></div>
+                            </label>
+                        </div>
+
+                        <!-- Tweak Card 4 -->
+                        <div class="glass-panel p-4 rounded-2xl flex items-center justify-between border border-white/5">
+                            <div>
+                                <span class="text-xs font-bold text-gray-200 block">Keyboard Response Optimization</span>
+                                <span class="text-[10px] text-gray-400 font-mono">Registry: Flags/Delay -> 0ms Rate</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" onchange="toggleTweak('Keyboard Response Opt', this.checked)" class="sr-only peer">
+                                <div class="w-9 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#be4dff]"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Tool Alert -->
+                    <div class="mt-4 p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs flex items-start gap-3 text-amber-300">
+                        <span class="mt-0.5">⚠️</span>
                         <div>
-                            <h2 class="text-base font-bold text-white">🛒 STACKX PRODUCTS SHELF</h2>
-                            <p class="text-xs text-gray-400 mt-0.5">ค้นหาและจัดการตัวเลือกสั่งซื้อคลังไฟล์สคริปต์ความหน่วงต่ำ</p>
-                        </div>
-                        <!-- ช่องค้นหาสุดโมเดิร์นพร้อมแสงเรือง -->
-                        <div class="glass-panel bg-black/40 rounded-xl px-3 py-2 flex items-center border border-white/10 focus-within:border-[#00f3ff] focus-within:shadow-[0_0_15px_rgba(0,243,255,0.15)] transition-all duration-300">
-                            <span class="text-sm mr-2 text-gray-400">🔍</span>
-                            <input type="text" id="searchInput" placeholder="ค้นหาชื่อโมดูลสคริปต์..." oninput="liveSearch()" class="outline-none text-xs w-44 font-mono bg-transparent text-white">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <!-- เมนูกลุ่มหมวดหมู่สินค้าด้านซ้าย -->
-                        <div class="flex flex-row md:flex-col gap-1.5 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0">
-                            <button id="cat-all" onclick="filterCategory('all')" class="cat-btn bg-gradient-to-r from-[#be4dff]/20 to-[#ff6ec7]/10 text-white border border-[#be4dff]/30 text-left text-xs font-bold px-3 py-3 rounded-xl whitespace-nowrap w-full cursor-pointer">⭐ คลังทั้งหมด</button>
-                            <button id="cat-opt" onclick="filterCategory('opt')" class="cat-btn text-gray-400 hover:text-white hover:bg-white/5 text-left text-xs px-3 py-3 rounded-xl border border-transparent whitespace-nowrap w-full cursor-pointer">⚡ UI & System Scripts</button>
-                            <button id="cat-ui" onclick="filterCategory('ui')" class="cat-btn text-gray-400 hover:text-white hover:bg-white/5 text-left text-xs px-3 py-3 rounded-xl border border-transparent whitespace-nowrap w-full cursor-pointer">🎨 Game Custom HUD</button>
-                        </div>
-
-                        <!-- ชั้นวางสินค้าแบบการ์ดแก้วเรืองแสง -->
-                        <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <!-- รายการ 1 -->
-                            <div class="glass-panel bg-white/[0.01] hover:bg-white/[0.03] p-4 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] item-card" data-cat="opt" data-name="zxx cpu pro booster script">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-xs font-bold text-purple-300">⚡ ZXX CPU PRO Script</span>
-                                    <span class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-lg shadow">HOT</span>
-                                </div>
-                                <p class="text-[11px] text-gray-400 leading-relaxed mb-4">ปรับแต่งแก้ไขโครงสร้างเอดิเตอร์เรจิสทรี เพื่อล็อกอัตราจัดสรรคอร์แกนระบบให้มีประสิทธิภาพสูง</p>
-                                <div class="flex justify-between items-center pt-3 border-t border-white/5 mt-auto">
-                                    <span class="text-sm font-mono font-bold text-[#ff6ec7]">250 ฿</span>
-                                    <button onclick="addToCart('ZXX CPU PRO', 250)" class="bg-gradient-to-r from-[#be4dff] to-[#ff6ec7] text-white text-[11px] font-bold px-3 py-2 rounded-xl hover:shadow-[0_0_15px_rgba(190,77,255,0.4)] transition-all cursor-pointer">Add To Cart</button>
-                                </div>
-                            </div>
-
-                            <!-- รายการ 2 -->
-                            <div class="glass-panel bg-white/[0.01] hover:bg-white/[0.03] p-4 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] item-card" data-cat="ui" data-name="glassmorphic design ui panels pack">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-xs font-bold text-purple-300">💎 Glassmorphic UI Pack</span>
-                                    <span class="bg-blue-500/20 text-[#00f3ff] text-[9px] font-bold px-2 py-0.5 rounded-lg border border-blue-500/30">PREMIUM</span>
-                                </div>
-                                <p class="text-[11px] text-gray-400 leading-relaxed mb-4">คลังไฟล์การ์ดความโปร่งแสงเบลอหลังแบบพรีเมียม เพื่อเพิ่มความสวยงามเรียบหรูระดับแนวหน้า</p>
-                                <div class="flex justify-between items-center pt-3 border-t border-white/5 mt-auto">
-                                    <span class="text-sm font-mono font-bold text-[#ff6ec7]">450 ฿</span>
-                                    <button onclick="addToCart('Glassmorphic UI Pack', 450)" class="bg-gradient-to-r from-[#be4dff] to-[#ff6ec7] text-white text-[11px] font-bold px-3 py-2 rounded-xl hover:shadow-[0_0_15px_rgba(190,77,255,0.4)] transition-all cursor-pointer">Add To Cart</button>
-                                </div>
-                            </div>
-
-                            <!-- รายการ 3 -->
-                            <div class="glass-panel bg-white/[0.01] hover:bg-white/[0.03] p-4 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] item-card" data-cat="opt" data-name="anti-trace database forensics wiper">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-xs font-bold text-purple-300">🧹 Anti-Trace System</span>
-                                    <span class="bg-green-500/20 text-[#00ff88] text-[9px] font-bold px-2 py-0.5 rounded-lg border border-green-500/30">POPULAR</span>
-                                </div>
-                                <p class="text-[11px] text-gray-400 leading-relaxed mb-4">คำสั่งอัตโนมัติลบจัดกวาดคราบเศษขยะล็อกและประวัติการทำงานเบื้องหลังระบบคอมพิวเตอร์</p>
-                                <div class="flex justify-between items-center pt-3 border-t border-white/5 mt-auto">
-                                    <span class="text-sm font-mono font-bold text-[#ff6ec7]">180 ฿</span>
-                                    <button onclick="addToCart('Anti-Trace System', 180)" class="bg-gradient-to-r from-[#be4dff] to-[#ff6ec7] text-white text-[11px] font-bold px-3 py-2 rounded-xl hover:shadow-[0_0_15px_rgba(190,77,255,0.4)] transition-all cursor-pointer">Add To Cart</button>
-                                </div>
-                            </div>
-
-                            <!-- รายการ 4 -->
-                            <div class="glass-panel bg-white/[0.01] hover:bg-white/[0.03] p-4 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] item-card" data-cat="ui" data-name="fivem custom peripheral optimizing hud">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-xs font-bold text-purple-300">🕹️ FiveM Custom HUD</span>
-                                    <span class="bg-purple-500/20 text-[#be4dff] text-[9px] font-bold px-2 py-0.5 rounded-lg border border-purple-500/30">NEW</span>
-                                </div>
-                                <p class="text-[11px] text-gray-400 leading-relaxed mb-4">ส่วนเสริมโครงสร้างหน้าจอความเสถียรความไวสูงแบบตัดไร้ขอบ เพื่อรันความลื่นไหลในวิดีโอเกม</p>
-                                <div class="flex justify-between items-center pt-3 border-t border-white/5 mt-auto">
-                                    <span class="text-sm font-mono font-bold text-[#ff6ec7]">300 ฿</span>
-                                    <button onclick="addToCart('FiveM Custom HUD', 300)" class="bg-gradient-to-r from-[#be4dff] to-[#ff6ec7] text-white text-[11px] font-bold px-3 py-2 rounded-xl hover:shadow-[0_0_15px_rgba(190,77,255,0.4)] transition-all cursor-pointer">Add To Cart</button>
-                                </div>
-                            </div>
+                            <span class="font-bold block">ข้อควรระวังความปลอดภัยโครงสร้างระบบ:</span>
+                            <span class="text-amber-400/80 leading-relaxed font-sans">การปรับสวิตช์ลงโครงสร้างเรจิสทรีด้านบน เป็นการจำลองเขียนค่าข้ามผ่านสิทธิ์ TrustedInstaller ของซอฟต์แวร์ STACKX กรุณาตรวจสอบสถานะเคอร์เนลอย่างสม่ำเสมอ</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 📜 VIEW 3: TRANSACTION DATABASE TABLE -->
-                <div class="app-view" id="view-history">
-                    <h2 class="text-base font-bold text-white mb-3">📜 LIVE DATABANK CORE REPORT LOG</h2>
+                <!-- 📜 PAGE 3: KERNEL LOGS COMPONENT -->
+                <div class="app-view" id="view-logs">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="text-base font-bold text-white">📜 LIVE CORE RECOVERY & DATABANK REPORT LOG</h2>
+                        <button onclick="clearHistoryLog()" class="bg-white/5 hover:bg-red-500/10 hover:text-red-400 text-gray-400 text-[11px] font-mono border border-white/5 px-3 py-1.5 rounded-xl transition-all cursor-pointer">
+                            🧹 PURGE LOG DATABASE
+                        </button>
+                    </div>
                     <div class="glass-panel rounded-2xl overflow-hidden border border-white/5">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-xs font-mono min-w-[650px] border-collapse">
                                 <thead>
                                     <tr class="bg-white/[0.03] border-b border-white/5 text-gray-400">
-                                        <th class="p-3.5">EVENT ACTION</th>
-                                        <th class="p-3.5">DESCRIPTION INTERACTION</th>
+                                        <th class="p-3.5">EVENT PIPE</th>
+                                        <th class="p-3.5">OPERATION INTERACTION INTERFACE</th>
                                         <th class="p-3.5">VALUE TARGET</th>
                                         <th class="p-3.5">TIMESTAMP</th>
-                                        <th class="p-3.5 text-center">RESPONSE STATUS</th>
+                                        <th class="p-3.5 text-center">KERNEL STATUS</th>
                                     </tr>
                                 </thead>
                                 <tbody id="historyTableBody" class="divide-y divide-white/[0.03]">
                                     <tr class="hover:bg-white/[0.01] transition-all">
                                         <td class="p-3.5 text-cyan-400 font-bold">SYSTEM_INIT</td>
-                                        <td class="p-3.5 text-gray-300">ผสานเชื่อมโยงโครงสร้างสัญญาระบบคลังหลักเรียบร้อย</td>
-                                        <td class="p-3.5 text-[#00f3ff] font-bold">v2.6.1</td>
-                                        <td class="p-3.5 text-gray-500">SYSTEM_READY</td>
+                                        <td class="p-3.5 text-gray-300">ผสานโครงสร้างชุดแผงควบคุมระบบเว็บบอร์ด STACKX เรียบร้อย</td>
+                                        <td class="p-3.5 text-[#00f3ff] font-bold">v2.6.5</td>
+                                        <td class="p-3.5 text-gray-500">CORE_READY</td>
                                         <td class="p-3.5 text-center"><span class="px-2.5 py-0.5 bg-green-500/10 border border-green-500/30 text-[#00ff88] font-bold text-[10px] rounded-lg">SUCCESS</span></td>
                                     </tr>
                                 </tbody>
@@ -319,318 +322,172 @@
             </div>
         </div>
 
-        <!-- 🛒 SHOPPING CART OVERLAY MODAL (Modern Side Panel Slider) -->
-        <div id="cartModal" class="hidden absolute top-0 right-0 w-full sm:w-[380px] h-full bg-[#0d071c]/95 backdrop-filter blur-xl border-l border-purple-500/20 z-50 p-5 flex flex-col shadow-2xl shadow-black">
-            <div class="flex justify-between items-center border-b border-white/5 pb-3 mb-4">
-                <span class="text-sm font-bold tracking-wider text-purple-300 flex items-center gap-2">🛒 MY STACKX CART</span>
-                <button onclick="toggleCart(false)" class="w-7 h-7 rounded-lg bg-white/5 text-gray-400 hover:text-white flex items-center justify-center border border-white/5 text-xs transition-all cursor-pointer">✕</button>
-            </div>
-            
-            <!-- รายชื่อไอเทมในตะกร้า -->
-            <div id="cartItemsList" class="flex-1 overflow-y-auto rounded-xl bg-black/40 p-2.5 flex flex-col gap-2 text-xs mb-4 border border-white/5">
-                <!-- ข้อมูลถูกดันจาก JS -->
-            </div>
-
-            <!-- โค้ดส่งเสริมคูปองส่วนลด -->
-            <div class="flex gap-2 mb-4">
-                <input type="text" id="couponInput" placeholder="กรอกรหัสคูปองระบบ..." class="glass-panel bg-black/30 rounded-xl px-3 py-2 text-xs outline-none flex-1 font-mono uppercase text-white placeholder-gray-500 focus:border-[#be4dff] transition-all">
-                <button onclick="applyCoupon()" class="bg-white/5 hover:bg-purple-500/20 hover:text-[#be4dff] border border-white/10 text-xs font-bold px-4 py-2 rounded-xl transition-all cursor-pointer">ใช้งาน</button>
-            </div>
-
-            <!-- สรุปผลสรุปยอด -->
-            <div class="bg-white/[0.02] p-3 rounded-xl border border-white/5 text-xs mb-3 flex justify-between items-center font-bold">
-                <span class="text-gray-400">NET CHECKOUT TOTAL:</span>
-                <span id="totalPriceText" class="text-base font-mono text-[#ff6ec7] glow-text-purple">0 ฿</span>
-            </div>
-            
-            <button onclick="checkoutSystem()" class="w-full bg-gradient-to-r from-[#be4dff] via-[#ff6ec7] to-[#00f3ff] bg-size-200 text-white text-xs font-bold py-3.5 rounded-xl hover:shadow-[0_0_25px_rgba(190,77,255,0.4)] transition-all duration-300 active:scale-[0.99] cursor-pointer">
-                💳 ดำเนินการตัดยอดชำระ
-            </button>
-        </div>
-
-        <!-- แถบแจ้งข้อมูลสถานะท้ายล่างแอป (Modern Bottom Status Bar) -->
+        <!-- ╔════════════════════════════════════════════════╗
+               📥 BOTTOM STATUS BAR CONTROL
+             ╚════════════════════════════════════════════════╝ -->
         <div class="px-6 py-2 border-t border-purple-500/10 bg-black/40 flex justify-between items-center text-[11px] text-gray-500 font-mono">
             <div class="flex items-center gap-2">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#00ff88] animate-ping"></span>
-                <span>SYSTEM PIPELINE ACTIVE: Ready to deploy functions</span>
+                <span id="pipelineText">SYSTEM PIPELINE STANDBY: Ready to inject optimization files</span>
             </div>
-            <div id="liveDigitalClock" class="text-purple-400 font-bold">13:57</div>
+            <div id="liveDigitalClock" class="text-purple-400 font-bold">13:59:40</div>
         </div>
 
     </div>
 
-    <!-- ================= ⚙️ CORE JAVASCRIPT OPERATIONS ================= -->
+    <!-- ================= ⚙️ CORE DASHBOARD ENGINE OPERATIONS ================= -->
     <script>
-        let balance = 1500;
-        let points = 50;
-        let discountRate = 0;
-        let cart = [];
-        let isServerOnline = true;
+        let isFiveMActive = false;
 
-        // 1. ระบบควบคุมการสลับหน้าเมนูความลื่นไหลสูง (SPA Navigation Architecture)
+        // 1. ฟังก์ชันเปลี่ยนผ่านก้าวข้ามหน้าจอ (Gate Screen -> Main Dashboard)
+        function enterDashboard() {
+            const gate = document.getElementById('gateScreen');
+            const dash = document.getElementById('mainDashboard');
+
+            gate.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                gate.classList.add('hidden');
+                dash.classList.remove('hidden');
+                
+                // แอนิเมชันตอนเปิด Dashboard
+                setTimeout(() => {
+                    dash.classList.remove('opacity-0', 'scale-95');
+                    addLogToTable("CORE_LAUNCH", "ผู้ใช้ผ่านรหัสสิทธิ์ Access Gate เพื่อเข้าสู่แดชบอร์ดหลัก", "SUCCESS", "INITIALIZED");
+                }, 50);
+            }, 400);
+        }
+
+        function exitDashboard() {
+            if(!confirm("คุณต้องการสั่ง Disconnect และย้อนกลับไปหน้าตรวจสอบสิทธิ์หลักหรือไม่?")) return;
+            
+            const gate = document.getElementById('gateScreen');
+            const dash = document.getElementById('mainDashboard');
+
+            dash.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                dash.classList.add('hidden');
+                gate.classList.remove('hidden');
+                setTimeout(() => {
+                    gate.classList.remove('scale-95', 'opacity-0');
+                }, 50);
+            }, 400);
+        }
+
+        // 2. ระบบควบคุมแถบสลับหน้าจัดการข้อมูลความเร็วสูง (Navigation Core)
         function switchTab(viewName) {
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
             document.querySelectorAll('.tab-btn').forEach(tab => {
                 tab.className = "tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer";
             });
             
-            // เปิดแอนิเมชันเปิดหน้าใหม่
             const currentView = document.getElementById(`view-${viewName}`);
             currentView.classList.add('active-view');
             
-            // ปรับสีไฮไลต์ปุ่มเมนูที่กำลังใช้งาน
             const activeTabBtn = document.getElementById(`tab-${viewName}`);
             activeTabBtn.className = "tab-btn w-full text-left text-xs font-semibold px-4 py-3.5 rounded-2xl flex items-center gap-3 transition-all duration-300 bg-gradient-to-r from-[#be4dff]/20 to-[#ff6ec7]/10 text-white border border-[#be4dff]/30 shadow-lg shadow-purple-500/5 cursor-pointer";
         }
 
-        // 2. ฟังก์ชันระบบการเงินฝากกระเป๋า
-        function mockAddFunds(amount) {
-            balance += amount;
-            updateUI();
-            addLogToTable("WALLET_DEPOSIT", `เติมเงินเข้าระบบจำลองสำเร็จจำนวน +${amount} ฿`, `${amount} ฿`, "DONE");
-        }
-
-        function clearWallet() {
-            balance = 0;
-            updateUI();
-            addLogToTable("WALLET_RESET", "ล้างยอดเงินกระเป๋าจำลองในระบบ", "0 ฿", "WARNING");
-        }
-
-        // 3. ฟังก์ชันระบบสุ่มจับคูปองรับโค้ดส่วนลด
-        function generateCoupon() {
-            const discounts = [10, 20, 30, 50];
-            const randomPercent = discounts[Math.floor(Math.random() * discounts.length)];
-            const code = `SECXION${randomPercent}`;
+        // 3. ฟังก์ชันระบบปุ่มกดล้างความหน่วงแฝง (Latency Purge Operation)
+        function triggerPurge() {
+            document.getElementById('stat-latency').innerText = "0.08 ms";
+            document.getElementById('stat-latency').style.color = "#00ff88";
+            document.getElementById('pipelineText').innerText = "SYSTEM PIPELINE STATUS: Purged Cache Data Block Successfully";
             
-            document.getElementById('couponDisplay').innerHTML = `🎟️ CODE REVEALED: <span class="text-[#ff6ec7] font-bold font-mono text-sm">${code}</span> (ลดทันที ${randomPercent}%)`;
-            addLogToTable("COUPON_GEN", `ระบบสุ่มแจกคูปองส่วนลดพิเศษ ${randomPercent}%`, code, "SUCCESS");
-        }
-
-        function applyCoupon() {
-            const input = document.getElementById('couponInput').value.trim().toUpperCase();
-            if(input === "SECXION10") discountRate = 0.10;
-            else if(input === "SECXION20") discountRate = 0.20;
-            else if(input === "SECXION30") discountRate = 0.30;
-            else if(input === "SECXION50") discountRate = 0.50;
-            else {
-                alert("❌ ไม่พบรหัสโค้ดส่วนลดนี้ในคลังระบบ STACKX");
-                return;
-            }
-            document.getElementById('stat-discount').innerText = (discountRate * 100) + "%";
-            updateCartUI();
-            alert(`🎉 บังคับใช้ส่วนลดสัญญาตัดยอดสำเร็จลดลง ${discountRate * 100}%`);
-            addLogToTable("COUPON_APPLY", "สิทธิ์ผู้ใช้เปิดรหัสคูปองส่วนลดในตะกร้า", `${discountRate*100}%`, "ACTIVE");
-        }
-
-        function resetCouponStatus() {
-            discountRate = 0;
-            document.getElementById('stat-discount').innerText = "0%";
-            document.getElementById('couponDisplay').innerText = "ระบบสแตนด์บายรอรับสิทธิ์ส่วนลด...";
-            updateCartUI();
-            addLogToTable("COUPON_RESET", "ล้างค่าฟังก์ชันส่วนลดระบบแอปทั้งหมด", "0%", "DONE");
-        }
-
-        // 4. มินิเกมความบันเทิงสุ่มของรางวัลกล่องของขวัญ (Lootbox System)
-        function rollGacha() {
-            if(points < 10) {
-                alert("❌ แต้มคะแนนสะสมของคุณไม่พอจำลองใช้งาน! (ต้องใช้ 10 pt)");
-                return;
-            }
-            points -= 10;
-            updateUI();
-
-            const prizes = [
-                "VIP Status Rank (7 Days)",
-                "Exclusive Custom Cyberpunk HUD V2",
-                "Bonus Wallet Cash +50 Baht",
-                "Unreleased Low Latency Registry Script",
-                "Better Luck Next Time! (เกลือ)"
-            ];
-            const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+            addLogToTable("STACK_PURGE", "สั่งกวาดล้างสแต็กหน่วยความจำส่วนเกินเพื่อเพิ่ม Kernel Responsiveness", "0.08 ms", "CLEARED");
+            alert("🧹 เคลียร์ขยะสแต็กความหน่วงระบบจำลองเสร็จสิ้น! (ค่า Latency ลดลงเหลือ 0.08 ms)");
             
-            if(randomPrize.includes("+50")) {
-                balance += 50;
-                updateUI();
-            }
-
-            document.getElementById('gachaDisplay').innerHTML = `🎁 PRIZE DROP: <span class="text-[#00f3ff] font-bold">${randomPrize}</span>`;
-            addLogToTable("GACHA_ROLL", `กดสุ่มไอเทมกิจกรรมของรางวัลจำลอง STACKX`, randomPrize, "SUCCESS");
+            setTimeout(() => {
+                document.getElementById('stat-latency').innerText = "0.45 ms";
+                document.getElementById('stat-latency').style.color = "";
+            }, 5000);
         }
 
-        function addMockPoints() {
-            points += 20;
-            updateUI();
-            addLogToTable("POINT_ADD", "เพิ่มแต้มพ้อยท์ระบบจำลองให้ผู้ใช้", "+20 pt", "DONE");
-        }
+        // 4. ฟังก์ชันเปิดโหมดพิเศษ FiveM Performance HUD
+        function toggleFiveMMode() {
+            isFiveMActive = !isFiveMActive;
+            const btn = document.getElementById('fivemBtn');
+            const cpuStat = document.getElementById('stat-cpu');
 
-        // 5. ตัวสลับตัดต่อควบคุมระบบสถานะเซิร์ฟเวอร์
-        function toggleServerStatus() {
-            isServerOnline = !isServerOnline;
-            const statusBox = document.getElementById('stat-online');
-            if(isServerOnline) {
-                statusBox.innerText = "342";
-                statusBox.style.color = "#00f3ff";
-                addLogToTable("SERVER_STATUS", "เปิดการเชื่อมต่อระบบเซิร์ฟเวอร์หลัก", "ONLINE", "RUNNING");
+            if(isFiveMActive) {
+                btn.className = "w-full sm:w-auto self-start bg-green-500/20 hover:bg-green-500/30 text-[#00ff88] border border-green-500/30 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all cursor-pointer shadow-[0_0_15px_rgba(0,255,136,0.1)]";
+                btn.innerText = "🟢 FiveM Profile Mode: ON";
+                cpuStat.innerText = "4.85 GHz";
+                cpuStat.style.color = "#00ff88";
+                
+                addLogToTable("FIVEM_MODE", "ปรับเร่งประสิทธิภาพเครื่องและปรับแต่งการแสดงผล HUD สำหรับ FiveM", "ENABLED", "HIGH_PRIORITY");
             } else {
-                statusBox.innerText = "OFFLINE";
-                statusBox.style.color = "#ff6ec7";
-                addLogToTable("SERVER_STATUS", "ตัดการเชื่อมต่อระบบเซิร์ฟเวอร์เพื่อบำรุงรักษา", "OFFLINE", "STOPPED");
+                btn.className = "w-full sm:w-auto self-start bg-cyan-500/10 hover:bg-cyan-500/20 text-[#00f3ff] border border-cyan-500/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all cursor-pointer";
+                btn.innerText = "⚡ เปิดใช้งาน FiveM Profile Mode";
+                cpuStat.innerText = "4.35 GHz";
+                cpuStat.style.color = "";
+                
+                addLogToTable("FIVEM_MODE", "คืนค่าสถานะความเสถียรสำหรับใช้งานทั่วไป", "DISABLED", "NORMAL");
             }
         }
 
-        // 6. ระบบสัญญากลไก ตะกร้าสะสมข้อมูลโมดูลสั่งซื้อ
-        function toggleCart(isOpen) {
-            const modal = document.getElementById('cartModal');
-            if(isOpen) modal.classList.remove('hidden');
-            else modal.classList.add('hidden');
-        }
-
-        function addToCart(name, price) {
-            if(!isServerOnline) {
-                alert("❌ ขออภัย! ตัวเซิร์ฟเวอร์คลังปิดให้บริการกะทันหัน ดำเนินการไม่ได้");
-                return;
-            }
-            cart.push({ id: Date.now() + Math.random(), name: name, price: price });
-            updateCartUI();
-        }
-
-        function removeFromCart(id) {
-            cart = cart.filter(item => item.id !== id);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            document.getElementById('cartCount').innerText = cart.length;
-            const listContainer = document.getElementById('cartItemsList');
-            listContainer.innerHTML = '';
-            let rawTotal = 0;
+        // 5. ระบบตรวจสอบปุ่มทวิกเรจิสทรี (Tweak Monitor)
+        function toggleTweak(tweakName, isChecked) {
+            const status = isChecked ? "ENABLED" : "DISABLED";
+            const hexCode = isChecked ? "0x00000001" : "0x00000000";
             
-            if(cart.length === 0) {
-                listContainer.innerHTML = '<p class="text-gray-500 text-center my-10 font-mono">NO ITEMS ATTACHED</p>';
-            } else {
-                cart.forEach(item => {
-                    rawTotal += item.price;
-                    const div = document.createElement('div');
-                    div.className = "flex justify-between items-center p-2.5 bg-white/[0.02] border border-white/5 rounded-xl";
-                    div.innerHTML = `
-                        <div>
-                            <div class="font-bold text-gray-200">${item.name}</div>
-                            <div class="text-[#00f3ff] font-mono font-bold mt-0.5">${item.price} ฿</div>
-                        </div>
-                        <button class="text-[#ff6ec7] hover:underline font-bold cursor-pointer" onclick="removeFromCart(${item.id})">ลบ</button>
-                    `;
-                    listContainer.appendChild(div);
-                });
-            }
-            
-            let finalTotal = rawTotal - (rawTotal * discountRate);
-            document.getElementById('totalPriceText').innerText = finalTotal + ' ฿';
+            addLogToTable("REG_TWEAK", `ปรับเปลี่ยนสถานะชุดคำสั่งสคริปต์ [${tweakName}]`, status, hexCode);
         }
 
-        function checkoutSystem() {
-            if(cart.length === 0) return;
-            
-            let rawTotal = 0;
-            cart.forEach(i => rawTotal += i.price);
-            let finalTotal = rawTotal - (rawTotal * discountRate);
-
-            if(balance < finalTotal) {
-                alert("❌ เครดิตสกุลเงินของคุณไม่เพียงพอทำรายการตัดจ่าย! กรุณากดเติมเครดิตเพิ่ม");
-                return;
-            }
-
-            balance -= finalTotal;
-            points += Math.floor(finalTotal / 10);
-            
-            cart.forEach(item => {
-                addLogToTable("SHOP_CHECKOUT", `ชำระค่าสคริปต์ไอเทม: ${item.name}`, `-${item.price} ฿`, "DELIVERED");
-            });
-
-            alert("🛒 ตัดยอดบัญชีและบันทึกโมดูลสำเร็จ! รายการถูกนำส่งเข้าหน้าคลังรายงานเรียบร้อย");
-            
-            cart = [];
-            updateCartUI();
-            updateUI();
-            toggleCart(false);
-            switchTab('history');
-        }
-
-        // 7. ระบบคัดกรองข้อมูลและช่องเสิร์ชไลฟ์ฟิลเตอร์ (Flexible Search Database)
-        function liveSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            document.querySelectorAll('.item-card').forEach(card => {
-                const name = card.getAttribute('data-name');
-                card.style.display = name.includes(query) ? 'flex' : 'none';
-            });
-        }
-
-        function filterCategory(cat) {
-            document.querySelectorAll('.cat-btn').forEach(b => {
-                b.className = "cat-btn text-gray-400 hover:text-white hover:bg-white/5 text-left text-xs px-3 py-3 rounded-xl border border-transparent whitespace-nowrap w-full cursor-pointer";
-            });
-            event.target.className = "cat-btn bg-gradient-to-r from-[#be4dff]/20 to-[#ff6ec7]/10 text-white border border-[#be4dff]/30 text-left text-xs font-bold px-3 py-3 rounded-xl whitespace-nowrap w-full cursor-pointer";
-
-            document.querySelectorAll('.item-card').forEach(card => {
-                const itemCat = card.getAttribute('data-cat');
-                card.style.display = (cat === 'all' || itemCat === cat) ? 'flex' : 'none';
-            });
-        }
-
-        // 8. ฟังชันการแทรกประวัติตารางธุรกรรมแบบไดนามิก
-        function addLogToTable(action, detail, val, status) {
+        // 6. ฟังก์ชันการแทรกแถวประวัติตาราง (Dynamic Kernel Log Injector)
+        function addLogToTable(pipe, detail, val, status) {
             const tableBody = document.getElementById('historyTableBody');
             const tr = document.createElement('tr');
             tr.className = "hover:bg-white/[0.01] transition-all";
             tr.innerHTML = `
-                <td class="p-3.5 text-[#ff6ec7] font-bold font-mono">${action}</td>
+                <td class="p-3.5 text-[#ff6ec7] font-bold font-mono">${pipe}</td>
                 <td class="p-3.5 text-gray-300">${detail}</td>
                 <td class="p-3.5 text-[#00f3ff] font-bold font-mono">${val}</td>
                 <td class="p-3.5 text-gray-500">JUST NOW</td>
                 <td class="p-3.5 text-center"><span class="px-2.5 py-0.5 bg-purple-500/10 border border-purple-500/30 text-[#be4dff] font-bold text-[10px] rounded-lg">${status}</span></td>
             `;
             tableBody.insertBefore(tr, tableBody.firstChild);
-
-            let salesBox = document.getElementById('stat-sales');
-            let currentSales = parseInt(salesBox.innerText.replace(/,/g, ''));
-            salesBox.innerText = (currentSales + 1).toLocaleString();
         }
 
         function clearHistoryLog() {
             document.getElementById('historyTableBody').innerHTML = `
                 <tr class="hover:bg-white/[0.01] transition-all">
                     <td class="p-3.5 text-red-400 font-bold">LOG_PURGE</td>
-                    <td class="p-3.5 text-gray-500">ล้างทำลายข้อมูลชุดล็อกธุรกรรมทั้งหมดในคลังเรียบร้อย</td>
+                    <td class="p-3.5 text-gray-500">ทำการสั่ง Wipe ลบทำลายสารบบโครงสร้างประวัติข้อมูลล็อกทั้งหมดบนแรมชั่วคราว</td>
                     <td class="p-3.5 text-gray-600">-</td>
                     <td class="p-3.5 text-gray-600">NOW</td>
                     <td class="p-3.5 text-center"><span class="px-2.5 py-0.5 bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-[10px] rounded-lg">CLEARED</span></td>
                 </tr>
             `;
-            alert("🧹 จัดการกวาดล้างไฟล์ตาราง Log ระบบทิ้งเรียบร้อยแล้วครับ");
         }
 
-        function updateUI() {
-            document.getElementById('userBalance').innerText = balance.toLocaleString();
-            document.getElementById('stat-points').innerText = points;
-        }
+        // 7. สถิติจำลองการขยับของกราฟตัวเลขฮาร์ดแวร์เบื้องหลัง
+        setInterval(() => {
+            if(!document.getElementById('mainDashboard').classList.contains('hidden') && document.getElementById('view-overview').classList.contains('active-view')) {
+                // สุ่มแกว่งโหลดของ GPU
+                let gpuBox = document.getElementById('stat-gpu');
+                let currentGpu = parseInt(gpuBox.innerText);
+                currentGpu += Math.floor(Math.random() * 7) - 3;
+                if(currentGpu < 5) currentGpu = 8;
+                if(currentGpu > 85) currentGpu = 30;
+                gpuBox.innerText = currentGpu + " %";
 
-        // ฟังก์ชันอัปเดตเวลามุมขวาล่างให้ตรงกัน
+                // สุ่มแกว่งของอุณหภูมิเซ็นเซอร์
+                let tempBox = document.getElementById('stat-temp');
+                let currentTemp = parseInt(tempBox.innerText);
+                currentTemp += Math.floor(Math.random() * 3) - 1;
+                if(currentTemp < 50) currentTemp = 55;
+                if(currentTemp > 80) currentTemp = 65;
+                tempBox.innerText = currentTemp + " °C";
+            }
+        }, 2000);
+
+        // ระบบนาฬิกาดิจิตอลมุมขวาล่างแอป
         function updateClock() {
             const now = new Date();
             document.getElementById('liveDigitalClock').innerText = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
         }
         setInterval(updateClock, 1000);
         updateClock();
-
-        // จำลองสถานการณ์บวก-ลดตัวเลขคนออนไลน์ทุก 3 วินาที
-        setInterval(() => {
-            if(isServerOnline && document.getElementById('view-home').classList.contains('active-view')) {
-                let onlineBox = document.getElementById('stat-online');
-                let num = parseInt(onlineBox.innerText);
-                num += Math.floor(Math.random() * 5) - 2;
-                if(num < 300) num = 325;
-                onlineBox.innerText = num;
-            }
-        }, 3000);
     </script>
 </body>
 </html>
