@@ -3,422 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>METAVERSE X | FIVEM ADVANCED UI</title>
+    <title>PURPLE NEON | FIVEM CUTE EDITION</title>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: ใช้ฟอนต์ละมุนๆ มีความน่ารักและอ่านง่าย -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Prompt:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --neon-cyan: #00f0ff;
-            --neon-magenta: #ff007f;
-            --neon-purple: #9400d3;
-            --dark-core: #05050a;
-            --glass-panel: rgba(7, 7, 15, 0.45);
-            --glass-border: rgba(0, 240, 255, 0.15);
+            --purple-neon: #be4dff;
+            --purple-glow: rgba(190, 77, 255, 0.4);
+            --pink-neon: #ff6ec7;
+            --bg-dark: #0d0b14;
+            --bg-card: rgba(22, 17, 36, 0.7);
+            --glass-border: rgba(190, 77, 255, 0.15);
+            --round-large: 32px;
+            --round-medium: 20px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Fredoka', 'Kanit', sans-serif;
             user-select: none;
         }
 
         body {
-            font-family: 'Prompt', sans-serif;
-            background-color: var(--dark-core);
+            background-color: var(--bg-dark);
             color: #fff;
-            overflow-x: hidden;
             min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            /* แสงออร่าวิ้งๆ ข้างหลัง */
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(190, 77, 255, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(255, 110, 199, 0.12) 0%, transparent 45%);
+            background-attachment: fixed;
         }
 
-        /* --- BACKGROUND MATRIX DATA STREAM ANIMATION --- */
-        .bg-animation {
+        /* --- 🌟 BACKGROUND SPARKS ANIMATION --- */
+        .sparkles {
             position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            opacity: 0.15;
             pointer-events: none;
-        }
-
-        .bg-animation canvas {
-            display: block;
-        }
-
-        /* --- Cyber Grid Overlay --- */
-        .grid-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
-            background-size: 40px 40px;
             z-index: 0;
-            pointer-events: none;
-            transform: perspective(500px) rotateX(60deg) translateY(-30%) scale(2);
-            animation: gridMove 20s linear infinite;
+        }
+        .sparkle {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: floatUp infinite linear;
+            opacity: 0.3;
         }
 
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 1000px; }
-        }
-
-        /* --- Header / Navbar Animation --- */
+        /* --- 🧭 NAV BAR (โค้งมนสุดๆ) --- */
         nav {
+            margin: 25px auto;
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(22, 17, 36, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 30px;
+            border-radius: var(--round-large);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 5%;
-            position: fixed;
-            width: 100%;
-            top: 0;
+            position: sticky;
+            top: 25px;
             z-index: 100;
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
-            animation: slideDown 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px var(--neon-cyan);
-            animation: flicker 3s infinite alternate;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--purple-glow);
+            cursor: pointer;
         }
-
-        .logo span { color: var(--neon-magenta); text-shadow: 0 0 10px var(--neon-magenta); }
+        .logo span { color: var(--pink-neon); }
 
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 10px;
             list-style: none;
         }
 
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
+        .nav-links button {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 10px 22px;
+            font-size: 1rem;
             font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            position: relative;
-            padding: 5px 0;
-            transition: 0.3s;
+            border-radius: var(--round-medium);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 0; height: 2px;
-            background: var(--neon-cyan);
-            box-shadow: 0 0 8px var(--neon-cyan);
-            transition: 0.3s ease;
+        .nav-links button:hover {
+            color: var(--purple-neon);
+            background: rgba(190, 77, 255, 0.08);
         }
 
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links a:hover { color: #fff; text-shadow: 0 0 8px var(--neon-cyan); }
+        .nav-links button.active {
+            background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon));
+            color: #fff;
+            box-shadow: 0 5px 15px var(--purple-glow);
+            transform: scale(1.05);
+        }
 
-        /* --- Hero Section & Entrance --- */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
+        /* --- 📦 MAIN CONTENT WRAPPER --- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+            flex: 1;
             position: relative;
             z-index: 10;
         }
 
-        .title-wrapper {
-            position: relative;
-            animation: scaleUp 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        /* --- 📄 MULTI-PAGE MANAGEMENT --- */
+        .page {
+            display: none; /* ซ่อนหน้าอื่นๆ ไว้ก่อน */
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .page.active-page {
+            display: block;
+            animation: pageShow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* --- 🏠 PAGE: HOME --- */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
         }
 
         .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 5.5rem;
-            font-weight: 900;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #fff 40%, var(--neon-cyan));
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, var(--purple-neon), var(--pink-neon));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
+            animation: bounceGentle 3s infinite ease-in-out;
         }
 
-        /* Glitch Effect Line */
-        .glitch-sub {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            color: var(--neon-cyan);
-            letter-spacing: 12px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            border-right: 3px solid var(--neon-cyan);
-            white-space: nowrap;
-            animation: typewriter 3s steps(30) infinite alternate, blink 0.6s infinite;
-            overflow: hidden;
-            max-width: fit-content;
-        }
-
-        /* --- Interactive Glowing Buttons --- */
-        .btn-box {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 60px;
-            opacity: 0;
-            animation: fadeIn 1s 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        .cyber-btn {
-            font-family: 'Orbitron', sans-serif;
-            padding: 18px 40px;
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #fff;
-            background: transparent;
-            border: 2px solid var(--neon-cyan);
-            clip-path: polygon(90% 0, 100% 34%, 100% 100%, 10% 100%, 0 66%, 0 0);
-            cursor: pointer;
-            position: relative;
-            transition: 0.5s;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-            text-decoration: none;
-        }
-
-        .cyber-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .cyber-btn:hover::before { left: 100%; }
-
-        .cyber-btn:hover {
-            background: var(--neon-cyan);
-            color: var(--dark-core);
-            box-shadow: 0 0 35px var(--neon-cyan);
-            font-weight: 900;
-        }
-
-        .cyber-btn.alt {
-            border-color: var(--neon-magenta);
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.1);
-        }
-        .cyber-btn.alt:hover {
-            background: var(--neon-magenta);
-            box-shadow: 0 0 35px var(--neon-magenta);
-        }
-
-        /* --- Hologram Glass Cards --- */
-        .cards-container {
-            display: flex;
-            gap: 30px;
-            width: 100%;
-            max-width: 1100px;
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeIn 1.2s 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        .holo-card {
-            background: var(--glass-panel);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(20px);
-            padding: 35px 25px;
-            border-radius: 16px;
-            width: 320px;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-
-        /* แสงวิ่งวาบขอบตอนโฮเวอร์ */
-        .holo-card::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(0,240,255,0.15) 0%, transparent 60%);
-            opacity: 0;
-            transition: 0.5s;
-            pointer-events: none;
-        }
-
-        .holo-card:hover {
-            transform: translateY(-12px) scale(1.03) rotateX(5deg) rotateY(5deg);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.15);
-        }
-
-        .holo-card:hover::after { opacity: 1; }
-
-        .holo-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            color: var(--neon-cyan);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .holo-card p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
+        .hero p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 35px auto;
             line-height: 1.6;
         }
 
-        /* --- ANIMATIONS TIMELINE KEYFRAMES --- */
-        @keyframes slideDown {
-            0% { transform: translateY(-100%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+        /* Cute Rounded Button */
+        .cute-btn {
+            background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon));
+            color: white;
+            border: none;
+            padding: 16px 38px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px; /* โค้งมนแบบมนสุดๆ */
+            cursor: pointer;
+            box-shadow: 0 8px 25px var(--purple-glow);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: inline-block;
         }
-        @keyframes scaleUp {
-            0% { transform: scale(0.8); opacity: 0; filter: blur(10px); }
-            100% { transform: scale(1); opacity: 1; filter: blur(0); }
+
+        .cute-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(190, 77, 255, 0.6);
         }
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .cute-btn:active { transform: translateY(-1px); }
+
+        /* Dashboard Status */
+        .status-box {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--round-large);
+            padding: 25px 40px;
+            margin: 50px auto 0 auto;
+            max-width: 700px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
         }
-        @keyframes typewriter {
-            0% { width: 0; }
-            100% { width: 100%; }
+
+        .status-info { display: flex; align-items: center; gap: 15px; }
+        .dot {
+            width: 12px; height: 12px;
+            background: #00ffaa; border-radius: 50%;
+            box-shadow: 0 0 12px #00ffaa;
+            animation: blink 1.5s infinite;
         }
-        @keyframes blink {
-            50% { border-color: transparent; }
+
+        /* --- 📜 PAGE: RULES (แบบโค้งมนยุบยับ) --- */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 100px));
+            gap: 25px;
+            margin-top: 20px;
         }
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
-            }
-            20%, 24%, 55% { text-shadow: none; }
+
+        .rule-card {
+            background: var(--bg-card);
+            border: 2px solid transparent;
+            border-radius: var(--round-large);
+            padding: 30px;
+            transition: 0.3s;
+            cursor: pointer;
         }
+        .rule-card:hover {
+            border-color: var(--purple-neon);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(190, 77, 255, 0.15);
+        }
+        .rule-card h3 { color: var(--pink-neon); margin-bottom: 10px; font-size: 1.3rem; }
+        .rule-card p { color: rgba(255, 255, 255, 0.6); font-size: 0.95rem; line-height: 1.5; }
+
+        /* --- 🛒 PAGE: STORE (การ์ดไอเทม) --- */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 100px));
+            gap: 25px;
+        }
+        .item-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--round-large);
+            padding: 25px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .item-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        .item-icon {
+            width: 80px; height: 80px;
+            background: rgba(255, 110, 199, 0.1);
+            border-radius: var(--round-medium);
+            margin: 0 auto 15px auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: var(--pink-neon);
+        }
+        .price { font-size: 1.4rem; color: var(--purple-neon); font-weight: 700; margin: 10px 0 15px 0; }
+        .buy-btn {
+            background: rgba(255,255,255,0.05); color: #fff;
+            border: 1px solid var(--glass-border); width: 100%;
+            padding: 10px; border-radius: 50px; cursor: pointer; font-weight: 600;
+            transition: 0.3s;
+        }
+        .item-card:hover .buy-btn { background: var(--purple-neon); box-shadow: 0 5px 15px var(--purple-glow); }
+
+        /* --- 🌐 ANIMATIONS KEYFRAMES --- */
+        @keyframes popIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes pageShow {
+            0% { opacity: 0; transform: translateY(15px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) translateX(0px); }
+            50% { transform: translateY(50vh) translateX(20px); }
+            100% { transform: translateY(-5vh) translateX(-10px); }
+        }
+        @keyframes bounceGentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes blink { 50% { opacity: 0.4; } }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; letter-spacing: 4px; }
-            .nav-links { display: none; }
-            .btn-box { flex-direction: column; width: 100%; max-width: 280px; }
-            .glitch-sub { font-size: 0.9rem; letter-spacing: 6px; }
+            .hero h1 { font-size: 2.5rem; }
+            nav { flex-direction: column; gap: 15px; border-radius: var(--round-medium); }
+            .status-box { flex-direction: column; gap: 10px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- DATA MATRIX STREAM BACKGROUND -->
-    <div class="bg-animation">
-        <canvas id="matrixCanvas"></canvas>
-    </div>
+    <!-- 🌌 เกล็ดดาวระยิบระยับลอยละล่อง background -->
+    <div class="sparkles" id="sparklesContainer"></div>
 
-    <!-- 3D CYBER GRID OVERLAY -->
-    <div class="grid-overlay"></div>
-
-    <!-- NAVIGATION BAR -->
+    <!-- 🧭 NAVIGATION BAR (กดสลับหน้าได้ที่นี่) -->
     <nav>
-        <div class="logo">NEO<span>CORE</span></div>
+        <div class="logo" onclick="switchPage('home')">CUTE<span>CITY</span></div>
         <ul class="nav-links">
-            <li><a href="#">System</a></li>
-            <li><a href="#">Database</a></li>
-            <li><a href="#">Access_Point</a></li>
+            <li><button class="nav-btn active" id="btn-home" onclick="switchPage('home')">Home</button></li>
+            <li><button class="nav-btn" id="btn-rules" onclick="switchPage('rules')">Rules</button></li>
+            <li><button class="nav-btn" id="btn-store" onclick="switchPage('store')">Store</button></li>
+            <li><button class="nav-btn" id="btn-about" onclick="switchPage('about')">About</button></li>
         </ul>
     </nav>
 
-    <!-- HERO DISPLAY -->
-    <section class="hero">
-        <div class="title-wrapper">
-            <h1>CHRONOS</h1>
-        </div>
-        <div class="glitch-sub" id="typewriter">NEXT-GEN ROLEPLAY</div>
-        
-        <!-- BUTTONS WITH INTERACTION -->
-        <div class="btn-box">
-            <a href="fivem://connect/YOUR_IP" class="cyber-btn">Initialize Link</a>
-            <a href="#" class="cyber-btn alt">Secure Discord</a>
+    <!-- 📦 MAIN CONTAINER -->
+    <div class="container">
+
+        <!-- 🏠 หน้าที่ 1: HOME -->
+        <div id="page-home" class="page active-page">
+            <section class="hero">
+                <h1>Welcome to CuteCity</h1>
+                <p>เมืองเวทมนตร์แห่งความสุข สังคมน่ารักใจดี มาร่วมสร้างเรื่องราวสตอรี่สุดประทับใจไปกับพวกเราสิคะ!</p>
+                <button class="cute-btn" onclick="alert('กำลังเชื่อมต่อเข้าเซิร์ฟเวอร์... 🚀')">Connect Server</button>
+            </section>
+
+            <div class="status-box">
+                <div class="status-info">
+                    <div class="dot"></div>
+                    <div style="font-size: 1.1rem; font-weight: 600;">สถานะเซิร์ฟเวอร์: เปิดให้บริการ</div>
+                </div>
+                <div style="font-weight: 700; color: var(--pink-neon); font-size: 1.2rem;">143 / 300 คนออนไลน์</div>
+            </div>
         </div>
 
-        <!-- 3D FLOATING GLASS CARDS -->
-        <div class="cards-container">
-            <div class="holo-card">
-                <h3>// 01 . HYPER_SYNC</h3>
-                <p>นวัตกรรมการเชื่อมต่อข้อมูลโครงสร้างแกนกลางของเซิร์ฟเวอร์แบบ Real-time ขจัดปัญหาความหน่วง มอบความลื่นไหลระดับสิบ</p>
-            </div>
-            <div class="holo-card">
-                <h3>// 02 . CYBER_LOGIC</h3>
-                <p>สคริปต์ UI และระบบฟังก์ชันถูกดีไซน์ขึ้นจากศูนย์ด้วยสไตล์นีออนกลาส เพื่อประสบการณ์ผู้เล่นที่สมจริงและล้ำหน้ายุคสมัย</p>
-            </div>
-            <div class="holo-card">
-                <h3>// 03 . DISK_OPTIMIZE</h3>
-                <p>ระบบเคลียร์ดาต้าขยะส่วนเกินและฟิกซ์สตรีมมิ่งไฟล์กราฟิก ช่วยดันเฟรมเรตคอมพิวเตอร์ของคุณให้พุ่งสูงสุด (FPS Boost)</p>
+        <!-- 📜 หน้าที่ 2: RULES -->
+        <div id="page-rules" class="page">
+            <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem;">📜 กฎระเบียบประจำเมือง</h2>
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <h3>01. เคารพซึ่งกันและกัน</h3>
+                    <p>ห้ามใช้ถ้อยคำหยาบคายรุนแรงนอกบทบาท (OOC) ให้เกียรติผู้เล่นร่วมเมืองทุกคนเพื่อสังคมที่น่าอยู่จ้า</p>
+                </div>
+                <div class="rule-card">
+                    <h3>02. การเล่นตามบทบาท</h3>
+                    <p>ไม่อนุญาตให้ทำผิดกฎพื้นฐานเช่น Power Gaming หรือ Meta Gaming เล่นให้สนุกและสมเหตุสมผลนะ</p>
+                </div>
+                <div class="rule-card">
+                    <h3>03. การใช้ถุงดำ / พื้นที่แดง</h3>
+                    <p>ห้ามใช้ถุงดำในพื้นที่เขตปลอดภัย (Safe Zone) และกรุณาทำความเข้าใจกฎพื้นที่สู้รบก่อนเข้าเล่นทุกครั้ง</p>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- MATRIX BACKGROUND SCRIPT -->
+        <!-- 🛒 หน้าที่ 3: STORE -->
+        <div id="page-store" class="page">
+            <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem;">🛒 ร้านค้าสนับสนุนเซิร์ฟเวอร์</h2>
+            <div class="store-grid">
+                <div class="item-card">
+                    <div class="item-icon">🏎️</div>
+                    <h3>Hyper Car Box</h3>
+                    <div class="price">350 ฿</div>
+                    <button class="buy-btn" onclick="alert('ระบบสุ่มรถกำลังทำงาน! 🎉')">ซื้อไอเทม</button>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">👑</div>
+                    <h3>VIP Status (30 Days)</h3>
+                    <div class="price">150 ฿</div>
+                    <button class="buy-btn" onclick="alert('ขอบคุณที่สนับสนุนเซิร์ฟเวอร์ค่ะ! 💖')">ซื้อไอเทม</button>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">🎒</div>
+                    <h3>Cute Backpack Skin</h3>
+                    <div class="price">90 ฿</div>
+                    <button class="buy-btn" onclick="alert('ซื้อกระเป๋าสุดน่ารักสำเร็จ! 🎒')">ซื้อไอเทม</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🌐 หน้าที่ 4: ABOUT -->
+        <div id="page-about" class="page">
+            <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem;">🔮 เกี่ยวกับ CuteCity</h2>
+            <div style="background: var(--bg-card); padding: 40px; border-radius: var(--round-large); border: 1px solid var(--glass-border); max-width: 800px; margin: 0 auto; line-height: 1.8; color: rgba(255,255,255,0.7);">
+                <p style="margin-bottom: 15px;">เซิร์ฟเวอร์ <strong>CuteCity FiveM</strong> ถูกก่อตั้งขึ้นมาด้วยความตั้งใจที่จะสร้างพื้นที่แลกเปลี่ยนเสียงหัวเราะและมิตรภาพที่ปลอดภัยสำหรับทุกคน</p>
+                <p>เรามีทีมงานแอดมินดูแลตลอด 24 ชั่วโมง ระบบเซิร์ฟเวอร์เสถียร ของเล่น/แฟชั่นอัปเดตใหม่ๆ เพียบ! ไม่ว่าคุณจะเป็นสายเนื้อเรื่องจ๋าๆ หรือสายทำกิจกรรมคอมมูนิตี้ ที่นี่พร้อมต้อนรับทุกคนเลยค่ะ 💜</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🛠️ JAVASCRIPT SYSTEM: ควบคุมการเปลี่ยนหน้า & แอนิเมชันดาว -->
     <script>
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
+        // 1. ฟังก์ชันสลับหน้า (SPA Web App)
+        function switchPage(pageId) {
+            // ซ่อนทุกหน้า และเอาคลาส active-page ออก
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active-page');
+            });
 
-        // ตั้งค่าขนาดหน้าจออัตโนมัติ
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+            // เอาคลาส active ออกจากทุกปุ่มบนเมนู
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
 
-        // ตัวอักษรดูล้ำๆ (ไซเบอร์/ดิจิตอล)
-        const katakana = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ01';
-        const alphabet = katakana.split('');
-
-        const fontSize = 16;
-        let columns = canvas.width / fontSize;
-
-        const rainDrops = [];
-        for (let x = 0; x < columns; x++) {
-            rainDrops[x] = 1;
+            // เปิดหน้าและเปิดปุ่มที่เราเลือก
+            document.getElementById('page-' + pageId).classList.add('active-page');
+            document.getElementById('btn-' + pageId).classList.add('active');
         }
 
-        // วาดสายฝนโค้ด Matrix
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 5, 10, 0.05)'; // ทำให้เกิดเอฟเฟกต์หางยาวจางๆ
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // 2. สร้างเอฟเฟกต์ประกายดาวลอยฟุ้งๆ (Cute Background Sparks)
+        const container = document.getElementById('sparklesContainer');
+        const sparkleCount = 30;
 
-            ctx.fillStyle = '#00f0ff'; // สี Cyan นีออน
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < rainDrops.length; i++) {
-                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
-                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-
-                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    rainDrops[i] = 0;
-                }
-                rainDrops[i]++;
-            }
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            
+            // สุ่มตำแหน่ง ขนาด และความเร็วในการลอย
+            const size = Math.random() * 4 + 2;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDuration = (Math.random() * 8 + 5) + 's';
+            sparkle.style.animationDelay = (Math.random() * 5) + 's';
+            
+            container.appendChild(sparkle);
         }
-
-        // วิ่งลูปแอนิเมชันความเร็วสูง
-        setInterval(drawMatrix, 30);
     </script>
-
 </body>
 </html>
