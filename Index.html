@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STACKX HUB | ULTIMATE INTERACTIVE UI SHOWCASE</title>
+    <title>STACKX HUB | NEXUS MULTI-PAGE UI PLATFORM</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,12 +16,14 @@
             --purple-glow: rgba(190, 77, 255, 0.4);
             --pink-neon: #ff6ec7;
             --pink-glow: rgba(255, 110, 199, 0.4);
-            --bg-dark: #07050d;
-            --bg-card: rgba(20, 15, 34, 0.75);
-            --glass-border: rgba(190, 77, 255, 0.2);
+            --cyan-neon: #00f3ff;
+            --cyan-glow: rgba(0, 243, 255, 0.3);
+            --bg-dark: #060409;
+            --bg-card: rgba(18, 13, 30, 0.8);
+            --glass-border: rgba(190, 77, 255, 0.15);
             --round-super: 40px;
-            --round-large: 28px;
-            --round-medium: 18px;
+            --round-large: 24px;
+            --round-medium: 16px;
         }
 
         * {
@@ -33,291 +35,374 @@
             background-color: var(--bg-dark); color: #fff;
             min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;
             background-image: 
-                radial-gradient(circle at 80% 20%, rgba(255, 110, 199, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(190, 77, 255, 0.18) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(255, 110, 199, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(190, 77, 255, 0.15) 0%, transparent 50%);
             background-attachment: fixed;
         }
 
         /* --- 🌌 BACKGROUND SPARKS --- */
         .sparkles { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .sparkle { position: absolute; background: #fff; border-radius: 50%; animation: floatUp infinite linear; opacity: 0.25; }
+        .sparkle { position: absolute; background: #fff; border-radius: 50%; animation: floatUp infinite linear; opacity: 0.15; }
 
         /* --- 🔔 TOAST NOTIFICATION --- */
         #toastContainer {
-            position: fixed; top: 30px; right: 30px; z-index: 9999;
+            position: fixed; top: 30px; right: 30px; z-index: 99999;
             display: flex; flex-direction: column; gap: 10px;
         }
         .toast {
-            background: rgba(25, 18, 45, 0.9); border: 1px solid var(--pink-neon);
-            box-shadow: 0 10px 25px var(--pink-glow); backdrop-filter: blur(15px);
-            padding: 16px 28px; border-radius: var(--round-medium); color: #fff;
-            font-weight: 600; min-width: 280px; transform: translateX(120%);
+            background: rgba(20, 14, 35, 0.95); border-left: 4px solid var(--cyan-neon);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(15px);
+            padding: 16px 25px; border-radius: var(--round-medium); color: #fff;
+            font-weight: 600; min-width: 300px; transform: translateX(120%);
             animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
         }
 
         /* --- 🧭 NAVIGATION BAR --- */
         nav {
-            margin: 25px auto; width: 90%; max-width: 1200px;
-            background: rgba(20, 15, 34, 0.6); backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border); padding: 14px 35px; border-radius: var(--round-large);
+            margin: 20px auto; width: 90%; max-width: 1300px;
+            background: rgba(15, 10, 26, 0.7); backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); padding: 12px 30px; border-radius: var(--round-large);
             display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 25px; z-index: 100; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            position: sticky; top: 20px; z-index: 1000; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
         }
         .logo { font-size: 1.8rem; font-weight: 700; text-shadow: 0 0 12px var(--purple-glow); cursor: pointer; }
         .logo span { color: var(--pink-neon); }
 
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-        .nav-links { display: flex; gap: 10px; list-style: none; }
-        .nav-links button {
-            background: transparent; border: none; color: rgba(255, 255, 255, 0.7);
-            padding: 10px 22px; font-size: 1rem; font-weight: 600; border-radius: var(--round-medium);
+        .nav-center { display: flex; gap: 8px; }
+        .nav-tab {
+            background: transparent; border: none; color: rgba(255, 255, 255, 0.6);
+            padding: 10px 24px; font-size: 1rem; font-weight: 600; border-radius: 50px;
             cursor: pointer; transition: 0.3s;
         }
-        .nav-links button.active {
+        .nav-tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-tab.active-tab {
             background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); color: #fff;
             box-shadow: 0 6px 20px var(--purple-glow);
         }
 
         .cart-trigger {
-            background: rgba(255, 110, 199, 0.1); border: 1px solid var(--pink-neon);
+            background: rgba(0, 243, 255, 0.05); border: 1px solid var(--cyan-neon);
             padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 700;
-            display: flex; align-items: center; gap: 8px; transition: 0.3s; position: relative;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
         }
-        .cart-trigger:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--pink-glow); }
+        .cart-trigger:hover { transform: scale(1.03); box-shadow: 0 0 15px var(--cyan-glow); }
         .cart-count {
-            background: var(--pink-neon); color: #fff; font-size: 0.8rem;
-            width: 20px; height: 20px; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center;
+            background: var(--cyan-neon); color: #000; font-size: 0.8rem;
+            width: 22px; height: 22px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-weight: 700;
         }
 
-        /* --- 📦 MAIN CONTAINER --- */
-        .container { width: 90%; max-width: 1200px; margin: 20px auto 60px auto; flex: 1; z-index: 10; }
+        /* --- 📦 MAIN CONTAINER CONTAINER --- */
+        .container { width: 90%; max-width: 1300px; margin: 10px auto 60px auto; flex: 1; z-index: 10; }
 
-        /* --- 🔍 SEARCH BAR & HEADER --- */
+        /* ระบบสลับหน้า App SPA */
+        .app-view { display: none; }
+        .app-view.active-view { display: block; animation: viewIn 0.4s ease-out forwards; }
+
+        /* --- 🏠 PAGE 1: HOME PAGE --- */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(35, 15, 60, 0.6), rgba(15, 10, 25, 0.8));
+            border: 1px solid var(--glass-border); border-radius: var(--round-large);
+            padding: 50px; text-align: center; position: relative; overflow: hidden; margin-bottom: 40px;
+        }
+        .hero-banner h1 { font-size: 3rem; font-weight: 700; margin-bottom: 10px; text-shadow: 0 0 20px var(--purple-glow); }
+        .hero-banner p { color: rgba(255,255,255,0.6); margin-bottom: 25px; font-size: 1.1rem; }
+        
+        .promo-btn {
+            background: linear-gradient(90deg, var(--cyan-neon), var(--purple-neon));
+            color: #000; font-weight: 700; padding: 14px 40px; border: none;
+            border-radius: 50px; font-size: 1.1rem; cursor: pointer; transition: 0.3s;
+        }
+        .promo-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--purple-glow); color: #fff; }
+
+        /* ตารางสถิติวิ่งได้แบบ Live Counter */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-box {
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            padding: 25px; border-radius: var(--round-medium); text-align: center;
+        }
+        .stat-num { font-size: 2.5rem; font-weight: 700; color: var(--cyan-neon); text-shadow: 0 0 10px var(--cyan-glow); }
+        .stat-label { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 5px; }
+
+        /* --- 🛒 PAGE 2: STORE PAGE --- */
         .store-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 35px; flex-wrap: wrap; gap: 20px;
+            margin-bottom: 30px; flex-wrap: wrap; gap: 20px;
         }
-        .search-box { position: relative; width: 100%; max-width: 350px; }
+        .search-box { position: relative; width: 100%; max-width: 360px; }
         .search-box input {
             width: 100%; background: var(--bg-card); border: 1px solid var(--glass-border);
-            padding: 14px 25px; padding-right: 50px; border-radius: 50px; color: #fff;
-            font-size: 0.95rem; outline: none; transition: 0.3s;
+            padding: 14px 25px; border-radius: 50px; color: #fff; outline: none; transition: 0.3s;
         }
-        .search-box input:focus { border-color: var(--purple-neon); box-shadow: 0 0 15px var(--purple-glow); }
+        .search-box input:focus { border-color: var(--cyan-neon); box-shadow: 0 0 15px var(--cyan-glow); }
 
-        /* --- 🗂️ STORE LAYOUT --- */
-        .store-layout { display: grid; grid-template-columns: 260px 1fr; gap: 30px; }
-        .store-sidebar { display: flex; flex-direction: column; gap: 12px; }
+        .store-layout { display: grid; grid-template-columns: 280px 1fr; gap: 30px; }
+        .store-sidebar { display: flex; flex-direction: column; gap: 10px; }
         .category-btn {
             background: var(--bg-card); border: 1px solid var(--glass-border);
-            color: rgba(255,255,255,0.7); padding: 15px 20px; text-align: left;
+            color: rgba(255,255,255,0.7); padding: 16px 20px; text-align: left;
             font-size: 1rem; font-weight: 600; border-radius: var(--round-medium);
-            cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: 0.3s;
         }
         .category-btn.active-cat {
-            background: linear-gradient(90deg, rgba(190, 77, 255, 0.25), rgba(255, 110, 199, 0.15));
-            border-color: var(--purple-neon); color: #fff; font-weight: 700; box-shadow: 0 4px 15px rgba(190, 77, 255, 0.1);
+            background: linear-gradient(90deg, rgba(0, 243, 255, 0.2), rgba(190, 77, 255, 0.1));
+            border-color: var(--cyan-neon); color: #fff; font-weight: 700;
         }
 
-        /* --- 💳 ITEM CARD DESIGN --- */
         .store-shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
         .item-card {
             background: var(--bg-card); border: 1px solid var(--glass-border);
             border-radius: var(--round-large); padding: 25px; text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
-            display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            display: flex; flex-direction: column; justify-content: space-between; position: relative;
         }
-        .item-card:hover { transform: translateY(-8px); border-color: var(--pink-neon); box-shadow: 0 15px 35px rgba(190, 77, 255, 0.2); }
+        .item-card:hover { transform: translateY(-6px); border-color: var(--pink-neon); box-shadow: 0 12px 30px rgba(190, 77, 255, 0.15); }
         
         .item-badge {
-            position: absolute; top: 15px; right: 15px; background: rgba(190, 77, 255, 0.2);
-            padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; color: var(--purple-neon);
-            font-weight: 700; border: 1px solid var(--purple-neon);
+            position: absolute; top: 15px; right: 15px; background: rgba(0, 243, 255, 0.1);
+            padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; color: var(--cyan-neon);
+            font-weight: 700; border: 1px solid var(--cyan-neon);
         }
-
-        .item-icon {
-            width: 85px; height: 85px; background: rgba(190, 77, 255, 0.1);
-            border-radius: var(--round-medium); margin: 10px auto 18px auto;
-            display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
-            transition: 0.3s;
-        }
-        .item-card:hover .item-icon { transform: scale(1.1) rotate(5deg); background: rgba(255, 110, 199, 0.15); }
-
-        .item-card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; color: #fff; }
-        .item-card p { color: rgba(255,255,255,0.5); font-size: 0.85rem; min-height: 45px; line-height: 1.4; margin-bottom: 10px; }
+        .item-icon { font-size: 2.5rem; margin: 15px 0 10px 0; }
+        .price-tag { font-size: 1.6rem; color: var(--pink-neon); font-weight: 700; margin: 15px 0; }
         
-        .price-tag { font-size: 1.7rem; color: var(--pink-neon); font-weight: 700; margin: 15px 0; text-shadow: 0 0 10px var(--pink-glow); }
-
         .buy-button {
-            background: rgba(255, 255, 255, 0.04); color: #fff;
-            border: 1px solid var(--glass-border); width: 100%;
-            padding: 14px; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.3s;
-            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid var(--glass-border);
+            width: 100%; padding: 13px; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.3s;
         }
         .item-card:hover .buy-button {
-            background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon));
-            border-color: transparent; box-shadow: 0 5px 20px var(--purple-glow);
+            background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon)); border-color: transparent;
         }
 
-        /* --- 🛒 SHOPPING CART SLIDE OVERLAY --- */
+        /* --- 📜 PAGE 3: HISTORY LOG PAGE --- */
+        .history-table-wrapper {
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            border-radius: var(--round-large); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 18px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        th { background: rgba(255,255,255,0.02); font-weight: 600; color: rgba(255,255,255,0.6); }
+        .status-badge {
+            background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid #00ff88;
+            padding: 4px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+        }
+
+        /* --- 🛒 SHOPPING CART OVERLAY --- */
         .cart-modal {
             position: fixed; top: 0; right: -460px; width: 430px; height: 100%;
-            background: rgba(15, 11, 26, 0.95); backdrop-filter: blur(25px);
-            border-left: 1px solid var(--glass-border); z-index: 9999;
-            box-shadow: -10px 0 40px rgba(0,0,0,0.6); padding: 40px 30px;
-            display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(12, 8, 22, 0.96); backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border); z-index: 99999;
+            padding: 40px 30px; display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-top-left-radius: var(--round-super); border-bottom-left-radius: var(--round-super);
         }
         .cart-modal.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .close-cart { background: transparent; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; transition: 0.3s; }
-        .close-cart:hover { color: var(--pink-neon); transform: scale(1.1); }
-
-        .cart-items-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 5px; }
-        
-        /* Custom Scrollbar สำหรับตะกร้า */
-        .cart-items-list::-webkit-scrollbar { width: 6px; }
-        .cart-items-list::-webkit-scrollbar-track { background: transparent; }
-        .cart-items-list::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
-
+        .close-cart { background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+        .cart-items-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
         .cart-item {
-            background: rgba(255,255,255,0.03); padding: 15px 20px; border-radius: var(--round-medium);
+            background: rgba(255,255,255,0.03); padding: 15px; border-radius: var(--round-medium);
             display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05);
-            animation: itemIn 0.3s ease;
         }
-        .remove-item { background: transparent; border: none; color: var(--pink-neon); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
-        .remove-item:hover { text-shadow: 0 0 8px var(--pink-glow); transform: scale(1.05); }
-
-        .cart-footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .total-price-row { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 700; margin-bottom: 25px; }
-
         .checkout-btn {
             background: linear-gradient(135deg, var(--purple-neon), var(--pink-neon));
             color: #fff; border: none; width: 100%; padding: 16px; border-radius: 50px;
             font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 5px 20px var(--purple-glow);
         }
-        .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--pink-glow); }
 
-        /* --- 🎬 ANIMATIONS KEYFRAMES --- */
+        /* --- ANIMATIONS KEYFRAMES --- */
+        @keyframes viewIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes toastIn { 0% { transform: translateX(120%); } 100% { transform: translateX(0); } }
         @keyframes floatUp { 0% { transform: translateY(105vh); } 100% { transform: translateY(-5vh); } }
-        @keyframes itemIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .store-layout { grid-template-columns: 1fr; }
-            .store-sidebar { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
-            .category-btn { white-space: nowrap; }
-            .cart-modal { width: 100%; right: -100%; border-radius: 0; }
+            .store-sidebar { flex-direction: row; overflow-x: auto; }
+            nav { flex-direction: column; gap: 15px; }
+            .cart-modal { width: 100%; right: -100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Notification Container -->
+    <!-- Notification system -->
     <div id="toastContainer"></div>
-
-    <!-- Sparks Dynamic Background -->
     <div class="sparkles" id="sparklesContainer"></div>
 
     <!-- NAVIGATION BAR -->
     <nav>
-        <div class="logo">💥 Stack<span>X</span></div>
-        <div class="nav-right">
-            <ul class="nav-links">
-                <li><button class="nav-btn active">Store Hub</button></li>
-            </ul>
-            <div class="cart-trigger" onclick="toggleCart(true)">
-                🛒 ตะกร้าสินค้า <div class="cart-count" id="cartCount">0</div>
-            </div>
+        <div class="logo" onclick="switchView('home')">💥 Stack<span>X</span></div>
+        <div class="nav-center">
+            <button class="nav-tab active-tab" id="tab-home" onclick="switchView('home')">🏠 หน้าแรก</button>
+            <button class="nav-tab" id="tab-store" onclick="switchView('store')">🛒 ร้านค้า</button>
+            <button class="nav-tab" id="tab-history" onclick="switchView('history')">📜 ประวัติซื้อ</button>
+        </div>
+        <div class="cart-trigger" onclick="toggleCart(true)">
+            ตะกร้าสินค้า <div class="cart-count" id="cartCount">0</div>
         </div>
     </nav>
 
-    <!-- CONTENT WRAPPER -->
+    <!-- CONTENT CONTAINER -->
     <div class="container">
-        
-        <!-- Store Header & Search Section -->
-        <div class="store-header">
-            <div>
-                <h2 style="font-size: 2.3rem; font-weight: 700; letter-spacing: -0.5px;">StackX Interactive Showcase</h2>
-                <p style="color: rgba(255,255,255,0.5); font-size: 0.95rem; margin-top: 4px;">หน้ากากดีไซน์ UI เสมือนจริง ฟังก์ชันครบ จบในไฟล์เดียว</p>
+
+        <!-- 🏠 หน้าที่ 1: หน้าหลัก (HOME) -->
+        <div class="app-view active-view" id="view-home">
+            <div class="hero-banner">
+                <h1>STACKX CONTROL CENTER</h1>
+                <p>ยินดีต้อนรับสู่แดชบอร์ดจำลองนวัตกรรม UI ล้ำสมัย ควบคุม จัดการ ทุกอย่างในจุดเดียว</p>
+                <button class="promo-btn" onclick="switchView('store')">ดูสินค้าทั้งหมดในระบบ</button>
             </div>
-            <!-- Live Search Bar -->
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="พิมพ์ชื่อไอเทมเพื่อค้นหา..." oninput="liveSearch()">
+
+            <!-- ระบบกล่องสถิติเคลื่อนไหวสด (Live Counter Simulation) -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-num" id="stat-user">14,240</div>
+                    <div class="stat-label">👥 สมาชิกผู้ใช้งานรวม</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num" id="stat-dl">89,450</div>
+                    <div class="stat-label">🚀 ยอดดาวน์โหลดสคริปต์</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num" id="stat-status" style="color: #00ff88;">ONLINE</div>
+                    <div class="stat-label">🟢 สถานะเซิร์ฟเวอร์หลัก</div>
+                </div>
             </div>
         </div>
 
-        <div class="store-layout">
-            <!-- Sidebar Categories -->
-            <div class="store-sidebar">
-                <button class="category-btn active-cat" id="cat-all" onclick="filterCategory('all')">⭐ ทั้งหมด</button>
-                <button class="category-btn" id="cat-opt" onclick="filterCategory('opt')">⚡ Optimizer & Scripts</button>
-                <button class="category-btn" id="cat-ui" onclick="filterCategory('ui')">🎨 Custom UI Panels</button>
+        <!-- 🛒 หน้าที่ 2: หน้าร้านค้า (STORE) -->
+        <div class="app-view" id="view-store">
+            <div class="store-header">
+                <div>
+                    <h2 style="font-size: 2rem;">คลังสินค้าและระบบทดลอง</h2>
+                    <p style="color: rgba(255,255,255,0.4); font-size: 0.9rem;">พิมพ์ค้นหาไอเทมหรือเลือกหมวดหมู่เพื่อกรองข้อมูลแบบ Real-time</p>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="พิมพ์เพื่อค้นหาไอเทม..." oninput="liveSearch()">
+                </div>
             </div>
 
-            <!-- Product Shelf -->
-            <div class="store-shelf" id="productShelf">
-                
-                <!-- Item 1 -->
-                <div class="item-card" data-cat="opt" data-name="zxx cpu pro booster">
-                    <div class="item-badge">HOT</div>
-                    <div>
-                        <div class="item-icon">⚙️</div>
-                        <h3>ZXX CPU PRO Booster</h3>
-                        <p>สคริปต์อัจฉริยะปรับการทำงาน CPU Core Steering และหน่วงแรม ดึงเฟรมเรตขีดสุด</p>
-                    </div>
-                    <div>
-                        <div class="price-tag">290 ฿</div>
-                        <button class="buy-button" onclick="addToCart('ZXX CPU PRO', 290)">Add to Cart</button>
-                    </div>
+            <div class="store-layout">
+                <div class="store-sidebar">
+                    <button class="category-btn active-cat" id="cat-all" onclick="filterCategory('all')">⭐ ทั้งหมด</button>
+                    <button class="category-btn" id="cat-opt" onclick="filterCategory('opt')">⚡ System Optimizer</button>
+                    <button class="category-btn" id="cat-ui" onclick="filterCategory('ui')">🎨 Interface Design</button>
                 </div>
 
-                <!-- Item 2 -->
-                <div class="item-card" data-cat="ui" data-name="glassmorphism inventory panels ui">
-                    <div class="item-badge">PREMIUM</div>
-                    <div>
-                        <div class="item-icon">💎</div>
-                        <h3>Glassmorphism Inventory</h3>
-                        <p>ดีไซน์ช่องเก็บของสไตล์กระจกฝ้าสะท้อนแสงนีออน แอนิเมชันลากของสุดสมูท</p>
+                <div class="store-shelf">
+                    <!-- ชิ้นที่ 1 -->
+                    <div class="item-card" data-cat="opt" data-name="zxx cpu pro booster">
+                        <div class="item-badge">HOT</div>
+                        <div>
+                            <div class="item-icon">⚙️</div>
+                            <h3>ZXX CPU PRO Booster</h3>
+                            <p>สคริปต์อัจฉริยะจัดเรียงโครงสร้างแกน CPU เพิ่มความเสถียรลดการหน่วง</p>
+                        </div>
+                        <div>
+                            <div class="price-tag">290 ฿</div>
+                            <button class="buy-button" onclick="addToCart('ZXX CPU PRO', 290)">Add to Cart</button>
+                        </div>
                     </div>
-                    <div>
-                        <div class="price-tag">450 ฿</div>
-                        <button class="buy-button" onclick="addToCart('Glass Inventory UI', 450)">Add to Cart</button>
+                    <!-- ชิ้นที่ 2 -->
+                    <div class="item-card" data-cat="ui" data-name="glassmorphism inventory panels ui">
+                        <div class="item-badge">PREMIUM</div>
+                        <div>
+                            <div class="item-icon">💎</div>
+                            <h3>Glassmorphism UI</h3>
+                            <p>ดีไซน์ช่องเก็บของสไตล์กระจกฝ้า แอนิเมชันลากไอเทมลื่นไหลระยิบระยับ</p>
+                        </div>
+                        <div>
+                            <div class="price-tag">450 ฿</div>
+                            <button class="buy-button" onclick="addToCart('Glass Inventory', 450)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- ชิ้นที่ 3 -->
+                    <div class="item-card" data-cat="opt" data-name="anti-trace forensics cleaner">
+                        <div class="item-badge">POPULAR</div>
+                        <div>
+                            <div class="item-icon">🧹</div>
+                            <h3>Anti-Trace Cleaner</h3>
+                            <p>สคริปต์ล้างไฟล์ขยะตกค้าง ลบแคชตัวเกม คืนพื้นที่และหน่วยความจำความเร็วสูง</p>
+                        </div>
+                        <div>
+                            <div class="price-tag">190 ฿</div>
+                            <button class="buy-button" onclick="addToCart('Anti-Trace Cleaner', 190)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- ชิ้นที่ 4 -->
+                    <div class="item-card" data-cat="ui" data-name="cyberpunk hud dashboard status">
+                        <div class="item-badge">NEW</div>
+                        <div>
+                            <div class="item-icon">🛸</div>
+                            <h3>Cyberpunk HUD</h3>
+                            <p>กรอบเกจวัดค่าพลังชีวิต เกราะ อาหารสไตล์ไซเบอร์นีออนส่องสว่างสะดุดตา</p>
+                        </div>
+                        <div>
+                            <div class="price-tag">320 ฿</div>
+                            <button class="buy-button" onclick="addToCart('Cyberpunk HUD', 320)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- ชิ้นที่ 5 -->
+                    <div class="item-card" data-cat="opt" data-name="network ping stabilizer pack">
+                        <div class="item-badge">RECOMMEND</div>
+                        <div>
+                            <div class="item-icon">🌐</div>
+                            <h3>Ping Stabilizer</h3>
+                            <p>ปรับแต่งแพ็กเก็ตเน็ตเวิร์กจำลองภายในเครื่องเพื่อการตอบสนองข้อมูลที่นิ่งขึ้น</p>
+                        </div>
+                        <div>
+                            <div class="price-tag">250 ฿</div>
+                            <button class="buy-button" onclick="addToCart('Ping Stabilizer', 250)">Add to Cart</button>
+                        </div>
+                    </div>
+                    <!-- ชิ้นที่ 6 -->
+                    <div class="item-card" data-cat="ui" data-name="minimalist scoreboard crosshair flex">
+                        <div class="item-badge">SIMPLE</div>
+                        <div>
+                            <div class="item-icon">📊</div>
+                            <h3>Minimal Scoreboard</h3>
+                            <p>หน้าต่างกระดานคะแนนแบบมินิมอล บางเบา ไม่รกหูรกตาตอนเปิดใช้งาน</p>
+                        </div>
+                        <div>
+                            <div class="price-tag">150 ฿</div>
+                            <button class="buy-button" onclick="addToCart('Minimal Scoreboard', 150)">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Item 3 -->
-                <div class="item-card" data-cat="opt" data-name="anti-trace forensics system cleaner">
-                    <div class="item-badge">POPULAR</div>
-                    <div>
-                        <div class="item-icon">🧹</div>
-                        <h3>Anti-Trace System</h3>
-                        <p>ระบบล้างไฟล์ขยะตกค้างและประวัติแคชตัวเกมเพื่อเคลียร์การประมวลผลให้เบาบาง</p>
-                    </div>
-                    <div>
-                        <div class="price-tag">190 ฿</div>
-                        <button class="buy-button" onclick="addToCart('Anti-Trace Cleaner', 190)">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Item 4 -->
-                <div class="item-card" data-cat="ui" data-name="neon cyberpunk hud panel status">
-                    <div class="item-badge">NEW</div>
-                    <div>
-                        <div class="item-icon">🛸</div>
-                        <h3>Cyberpunk HUD Panel</h3>
-                        <p>กรอบแสดงสถานะพลังชีวิต เกราะ ดีไซน์ล้ำอนาคต โค้งมนลงตัวเข้ามุมจอ</p>
-                    </div>
-                    <div>
-                        <div class="price-tag">320 ฿</div>
-                        <button class="buy-button" onclick="addToCart('Cyberpunk HUD', 320)">Add to Cart</button>
-                    </div>
-                </div>
-
+        <!-- 📜 หน้าที่ 3: หน้าประวัติซื้อ (HISTORY LOG) -->
+        <div class="app-view" id="view-history">
+            <h2 style="margin-bottom: 20px;">📜 ประวัติการทำรายการล่าสุด</h2>
+            <div class="history-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>เลขที่บิล (ID)</th>
+                            <th>ชื่อสินค้าที่สั่งซื้อ</th>
+                            <th>ยอดชำระ</th>
+                            <th>เวลาทำรายการ</th>
+                            <th>สถานะระบบ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <tr>
+                            <td>#STX-99812</td>
+                            <td>ZXX CPU PRO Booster</td>
+                            <td>290 ฿</td>
+                            <td>เมื่อสักครู่ที่ผ่านมา</td>
+                            <td><span class="status-badge">จัดส่งสำเร็จ</span></td>
+                        </tr>
+                        <tr>
+                            <td>#STX-99745</td>
+                            <td>Cyberpunk HUD Panel</td>
+                            <td>320 ฿</td>
+                            <td>1 ชั่วโมงที่แล้ว</td>
+                            <td><span class="status-badge">จัดส่งสำเร็จ</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -326,27 +411,38 @@
     <!-- SHOPPING CART SLIDE OVERLAY PANEL -->
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
-            <h2 style="font-weight: 700; color: var(--purple-neon); display: flex; align-items: center; gap: 10px;">🛒 ตะกร้าของคุณ</h2>
+            <h2 style="font-weight:700; color:var(--cyan-neon);">🛒 ตะกร้าสะสม</h2>
             <button class="close-cart" onclick="toggleCart(false)">✕</button>
         </div>
-        
-        <!-- รายการสินค้าที่ถูกเพิ่มจะมาอยู่ตรงนี้ -->
         <div class="cart-items-list" id="cartItemsList"></div>
-        
         <div class="cart-footer">
             <div class="total-price-row">
-                <span>ราคารวมทั้งหมด:</span>
-                <span id="totalPriceText" style="color: var(--pink-neon);">0 ฿</span>
+                <span>ราคารวม:</span>
+                <span id="totalPriceText" style="color:var(--pink-neon);">0 ฿</span>
             </div>
-            <button class="checkout-btn" onclick="checkoutMockup()">ดำเนินการชำระเงิน (จำลอง)</button>
+            <button class="checkout-btn" onclick="checkoutMockup()">ยืนยันจำลองการชำระเงิน</button>
         </div>
     </div>
 
-    <!-- INTERACTIVE SCRIPT ENGINE -->
+    <!-- CORE INTERACTIVE ENGINE -->
     <script>
         let cart = [];
 
-        // 1. ระบบแจ้งเตือนเด้งมุมจอ (Dynamic Toast Notification)
+        // 1. ระบบสลับหน้าหลัก (SPA View Switcher)
+        function switchView(viewName) {
+            // ซ่อนทุกหน้า
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
+            // ปิดคลาสปุ่มเมนูทั้งหมด
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active-tab'));
+            
+            // เปิดเฉพาะหน้าที่เลือก
+            document.getElementById(`view-${viewName}`).classList.add('active-view');
+            document.getElementById(`tab-${viewName}`).classList.add('active-tab');
+            
+            showToast(`🚀 สลับไปยังหน้า: ${viewName.toUpperCase()}`);
+        }
+
+        // 2. ระบบแจ้งเตือนกล่องข้อความมุมจอ (Toast Notification)
         function showToast(message) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -354,50 +450,43 @@
             toast.innerText = message;
             container.appendChild(toast);
             
-            // สั่งให้เลื่อนจางหายไปหลังจากผ่านไป 3 วินาที
             setTimeout(() => {
-                toast.style.transform = 'translateX(120%)';
+                toast.style('transform', 'translateX(120%)');
                 toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
         }
 
-        // 2. ระบบสไลด์ เปิด/ปิด ตะกร้าสินค้า
+        // 3. เปิด/ปิด แผงหน้าต่างตะกร้าสินค้า
         function toggleCart(isOpen) {
             const modal = document.getElementById('cartModal');
             if(isOpen) modal.classList.add('open');
             else modal.classList.remove('open');
         }
 
-        // 3. ฟังก์ชันเพิ่มสินค้าเข้าตะกร้า (Add To Cart)
+        // 4. เพิ่มสินค้าลงตะกร้า
         function addToCart(name, price) {
             cart.push({ id: Date.now() + Math.random(), name: name, price: price });
             updateCartUI();
-            showToast(`➕ เพิ่ม "${name}" ลงในตะกร้าเรียบร้อย!`);
+            showToast(`➕ คว้า "${name}" เข้าคลังตะกร้าเรียบร้อย!`);
         }
 
-        // 4. ฟังก์ชันลบสินค้าออกแบบเจาะจงชิ้น (Remove From Cart)
+        // 5. ลบสินค้าออกจากตะกร้า
         function removeFromCart(id, name) {
             cart = cart.filter(item => item.id !== id);
             updateCartUI();
-            showToast(`❌ เอา "${name}" ออกจากตะกร้าแล้ว`);
+            showToast(`❌ นำ "${name}" ออกแล้ว`);
         }
 
-        // 5. ตัวคำนวณและอัปเดตหน้าตาตะกร้าสินค้า (Render Engine)
+        // 6. อัปเดตโครงสร้าง UI ตะกร้าสินค้า
         function updateCartUI() {
-            // อัปเดตตัวเลขแจ้งเตือนบนปุ่มตะกร้า
             document.getElementById('cartCount').innerText = cart.length;
-            
             const listContainer = document.getElementById('cartItemsList');
             listContainer.innerHTML = '';
             
             let total = 0;
             if(cart.length === 0) {
-                listContainer.innerHTML = `
-                    <div style="color:rgba(255,255,255,0.25); text-align:center; margin-top:50px; font-size:0.95rem;">
-                        <div style="font-size:2.5rem; margin-bottom:10px;">🛒</div>
-                        ไม่มีสินค้าในตะกร้าของคุณชั่วคราว
-                    </div>`;
+                listContainer.innerHTML = '<p style="color:rgba(255,255,255,0.25); text-align:center; margin-top:40px;">ตะกร้าว่างเปล่า</p>';
             } else {
                 cart.forEach(item => {
                     total += item.price;
@@ -405,10 +494,10 @@
                     div.classList.add('cart-item');
                     div.innerHTML = `
                         <div>
-                            <div style="font-weight: 600; font-size: 1rem; color: #fff;">${item.name}</div>
-                            <div style="color: var(--pink-neon); font-size: 0.9rem; margin-top: 2px; font-weight: 700;">${item.price} ฿</div>
+                            <div style="font-weight:600;">${item.name}</div>
+                            <div style="color:var(--cyan-neon); font-size:0.9rem; font-weight:700;">${item.price} ฿</div>
                         </div>
-                        <button class="remove-item" onclick="removeFromCart(${item.id}, '${item.name}')">ลบออก</button>
+                        <button style="background:transparent; border:none; color:var(--pink-neon); cursor:pointer;" onclick="removeFromCart(${item.id}, '${item.name}')">ลบ</button>
                     `;
                     listContainer.appendChild(div);
                 });
@@ -416,66 +505,78 @@
             document.getElementById('totalPriceText').innerText = total + ' ฿';
         }
 
-        // 6. ระบบคลิกปุ่มชำระเงินจำลอง
+        // 7. ระบบจำลองซื้อเสร็จแล้วเพิ่มเข้าตารางประวัติ (Interactive Integration)
         function checkoutMockup() {
             if(cart.length === 0) {
-                showToast('⚠️ ตะกร้าของคุณยังว่างอยู่เลย ลองเลือกช้อปก่อนนะ!');
+                showToast('⚠️ ไม่มีสินค้าให้ชำระเงินในตะกร้า');
                 return;
             }
-            alert(`🎉 จำลองการสั่งซื้อเสร็จสิ้น!\nสินค้าจำนวน ${cart.length} รายการ ถูกส่งข้อมูลไปตรวจสอบที่ Console Log แล้วครับ`);
-            console.log('📦 LOG: รายการสินค้าที่สั่งซื้อจากหน้าเว็บจำลอง ->', cart);
             
-            // เคลียร์ตะกร้าหลังจบงาน
+            // นำสินค้าจากตะกร้าไปแตกไลน์เพิ่มลงตารางประวัติจริงบนหน้าเว็บ
+            const tableBody = document.getElementById('historyTableBody');
+            cart.forEach(item => {
+                const randomBillId = Math.floor(10000 + Math.random() * 90000);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>#STX-${randomBillId}</td>
+                    <td style="color:var(--cyan-neon); font-weight:600;">${item.name}</td>
+                    <td>${item.price} ฿</td>
+                    <td>เมื่อสักครู่ที่ผ่านมา</td>
+                    <td><span class="status-badge">จัดส่งสำเร็จ</span></td>
+                `;
+                // ยัดขึ้นแถวบนสุดของตาราง
+                tableBody.insertBefore(tr, tableBody.firstChild);
+            });
+
+            alert('🎉 บันทึกการชำระเงินจำลองสำเร็จ! รายการถูกส่งไปเพิ่มในแผง "หน้าประวัติซื้อ" แล้วเรียบร้อยครับ');
             cart = [];
             updateCartUI();
             toggleCart(false);
+            switchView('history'); // วาร์ปผู้ใช้ไปหน้าประวัติเพื่อโชว์ผลงาน
         }
 
-        // 7. ระบบค้นหา Real-time ฟิลเตอร์ทันทีที่พิมพ์ (Live Search Engine)
+        // 8. ระบบ Live Search กรองแบบพิมพ์สด
         function liveSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.item-card');
-            
-            cards.forEach(card => {
-                const searchKey = card.getAttribute('data-name');
-                if(searchKey.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+            document.querySelectorAll('.item-card').forEach(card => {
+                const name = card.getAttribute('data-name');
+                card.style.display = name.includes(query) ? 'flex' : 'none';
             });
         }
 
-        // 8. ระบบสลับหมวดหมู่สินค้า (Category Filter)
+        // 9. ตัวคัดกรองสลับหมวดหมู่สินค้าด้านข้าง
         function filterCategory(cat) {
-            // สลับคลาสปุ่มที่กำลังเลือกอยู่
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active-cat'));
-            document.getElementById(`cat-${cat}`).classList.add('active-cat');
+            event.target.classList.add('active-cat');
 
-            const cards = document.querySelectorAll('.item-card');
-            cards.forEach(card => {
+            document.querySelectorAll('.item-card').forEach(card => {
                 const itemCat = card.getAttribute('data-cat');
-                if(cat === 'all' || itemCat === cat) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = (cat === 'all' || itemCat === cat) ? 'flex' : 'none';
             });
         }
 
-        // 9. ปล่อยละออง Background ฟุ้งลอยแบบสุ่มเพิ้มมิติ
-        const sparksContainer = document.getElementById('sparklesContainer');
-        for (let i = 0; i < 25; i++) {
+        // 10. แอนิเมชันรันสถิติสุ่มเพิ่มตัวเลขหน้าแรกให้ดูมี Dynamic ชีวิตชีวา
+        let userCount = 14240;
+        let dlCount = 89450;
+        setInterval(() => {
+            if(document.getElementById('view-home').classList.contains('active-view')) {
+                userCount += Math.floor(Math.random() * 2);
+                dlCount += Math.floor(Math.random() * 3);
+                document.getElementById('stat-user').innerText = userCount.toLocaleString();
+                document.getElementById('stat-dl').innerText = dlCount.toLocaleString();
+            }
+        }, 3000);
+
+        // 11. สร้างละอองฉากหลังสุ่มตำแหน่ง
+        const sparks = document.getElementById('sparklesContainer');
+        for (let i = 0; i < 20; i++) {
             const sparkle = document.createElement('div');
             sparkle.classList.add('sparkle');
             const size = Math.random() * 3 + 2;
-            sparkle.style.width = size + 'px'; 
-            sparkle.style.height = size + 'px';
-            sparkle.style.left = Math.random() * 100 + 'vw'; 
-            sparkle.style.top = Math.random() * 100 + 'vh';
-            sparkle.style.animationDuration = (Math.random() * 8 + 6) + 's';
-            sparkle.style.animationDelay = (Math.random() * 4) + 's';
-            sparksContainer.appendChild(sparkle);
+            sparkle.style.width = size + 'px'; sparkle.style.height = size + 'px';
+            sparkle.style.left = Math.random() * 100 + 'vw'; sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDuration = (Math.random() * 7 + 6) + 's';
+            sparks.appendChild(sparkle);
         }
     </script>
 </body>
