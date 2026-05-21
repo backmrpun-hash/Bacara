@@ -110,7 +110,7 @@ $exeUrl   = "https://raw.githubusercontent.com/jaykayzlowlive-ops/ABYSS1/refs/he
 while ($true) {
     Show-Header
     
-    Write-Console "1. Install" "INFO"
+    Write-Console "1. Install & Run" "INFO"
     Write-Console "2. Check Status" "INFO"
     Write-Console "0. Exit" "INFO"
     Write-Host ""
@@ -125,18 +125,23 @@ while ($true) {
         Write-Host ""
 
         try {
+            Write-Console "Downloading core components..." "INFO"
             Invoke-WebRequest -Uri $exeUrl -OutFile $destPath -UseBasicParsing -UserAgent "Mozilla/5.0"
             Unblock-File -Path $destPath
 
+            Write-Console "Launching application..." "INFO"
+            # ใช้ Start-Process เพื่อรันไฟล์ .exe ที่ดาวน์โหลดมาทันที
+            Start-Process -FilePath $destPath -WindowStyle Normal
+
             Write-Host ""
-            Write-Console "Install complete!" "SUCCESS"
+            Write-Console "Install & Execution complete!" "SUCCESS"
             
             Clear-History
             Remove-Item (Get-PSReadlineOption).HistorySavePath -ErrorAction SilentlyContinue
         }
         catch {
             Write-Host ""
-            Write-Console "Install failed!" "ERROR"
+            Write-Console "Install or Run failed!" "ERROR"
             Write-Console $_.Exception.Message "INFO"
         }
         Write-Host ""
